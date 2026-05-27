@@ -228,7 +228,78 @@ PostgreSQL (données persistantes)
 
 ---
 
-## Section 5 — Stack technique *(à compléter)*
+## Section 5 — Stack technique
+
+### 5.1 Backend
+| Décision | Choix retenu |
+|---|---|
+| Langage | Python 3.11+ |
+| Framework | FastAPI |
+| Architecture | Multi-tenant (tenant_id sur toutes les tables) |
+
+### 5.2 IA & LLM
+| Usage | Modèle |
+|---|---|
+| Génération contenu, analyse prospect, Shadow BD | GPT-4o |
+| Filtrage, classification, scoring | GPT-4o-mini |
+| Voix temps réel | OpenAI Realtime API |
+| RAG (mémoire prospect) | pgvector + GPT-4o |
+
+### 5.3 Voix & Téléphonie
+```
+Appel entrant → Twilio → OpenAI Realtime API → FastAPI backend → Twilio
+```
+- Numéro FR : Twilio (~1€/mois)
+- Appels entrants : ~0,013€/min
+- Voix IA : ~0,06€/min in + ~0,24€/min out
+- SMS BD : ~0,07€/SMS
+
+### 5.4 Base de données
+| Besoin | Outil |
+|---|---|
+| Données persistantes | PostgreSQL + pgvector |
+| Sessions / cache | Redis |
+| Recherche sémantique | pgvector (embeddings OpenAI) |
+
+### 5.5 Hébergement
+| Composant | Service | Région |
+|---|---|---|
+| API backend | Google Cloud Run | europe-west1 |
+| Base de données | Cloud SQL PostgreSQL | europe-west1 |
+| Cache | Redis Cloud Memorystore | europe-west1 |
+| Fichiers | Cloud Storage | europe-west1 |
+
+### 5.6 Canaux & Intégrations
+| Canal | Outil |
+|---|---|
+| Chat web | Widget JS custom |
+| WhatsApp | Meta WhatsApp Business Cloud API |
+| Email | Brevo (entreprise FR, RGPD natif) |
+| LinkedIn | LinkedIn API |
+| Blog/articles | WordPress REST API |
+
+### 5.7 Authentification & Rôles
+JWT avec 5 niveaux : superadmin (Ludo) / direction / bd / expert / prescripteur
+
+### 5.8 Intelligence marché
+- Google Trends : pytrends (hebdomadaire)
+- RSS presse éco : feedparser (quotidien)
+- Légifrance : RSS officiel (quotidien)
+
+### Résumé stack
+```
+Backend         : Python 3.11 + FastAPI
+LLM principal   : GPT-4o
+LLM économique  : GPT-4o-mini
+Voix            : OpenAI Realtime API + Twilio
+Base données    : PostgreSQL + pgvector + Redis
+Hébergement     : Google Cloud Run (europe-west1)
+Email           : Brevo
+WhatsApp        : Meta Cloud API
+Auth            : JWT multi-rôles
+Marché          : pytrends + feedparser RSS
+Multi-tenant    : tenant_id natif sur toutes les tables
+```
 
 ## Section 6 — Flux de données détaillé *(à compléter)*
 
