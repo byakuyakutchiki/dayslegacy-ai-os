@@ -3,339 +3,954 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Days Legacy — Tableau de bord</title>
+<title>Days Legacy — AI Command Center</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f0f13; color: #e8e8f0; min-height: 100vh; }
+:root {
+  --bg: #050509;
+  --s1: rgba(255,255,255,.025);
+  --s2: rgba(255,255,255,.018);
+  --s3: rgba(255,255,255,.012);
+  --bd: rgba(255,255,255,.06);
+  --bd2: rgba(255,255,255,.04);
+  --gold: #c9a84c;
+  --gold-b: rgba(201,168,76,.12);
+  --gold-g: linear-gradient(135deg,#c9a84c 0%,#e8c96a 100%);
+  --hot: #e05555;
+  --hot-b: rgba(224,85,85,.1);
+  --warm: #e8943a;
+  --warm-b: rgba(232,148,58,.1);
+  --blue: #4d8eff;
+  --blue-b: rgba(77,142,255,.1);
+  --green: #3ecf8e;
+  --green-b: rgba(62,207,142,.1);
+  --text: #eeeef8;
+  --dim: #7878a0;
+  --faint: #38385a;
+  --font: 'Segoe UI',system-ui,-apple-system,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;font-variant-numeric:tabular-nums;}
 
-  /* Login */
-  #login-screen {
-    display: flex; align-items: center; justify-content: center;
-    min-height: 100vh; background: linear-gradient(135deg, #0f0f13 0%, #1a1a2e 100%);
-  }
-  .login-card {
-    background: #1c1c28; border: 1px solid #2a2a3e; border-radius: 16px;
-    padding: 48px 40px; width: 360px; text-align: center;
-  }
-  .login-logo { font-size: 32px; font-weight: 700; color: #c9a84c; margin-bottom: 8px; }
-  .login-sub { color: #888; font-size: 14px; margin-bottom: 32px; }
-  .login-card input {
-    width: 100%; padding: 12px 16px; background: #12121c; border: 1px solid #2a2a3e;
-    border-radius: 8px; color: #e8e8f0; font-size: 15px; margin-bottom: 16px; outline: none;
-  }
-  .login-card input:focus { border-color: #c9a84c; }
-  .btn-gold {
-    width: 100%; padding: 12px; background: #c9a84c; border: none; border-radius: 8px;
-    color: #0f0f13; font-weight: 700; font-size: 15px; cursor: pointer;
-  }
-  .btn-gold:hover { background: #d4b86a; }
-  .login-error { color: #e05555; font-size: 13px; margin-top: 12px; }
+/* ── UTILS ───────────────────────────────────────── */
+.glass{background:var(--s1);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);}
+.label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim);}
+.gold-text{background:var(--gold-g);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 
-  /* App */
-  #app { display: none; }
+/* ── LOGIN ───────────────────────────────────────── */
+#login{display:flex;align-items:center;justify-content:center;min-height:100vh;
+  background:radial-gradient(ellipse 60% 80% at 30% 50%,rgba(201,168,76,.05) 0%,transparent 100%),var(--bg);}
+.lcard{background:rgba(255,255,255,.03);border:1px solid var(--bd);border-radius:20px;
+  padding:52px 44px;width:380px;text-align:center;backdrop-filter:blur(40px);}
+.lbrand{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--dim);margin-bottom:10px;}
+.llogo{font-size:30px;font-weight:800;background:var(--gold-g);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px;}
+.ltag{font-size:12px;color:var(--faint);margin-bottom:40px;}
+.linput{width:100%;padding:13px 16px;background:rgba(255,255,255,.04);border:1px solid var(--bd);
+  border-radius:10px;color:var(--text);font-size:14px;margin-bottom:14px;outline:none;transition:border-color .2s;}
+.linput:focus{border-color:rgba(201,168,76,.5);}
+.lbtn{width:100%;padding:13px;border:none;border-radius:10px;cursor:pointer;
+  background:var(--gold-g);color:#000;font-weight:800;font-size:14px;letter-spacing:.3px;transition:opacity .2s;}
+.lbtn:hover{opacity:.88;}
+.lerr{color:var(--hot);font-size:12px;margin-top:10px;min-height:16px;}
 
-  .topbar {
-    background: #1c1c28; border-bottom: 1px solid #2a2a3e;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 32px; height: 60px;
-  }
-  .topbar-logo { font-size: 20px; font-weight: 700; color: #c9a84c; }
-  .topbar-right { display: flex; align-items: center; gap: 16px; }
-  .btn-logout { background: none; border: 1px solid #2a2a3e; border-radius: 6px; padding: 6px 14px; color: #888; cursor: pointer; font-size: 13px; }
-  .btn-logout:hover { color: #e8e8f0; border-color: #888; }
+/* ── APP ─────────────────────────────────────────── */
+#app{display:none;}
 
-  .main { padding: 32px; max-width: 1200px; margin: 0 auto; }
+/* TOPBAR */
+.topbar{position:sticky;top:0;z-index:60;background:rgba(5,5,9,.88);backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;
+  padding:0 28px;height:56px;}
+.tb-left{display:flex;align-items:center;gap:14px;}
+.tb-logo-wrap{display:flex;flex-direction:column;}
+.tb-brand{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--faint);}
+.tb-name{font-size:15px;font-weight:800;background:var(--gold-g);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.2;}
+.live-badge{display:flex;align-items:center;gap:5px;background:rgba(62,207,142,.08);
+  border:1px solid rgba(62,207,142,.2);border-radius:20px;padding:3px 9px;}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 1.8s infinite;}
+.live-txt{font-size:9px;font-weight:800;letter-spacing:1.5px;color:var(--green);}
+.tb-right{display:flex;align-items:center;gap:12px;}
+.tb-clock{font-size:12px;color:var(--dim);}
+.btn-vision{padding:8px 18px;border-radius:8px;border:1px solid rgba(201,168,76,.3);
+  background:rgba(201,168,76,.07);color:var(--gold);font-size:11px;font-weight:700;
+  letter-spacing:1px;cursor:pointer;transition:all .2s;}
+.btn-vision:hover{background:rgba(201,168,76,.14);border-color:rgba(201,168,76,.5);}
+.btn-logout{background:none;border:1px solid var(--bd);border-radius:7px;
+  padding:6px 12px;color:var(--dim);cursor:pointer;font-size:11px;transition:all .2s;}
+.btn-logout:hover{color:var(--text);}
 
-  /* Stats */
-  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
-  .stat-card {
-    background: #1c1c28; border: 1px solid #2a2a3e; border-radius: 12px;
-    padding: 20px 24px;
-  }
-  .stat-label { font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 1px; }
-  .stat-value { font-size: 32px; font-weight: 700; margin-top: 4px; }
-  .stat-total .stat-value { color: #e8e8f0; }
-  .stat-hot .stat-value { color: #e05555; }
-  .stat-warm .stat-value { color: #c9a84c; }
-  .stat-cold .stat-value { color: #5588cc; }
+/* MAIN */
+.main{padding:24px 28px;max-width:1380px;margin:0 auto;}
 
-  /* Filters */
-  .filters { display: flex; gap: 12px; margin-bottom: 20px; align-items: center; }
-  .filter-btn {
-    padding: 6px 16px; border-radius: 20px; border: 1px solid #2a2a3e;
-    background: none; color: #888; cursor: pointer; font-size: 13px;
-  }
-  .filter-btn.active { background: #c9a84c; border-color: #c9a84c; color: #0f0f13; font-weight: 600; }
+/* AI BRIEFING */
+.briefing{background:linear-gradient(135deg,rgba(201,168,76,.06) 0%,rgba(77,142,255,.04) 100%);
+  border:1px solid rgba(201,168,76,.14);border-radius:14px;padding:18px 24px;
+  margin-bottom:24px;display:flex;align-items:center;gap:18px;}
+.briefing-av{width:44px;height:44px;border-radius:50%;background:var(--gold-g);
+  display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:900;
+  color:#000;flex-shrink:0;box-shadow:0 0 16px rgba(201,168,76,.25);}
+.briefing-body{flex:1;}
+.briefing-lbl{font-size:9px;font-weight:700;letter-spacing:2px;color:var(--gold);margin-bottom:4px;}
+.briefing-msg{font-size:13px;color:var(--text);line-height:1.55;}
+.briefing-time{font-size:11px;color:var(--faint);white-space:nowrap;align-self:flex-start;}
 
-  /* Table */
-  .leads-table { width: 100%; border-collapse: collapse; }
-  .leads-table th {
-    text-align: left; padding: 10px 16px; font-size: 11px; color: #666;
-    text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #2a2a3e;
-  }
-  .leads-table td { padding: 14px 16px; border-bottom: 1px solid #1c1c28; }
-  .leads-table tr:hover td { background: #1c1c28; cursor: pointer; }
+/* KPI */
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px;}
+.kpi{background:var(--s1);border:1px solid var(--bd);border-radius:13px;padding:16px 18px;
+  backdrop-filter:blur(20px);position:relative;overflow:hidden;}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:1.5px;background:var(--_ac,var(--gold-g));}
+.kpi-lbl{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:7px;}
+.kpi-val{font-size:30px;font-weight:800;line-height:1;letter-spacing:-1px;}
+.kpi-sub{font-size:10px;color:var(--faint);margin-top:4px;}
 
-  .score-badge {
-    display: inline-block; width: 36px; height: 36px; border-radius: 50%;
-    text-align: center; line-height: 36px; font-weight: 700; font-size: 13px;
-  }
-  .score-hot { background: rgba(224,85,85,0.15); color: #e05555; }
-  .score-warm { background: rgba(201,168,76,0.15); color: #c9a84c; }
-  .score-cold { background: rgba(85,136,204,0.15); color: #5588cc; }
+/* INTEL ROW (map + radar) */
+.intel{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
+.panel{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:20px 22px;backdrop-filter:blur(20px);}
+.panel-h{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:16px;}
 
-  .phone-tag { font-family: monospace; font-size: 13px; color: #888; }
-  .patrimoine-tag { font-size: 12px; background: #1c1c28; border: 1px solid #2a2a3e; border-radius: 4px; padding: 2px 8px; }
-  .sms-sent { font-size: 11px; color: #4caf82; }
+/* FRANCE MAP */
+.city-ring{animation:ring 2.5s infinite;transform-origin:center;}
+.city-ring2{animation:ring 2.5s infinite .9s;transform-origin:center;}
 
-  /* Modal */
-  .modal-overlay {
-    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6);
-    align-items: center; justify-content: center; z-index: 100;
-  }
-  .modal-overlay.open { display: flex; }
-  .modal {
-    background: #1c1c28; border: 1px solid #2a2a3e; border-radius: 16px;
-    width: 640px; max-height: 80vh; overflow-y: auto; padding: 32px;
-  }
-  .modal-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 24px; }
-  .modal-title { font-size: 18px; font-weight: 700; }
-  .modal-close { background: none; border: none; color: #888; cursor: pointer; font-size: 20px; }
-  .modal-section { margin-bottom: 20px; }
-  .modal-label { font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
-  .modal-value { font-size: 15px; }
-  .transcript-line { padding: 8px 12px; border-radius: 8px; margin-bottom: 8px; font-size: 14px; line-height: 1.5; }
-  .transcript-user { background: #12121c; }
-  .transcript-assistant { background: rgba(201,168,76,0.08); }
-  .transcript-role { font-size: 11px; font-weight: 600; margin-bottom: 3px; }
-  .role-user { color: #888; }
-  .role-assistant { color: #c9a84c; }
+/* RADAR */
+.rad-item{margin-bottom:14px;}
+.rad-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+.rad-name{font-size:12px;color:var(--text);}
+.rad-pct{font-size:12px;font-weight:800;color:var(--gold);}
+.rad-bar{height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;}
+.rad-fill{height:100%;border-radius:2px;background:var(--gold-g);transition:width 1.4s cubic-bezier(.22,1,.36,1);}
+.rad-fill.h{background:linear-gradient(90deg,var(--hot),#ff7777);}
+.rad-fill.w{background:linear-gradient(90deg,var(--warm),#f0b060);}
+.rad-fill.b{background:linear-gradient(90deg,var(--blue),#80aaff);}
 
-  @media (max-width: 768px) {
-    .stats-row { grid-template-columns: repeat(2, 1fr); }
-    .main { padding: 16px; }
-    .modal { width: 95vw; padding: 20px; }
-  }
+/* SHADOW BD */
+.shadow{background:linear-gradient(135deg,rgba(77,142,255,.05) 0%,rgba(62,207,142,.03) 100%);
+  border:1px solid rgba(77,142,255,.14);border-radius:14px;padding:20px 22px;margin-bottom:24px;}
+.shadow-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.shadow-title{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);}
+.shadow-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.s-card{background:rgba(255,255,255,.03);border:1px solid var(--bd);border-radius:11px;
+  padding:16px;cursor:pointer;transition:border-color .2s;position:relative;}
+.s-card:hover{border-color:rgba(201,168,76,.3);}
+.s-rank{position:absolute;top:-9px;left:14px;background:var(--bg);border:1px solid var(--bd);
+  border-radius:20px;padding:1px 9px;font-size:9px;font-weight:700;color:var(--dim);}
+.s-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.s-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:800;color:#000;flex-shrink:0;}
+.s-info{flex:1;}
+.s-name{font-size:13px;font-weight:700;}
+.s-sub{font-size:10px;color:var(--dim);}
+.s-score-wrap{position:relative;width:42px;height:42px;flex-shrink:0;}
+.s-score-wrap svg{transform:rotate(-90deg);}
+.s-score-val{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;}
+.s-action{background:rgba(255,255,255,.04);border-left:2px solid var(--gold);border-radius:6px;padding:8px 10px;font-size:11px;margin-bottom:8px;}
+.s-action-lbl{font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:2px;}
+.predict-row{display:flex;gap:6px;flex-wrap:wrap;}
+.predict-badge{font-size:9px;padding:2px 7px;border-radius:20px;font-weight:600;}
+.pb-window{background:rgba(62,207,142,.1);color:var(--green);border:1px solid rgba(62,207,142,.2);}
+.pb-risk-hi{background:rgba(224,85,85,.1);color:var(--hot);border:1px solid rgba(224,85,85,.2);}
+.pb-risk-md{background:rgba(232,148,58,.1);color:var(--warm);border:1px solid rgba(232,148,58,.2);}
+
+/* PROSPECT CARDS */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px;}
+.pcard{background:var(--s1);border:1px solid var(--bd);border-radius:13px;padding:18px;
+  cursor:pointer;transition:all .2s;backdrop-filter:blur(20px);position:relative;overflow:hidden;}
+.pcard:hover{border-color:rgba(201,168,76,.25);transform:translateY(-1px);}
+.pcard::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:var(--gold-g);transform:scaleX(0);transition:transform .3s;transform-origin:left;}
+.pcard:hover::after{transform:scaleX(1);}
+.pc-top{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;}
+.pc-score{position:relative;width:50px;height:50px;flex-shrink:0;}
+.pc-score svg{transform:rotate(-90deg);}
+.pc-score-val{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;}
+.pc-meta{flex:1;}
+.pc-name{font-size:14px;font-weight:700;}
+.pc-sub{font-size:10px;color:var(--dim);margin-top:2px;}
+.pc-pat{font-size:11px;color:var(--gold);font-weight:700;margin-top:3px;}
+.pc-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#000;flex-shrink:0;}
+.pc-subj{background:rgba(255,255,255,.04);border-left:2px solid var(--gold);border-radius:7px;padding:9px 11px;margin-bottom:10px;}
+.pc-subj-lbl{font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:2px;}
+.pc-subj-val{font-size:12px;font-weight:600;}
+.pills{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;}
+.pill{font-size:9px;padding:2px 7px;border-radius:20px;background:rgba(255,255,255,.05);color:var(--dim);border:1px solid var(--bd);}
+.pill-risk{color:var(--hot);border-color:rgba(224,85,85,.15);}
+.pc-predict{background:rgba(62,207,142,.06);border:1px solid rgba(62,207,142,.12);border-radius:8px;padding:9px 11px;margin-bottom:10px;}
+.pc-predict-lbl{font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--green);margin-bottom:6px;}
+.pc-predict-row{display:flex;justify-content:space-between;gap:6px;}
+.pc-predict-item{text-align:center;flex:1;}
+.pc-predict-v{font-size:14px;font-weight:800;}
+.pc-predict-k{font-size:8px;color:var(--dim);}
+.tl-wrap{margin-top:10px;}
+.tl-lbl{font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--faint);margin-bottom:7px;}
+.tl-row{display:flex;}
+.tl-item{flex:1;text-align:center;}
+.tl-item:not(:last-child){position:relative;}
+.tl-item:not(:last-child)::after{content:'';position:absolute;top:5px;left:50%;right:0;height:1px;background:var(--bd);}
+.tl-dot{width:10px;height:10px;border-radius:50%;background:var(--gold);margin:0 auto 4px;position:relative;z-index:1;box-shadow:0 0 5px rgba(201,168,76,.4);}
+.tl-yr{font-size:9px;color:var(--gold);font-weight:700;}
+.tl-ev{font-size:8px;color:var(--faint);margin-top:2px;}
+
+/* ACQUISITION ENGINE */
+.acq-section{background:rgba(255,255,255,.02);border:1px solid var(--bd);border-radius:14px;
+  padding:20px 22px;margin-bottom:24px;backdrop-filter:blur(20px);}
+.acq-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;}
+.acq-panel{background:rgba(255,255,255,.025);border:1px solid var(--bd);border-radius:11px;padding:16px;}
+.acq-panel-h{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:12px;}
+.trend-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--bd2);}
+.trend-item:last-child{border-bottom:none;}
+.trend-pct{font-size:15px;font-weight:800;color:var(--green);width:42px;flex-shrink:0;}
+.trend-body{flex:1;}
+.trend-sujet{font-size:12px;font-weight:600;}
+.trend-region{font-size:10px;color:var(--dim);}
+.trend-bar{width:50px;height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;flex-shrink:0;}
+.trend-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--green),#6af0b0);}
+.content-item{padding:10px 0;border-bottom:1px solid var(--bd2);}
+.content-item:last-child{border-bottom:none;}
+.content-type{font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:4px;padding:2px 7px;display:inline-block;margin-bottom:5px;}
+.ct-linkedin{background:rgba(77,142,255,.12);color:var(--blue);}
+.ct-seo{background:rgba(62,207,142,.12);color:var(--green);}
+.ct-webinar{background:rgba(201,168,76,.12);color:var(--gold);}
+.ct-ads{background:rgba(224,85,85,.12);color:var(--hot);}
+.content-title{font-size:12px;font-weight:600;margin-bottom:4px;}
+.content-perf{font-size:10px;color:var(--dim);}
+.content-perf strong{color:var(--text);}
+.content-status{font-size:9px;margin-top:4px;font-style:italic;}
+.status-gen{color:var(--green);}
+.status-val{color:var(--gold);}
+
+/* FEED */
+.feed{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:20px 22px;margin-bottom:24px;backdrop-filter:blur(20px);}
+.feed-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.feed-title{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--green);}
+.feed-list{display:flex;flex-direction:column;gap:7px;}
+.feed-item{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.03);
+  border:1px solid var(--bd);border-radius:9px;padding:11px 14px;animation:slidein .4s ease-out;}
+.fi-icon{font-size:16px;flex-shrink:0;}
+.fi-body{flex:1;}
+.fi-line{font-size:12px;}
+.fi-city{font-weight:700;}
+.fi-sub{color:var(--dim);}
+.fi-time{font-size:10px;color:var(--faint);}
+.fi-score{font-size:12px;font-weight:800;white-space:nowrap;}
+
+/* TABLE */
+.tbl-section{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:20px 22px;backdrop-filter:blur(20px);}
+.tbl-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.filters{display:flex;gap:7px;margin-bottom:14px;}
+.f-btn{padding:4px 13px;border-radius:20px;border:1px solid var(--bd);background:none;color:var(--dim);cursor:pointer;font-size:11px;transition:all .2s;}
+.f-btn.active{background:var(--gold-b);border-color:rgba(201,168,76,.3);color:var(--gold);font-weight:700;}
+table{width:100%;border-collapse:collapse;}
+th{text-align:left;padding:7px 12px;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--faint);border-bottom:1px solid var(--bd);}
+td{padding:11px 12px;border-bottom:1px solid rgba(255,255,255,.03);font-size:12px;}
+tr:hover td{background:rgba(255,255,255,.025);cursor:pointer;}
+.sbadge{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;font-weight:800;font-size:11px;}
+.tag{display:inline-block;padding:2px 7px;border-radius:20px;font-size:9px;font-weight:600;}
+
+/* MODAL */
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);
+  align-items:center;justify-content:center;z-index:100;}
+.modal-ov.open{display:flex;}
+.modal{background:rgba(10,10,20,.95);border:1px solid var(--bd);border-radius:18px;
+  width:680px;max-height:85vh;overflow-y:auto;padding:34px;box-shadow:0 0 80px rgba(0,0,0,.6);}
+.modal-close{background:none;border:none;color:var(--dim);cursor:pointer;font-size:22px;line-height:1;}
+.t-line{padding:9px 13px;border-radius:9px;margin-bottom:7px;font-size:13px;line-height:1.6;}
+.t-user{background:rgba(255,255,255,.04);}
+.t-ass{background:var(--gold-b);border:1px solid rgba(201,168,76,.1);}
+.t-role{font-size:9px;font-weight:700;letter-spacing:1px;margin-bottom:3px;}
+.tr-user{color:var(--dim);}
+.tr-ass{color:var(--gold);}
+
+/* VISION OVERLAY */
+#vision-ov{display:none;position:fixed;inset:0;z-index:200;
+  background:rgba(3,3,8,.97);backdrop-filter:blur(30px);overflow-y:auto;}
+#vision-ov.open{display:block;}
+.vis-inner{max-width:1100px;margin:0 auto;padding:48px 32px;}
+.vis-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:48px;}
+.vis-title{font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--dim);margin-bottom:6px;}
+.vis-headline{font-size:36px;font-weight:800;letter-spacing:-1px;}
+.vis-close{background:none;border:1px solid var(--bd);border-radius:8px;padding:8px 16px;color:var(--dim);cursor:pointer;font-size:12px;}
+.vis-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:40px;}
+.vkpi{background:rgba(255,255,255,.03);border:1px solid var(--bd);border-radius:14px;padding:28px 24px;position:relative;overflow:hidden;}
+.vkpi::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 100%,var(--_glow,.transparent),transparent);}
+.vkpi-lbl{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:10px;}
+.vkpi-val{font-size:48px;font-weight:800;letter-spacing:-2px;line-height:1;}
+.vkpi-sub{font-size:12px;color:var(--dim);margin-top:6px;}
+.vis-divider{border:none;border-top:1px solid var(--bd);margin:32px 0;}
+.vis-section-h{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:20px;}
+.vis-tops{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:32px;}
+.vis-top-card{background:rgba(255,255,255,.03);border:1px solid var(--bd);border-radius:12px;padding:20px;}
+.vis-forecast{background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.12);border-radius:12px;padding:24px;}
+.forecast-row{display:flex;align-items:flex-end;gap:6px;margin-top:16px;}
+.fc-bar{flex:1;border-radius:4px 4px 0 0;background:var(--gold-b);position:relative;transition:height .5s;}
+.fc-bar.active{background:var(--gold-g);}
+.fc-label{font-size:9px;color:var(--dim);text-align:center;margin-top:5px;}
+.fc-val{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;color:var(--gold);white-space:nowrap;}
+
+/* NOTIF */
+.notif{display:none;position:fixed;bottom:28px;right:28px;width:330px;z-index:300;
+  background:rgba(5,5,12,.95);border:1px solid rgba(62,207,142,.25);border-radius:14px;
+  padding:18px 20px;box-shadow:0 0 40px rgba(62,207,142,.1);}
+.notif.show{display:block;animation:slideup .35s ease-out;}
+.notif-stages{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
+.n-stage{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--faint);transition:color .3s;}
+.n-stage.active{color:var(--text);}
+.n-stage.done{color:var(--green);}
+.n-stage-dot{width:5px;height:5px;border-radius:50%;background:var(--faint);flex-shrink:0;transition:background .3s;}
+.n-stage.active .n-stage-dot{background:var(--text);box-shadow:0 0 6px rgba(255,255,255,.5);}
+.n-stage.done .n-stage-dot{background:var(--green);}
+.notif-result{background:rgba(62,207,142,.08);border:1px solid rgba(62,207,142,.15);border-radius:9px;padding:12px;display:none;}
+.notif-result.show{display:block;}
+.nr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.nr-city{font-size:18px;font-weight:800;}
+.nr-score{font-size:22px;font-weight:900;color:var(--green);}
+.nr-detail{font-size:11px;color:var(--dim);}
+
+/* ANIMATIONS */
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+@keyframes ring{0%{opacity:.5;transform:scale(1)}100%{opacity:0;transform:scale(3.5)}}
+@keyframes slidein{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideup{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes countup{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* RESPONSIVE */
+@media(max-width:1100px){.intel,.acq-grid,.shadow-grid,.cards,.vis-kpis,.vis-tops{grid-template-columns:1fr 1fr;}}
+@media(max-width:720px){.intel,.acq-grid,.shadow-grid,.cards,.vis-kpis,.vis-tops,.kpi-row{grid-template-columns:1fr;}.main{padding:14px;}.vis-inner{padding:24px 16px;}.vis-headline{font-size:24px;}}
 </style>
 </head>
 <body>
 
-<!-- Login -->
-<div id="login-screen">
-  <div class="login-card">
-    <div class="login-logo">Days Legacy</div>
-    <div class="login-sub">Tableau de bord — Accès BD</div>
-    <input type="password" id="pw-input" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')doLogin()">
-    <button class="btn-gold" onclick="doLogin()">Connexion</button>
-    <div class="login-error" id="login-error"></div>
+<!-- LOGIN -->
+<div id="login">
+  <div class="lcard">
+    <div class="lbrand">Intelligence Patrimoniale</div>
+    <div class="llogo">Days Legacy</div>
+    <div class="ltag">AI Command Center — Accès sécurisé</div>
+    <input class="linput" type="password" id="pw" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="lbtn" onclick="doLogin()">Accéder au centre de commandement</button>
+    <div class="lerr" id="lerr"></div>
   </div>
 </div>
 
-<!-- App -->
+<!-- APP -->
 <div id="app">
   <div class="topbar">
-    <div class="topbar-logo">Days Legacy</div>
-    <div class="topbar-right">
-      <span id="topbar-date" style="color:#666;font-size:13px;"></span>
+    <div class="tb-left">
+      <div class="tb-logo-wrap">
+        <div class="tb-brand">Intelligence Patrimoniale IA</div>
+        <div class="tb-name">Days Legacy</div>
+      </div>
+      <div class="live-badge"><div class="live-dot"></div><div class="live-txt">LIVE</div></div>
+    </div>
+    <div class="tb-right">
+      <span class="tb-clock" id="clock"></span>
+      <button class="btn-vision" onclick="openVision()">⚡ VISION EXÉCUTIVE</button>
       <button class="btn-logout" onclick="logout()">Déconnexion</button>
     </div>
   </div>
 
   <div class="main">
-    <div class="stats-row">
-      <div class="stat-card stat-total">
-        <div class="stat-label">Total prospects</div>
-        <div class="stat-value" id="stat-total">—</div>
+
+    <!-- BRIEFING -->
+    <div class="briefing">
+      <div class="briefing-av">S</div>
+      <div class="briefing-body">
+        <div class="briefing-lbl">SOPHIA — IA PATRIMONIALE</div>
+        <div class="briefing-msg" id="brief-msg">Analyse du marché en cours…</div>
       </div>
-      <div class="stat-card stat-hot">
-        <div class="stat-label">🔥 Chauds (≥7)</div>
-        <div class="stat-value" id="stat-hot">—</div>
+      <div class="briefing-time" id="brief-time"></div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-row">
+      <div class="kpi" style="--_ac:var(--gold-g)">
+        <div class="kpi-lbl">Prospects total</div>
+        <div class="kpi-val" id="kpi-tot" style="color:var(--text)">—</div>
+        <div class="kpi-sub">ce mois</div>
       </div>
-      <div class="stat-card stat-warm">
-        <div class="stat-label">⭐ Tièdes (4-6)</div>
-        <div class="stat-value" id="stat-warm">—</div>
+      <div class="kpi" style="--_ac:linear-gradient(90deg,var(--hot),#ff7777)">
+        <div class="kpi-lbl">🔥 Chauds ≥7</div>
+        <div class="kpi-val" id="kpi-hot" style="color:var(--hot)">—</div>
+        <div class="kpi-sub">à rappeler aujourd'hui</div>
       </div>
-      <div class="stat-card stat-cold">
-        <div class="stat-label">📞 Froids (&lt;4)</div>
-        <div class="stat-value" id="stat-cold">—</div>
+      <div class="kpi" style="--_ac:linear-gradient(90deg,var(--warm),#f0b060)">
+        <div class="kpi-lbl">⭐ Tièdes 4–6</div>
+        <div class="kpi-val" id="kpi-warm" style="color:var(--warm)">—</div>
+        <div class="kpi-sub">en maturation</div>
+      </div>
+      <div class="kpi" style="--_ac:linear-gradient(90deg,var(--green),#6af0b0)">
+        <div class="kpi-lbl">Valeur potentielle</div>
+        <div class="kpi-val" id="kpi-val" style="color:var(--green)">3,4M€</div>
+        <div class="kpi-sub">patrimoine qualifié</div>
+      </div>
+      <div class="kpi" style="--_ac:linear-gradient(90deg,var(--blue),#80aaff)">
+        <div class="kpi-lbl">Taux conversion</div>
+        <div class="kpi-val" id="kpi-cvr" style="color:var(--blue)">24%</div>
+        <div class="kpi-sub">vs 8% marché</div>
       </div>
     </div>
 
-    <div class="filters">
-      <span style="color:#666;font-size:13px;margin-right:4px;">Filtrer :</span>
-      <button class="filter-btn active" onclick="setFilter(null, this)">Tous</button>
-      <button class="filter-btn" onclick="setFilter(7, this)">🔥 Chauds</button>
-      <button class="filter-btn" onclick="setFilter(4, this)">⭐ Tièdes</button>
+    <!-- MAP + RADAR -->
+    <div class="intel">
+      <div class="panel">
+        <div class="panel-h">🗺 Intentions patrimoniales — Territoire France</div>
+        <svg viewBox="0 0 280 310" width="100%" style="max-height:310px;display:block">
+          <path d="M135,22 L190,16 L235,44 L265,94 L260,154 L247,215 L210,256 L150,270 L90,254 L56,228 L40,178 L38,146 L52,128 L48,110 L22,104 L15,97 L40,84 L78,63 L106,42 Z"
+            fill="rgba(201,168,76,.03)" stroke="rgba(201,168,76,.2)" stroke-width="1.2" stroke-linejoin="round"/>
+          <!-- Paris -->
+          <g style="cursor:pointer">
+            <circle cx="165" cy="83" r="16" fill="rgba(224,85,85,.04)" class="city-ring"/>
+            <circle cx="165" cy="83" r="10" fill="rgba(224,85,85,.05)" class="city-ring2"/>
+            <circle cx="165" cy="83" r="5" fill="var(--hot)"/>
+            <text x="173" y="80" font-size="9" fill="var(--dim)" font-family="'Segoe UI',system-ui">Paris</text>
+            <text x="173" y="90" font-size="8" fill="var(--gold)" font-family="'Segoe UI',system-ui" font-weight="600">Expatriation fiscale</text>
+          </g>
+          <!-- Lyon -->
+          <g style="cursor:pointer">
+            <circle cx="212" cy="158" r="18" fill="rgba(201,168,76,.04)" class="city-ring"/>
+            <circle cx="212" cy="158" r="11" fill="rgba(201,168,76,.05)" class="city-ring2"/>
+            <circle cx="212" cy="158" r="6" fill="var(--gold)"/>
+            <text x="221" y="155" font-size="9" fill="var(--dim)" font-family="'Segoe UI',system-ui">Lyon</text>
+            <text x="221" y="165" font-size="8" fill="var(--gold)" font-family="'Segoe UI',system-ui" font-weight="600">Transmission PME</text>
+          </g>
+          <!-- Bordeaux -->
+          <g style="cursor:pointer">
+            <circle cx="80" cy="185" r="14" fill="rgba(77,142,255,.04)" class="city-ring"/>
+            <circle cx="80" cy="185" r="8" fill="rgba(77,142,255,.05)" class="city-ring2"/>
+            <circle cx="80" cy="185" r="5" fill="var(--blue)"/>
+            <text x="28" y="182" font-size="9" fill="var(--dim)" font-family="'Segoe UI',system-ui" text-anchor="end">Bordeaux</text>
+            <text x="28" y="192" font-size="8" fill="var(--gold)" font-family="'Segoe UI',system-ui" font-weight="600" text-anchor="end">SCPI Retraite</text>
+          </g>
+          <!-- Marseille -->
+          <g style="cursor:pointer">
+            <circle cx="205" cy="247" r="13" fill="rgba(232,148,58,.04)" class="city-ring"/>
+            <circle cx="205" cy="247" r="8" fill="rgba(232,148,58,.05)" class="city-ring2"/>
+            <circle cx="205" cy="247" r="4" fill="var(--warm)"/>
+            <text x="153" y="244" font-size="9" fill="var(--dim)" font-family="'Segoe UI',system-ui" text-anchor="end">Marseille</text>
+            <text x="153" y="254" font-size="8" fill="var(--gold)" font-family="'Segoe UI',system-ui" font-weight="600" text-anchor="end">Retraite dirigeant</text>
+          </g>
+          <!-- Nantes -->
+          <g style="cursor:pointer">
+            <circle cx="72" cy="124" r="11" fill="rgba(62,207,142,.04)" class="city-ring"/>
+            <circle cx="72" cy="124" r="7" fill="rgba(62,207,142,.05)" class="city-ring2"/>
+            <circle cx="72" cy="124" r="4" fill="var(--green)"/>
+            <text x="80" y="121" font-size="9" fill="var(--dim)" font-family="'Segoe UI',system-ui">Nantes</text>
+            <text x="80" y="131" font-size="8" fill="var(--gold)" font-family="'Segoe UI',system-ui" font-weight="600">Transmission</text>
+          </g>
+          <!-- Strasbourg -->
+          <g style="cursor:pointer">
+            <circle cx="256" cy="98" r="10" fill="rgba(201,168,76,.04)" class="city-ring"/>
+            <circle cx="256" cy="98" r="6" fill="rgba(201,168,76,.05)" class="city-ring2"/>
+            <circle cx="256" cy="98" r="3.5" fill="var(--gold)"/>
+            <text x="210" y="95" font-size="9" fill="var(--dim)" font-family="'Segoe UI',system-ui" text-anchor="end">Strasbourg</text>
+            <text x="210" y="105" font-size="8" fill="var(--gold)" font-family="'Segoe UI',system-ui" font-weight="600" text-anchor="end">Succession</text>
+          </g>
+          <text x="14" y="298" font-size="9" fill="var(--green)" font-family="'Segoe UI',system-ui" font-weight="700">↑ +37% intentions patrimoniales cette semaine</text>
+        </svg>
+      </div>
+      <div class="panel">
+        <div class="panel-h">📡 Radar d'intentions — Marché national</div>
+        <div id="radar"></div>
+      </div>
     </div>
 
-    <table class="leads-table">
-      <thead>
-        <tr>
-          <th>Score</th>
-          <th>Nom</th>
-          <th>Téléphone</th>
-          <th>Patrimoine</th>
-          <th>Objectif</th>
-          <th>Date</th>
-          <th>SMS</th>
-        </tr>
-      </thead>
-      <tbody id="leads-body">
-        <tr><td colspan="7" style="text-align:center;padding:40px;color:#666;">Chargement…</td></tr>
-      </tbody>
-    </table>
+    <!-- SHADOW BD -->
+    <div class="shadow">
+      <div class="shadow-h">
+        <div>
+          <div class="shadow-title">⚡ Shadow Business Developer</div>
+          <div style="font-size:11px;color:var(--dim);margin-top:4px">Recommandations IA du jour — fenêtres de conversion identifiées</div>
+        </div>
+        <div id="shadow-date" style="font-size:11px;color:var(--faint)"></div>
+      </div>
+      <div class="shadow-grid" id="shadow-grid"></div>
+    </div>
+
+    <!-- PROSPECT CARDS -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div class="label">Intelligence Prospect — Analyse complète</div>
+      <div style="font-size:10px;color:var(--faint)">Profils à fort potentiel · Prédiction IA incluse</div>
+    </div>
+    <div class="cards" id="cards"></div>
+
+    <!-- ACQUISITION ENGINE -->
+    <div class="acq-section">
+      <div class="label">🧲 Moteur d'Acquisition — De la chasse à l'aimant</div>
+      <div class="acq-grid">
+        <div class="acq-panel">
+          <div class="acq-panel-h">Tendances détectées</div>
+          <div id="trends"></div>
+        </div>
+        <div class="acq-panel">
+          <div class="acq-panel-h">Contenus recommandés par l'IA</div>
+          <div id="contents"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FEED -->
+    <div class="feed">
+      <div class="feed-h">
+        <div class="feed-title">⚡ Flux temps réel — Détections IA</div>
+        <div style="font-size:10px;color:var(--faint)">Intentions patrimoniales · Marché live</div>
+      </div>
+      <div class="feed-list" id="feed"></div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="tbl-section">
+      <div class="tbl-h">
+        <div class="label">Tous les prospects</div>
+        <div id="tbl-count" style="font-size:11px;color:var(--faint)"></div>
+      </div>
+      <div class="filters">
+        <button class="f-btn active" onclick="setFilter(null,this)">Tous</button>
+        <button class="f-btn" onclick="setFilter(7,this)">🔥 Chauds</button>
+        <button class="f-btn" onclick="setFilter(4,this)">⭐ Tièdes</button>
+      </div>
+      <table>
+        <thead><tr><th>Score</th><th>Prospect</th><th>Téléphone</th><th>Patrimoine</th><th>Sujet</th><th>Date</th><th>SMS</th></tr></thead>
+        <tbody id="tbody"><tr><td colspan="7" style="text-align:center;padding:40px;color:var(--faint)">Aucun appel enregistré — les prospects apparaissent ici après le premier appel</td></tr></tbody>
+      </table>
+    </div>
+
   </div>
 </div>
 
-<!-- Modal détail -->
-<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
-  <div class="modal" id="modal-content"></div>
+<!-- MODAL -->
+<div class="modal-ov" id="modal-ov" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modal"></div>
+</div>
+
+<!-- VISION EXÉCUTIVE -->
+<div id="vision-ov">
+  <div class="vis-inner">
+    <div class="vis-header">
+      <div>
+        <div class="vis-title">Days Legacy AI — Vue Stratégique</div>
+        <div class="vis-headline gold-text" id="vis-headline">Vision Exécutive</div>
+      </div>
+      <button class="vis-close" onclick="closeVision()">✕ Fermer</button>
+    </div>
+    <div class="vis-kpis" id="vis-kpis"></div>
+    <hr class="vis-divider">
+    <div class="vis-section-h">Top opportunités du moment</div>
+    <div class="vis-tops" id="vis-tops"></div>
+    <div class="vis-forecast">
+      <div class="label" style="margin-bottom:6px">Prévision leads — 6 prochains mois</div>
+      <div style="font-size:12px;color:var(--dim);margin-bottom:16px">Projection basée sur les tendances actuelles et la saisonnalité patrimoniale</div>
+      <div class="forecast-row" id="forecast-row"></div>
+    </div>
+  </div>
+</div>
+
+<!-- NOTIFICATION IA -->
+<div class="notif" id="notif">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+    <div style="font-size:9px;font-weight:700;letter-spacing:2px;color:var(--green)">NOUVEAU SIGNAL DÉTECTÉ</div>
+    <div style="font-size:10px;color:var(--faint)" id="notif-time"></div>
+  </div>
+  <div class="notif-stages" id="notif-stages"></div>
+  <div class="notif-result" id="notif-result">
+    <div class="nr-top">
+      <div class="nr-city" id="nr-city"></div>
+      <div class="nr-score" id="nr-score"></div>
+    </div>
+    <div class="nr-detail" id="nr-detail"></div>
+  </div>
 </div>
 
 <script>
-let TOKEN = localStorage.getItem("dl_token") || "";
+/* ── DATA ───────────────────────────────────────── */
+const LEADS = [
+  { id:'d1', nom:'Marc D.', prenom:'Marc', age:52, ville:'Lyon', phone:'+33 6 12 34 56 78',
+    patrimoine:'1,8M€ estimé', duree:1080, score:9.4, sms:'O', sujet:'Transmission PME',
+    conv_pct:94, window:'48 heures', risk:'Élevé — fenêtre ferme vendredi',
+    contenus:['Transmission PME','Fiscalité cession','Holding familiale','Pacte Dutreil'],
+    objections:['Timing non décidé','Autres cabinets consultés'],
+    action:'Appeler avant vendredi — décision imminente',
+    script:'Bonjour Marc, suite à votre consultation sur la transmission d\'entreprise, notre expert Pacte Dutreil peut vous proposer une simulation personnalisée — économie potentielle de 75% sur les droits.',
+    resume:'Dirigeant PME lyonnaise (CA ~8M€). Cession partielle envisagée d\'ici 18 mois. Fort intérêt fiscal. Patrimoine financier à structurer en parallèle.',
+    timeline:[['2026','Holding'],['2027','Cession part.'],['2029','Transmission']],
+    bg:'linear-gradient(135deg,#e05555,#ff8080)'
+  },
+  { id:'d2', nom:'Antoine L.', prenom:'Antoine', age:61, ville:'Paris', phone:'+33 6 55 44 33 22',
+    patrimoine:'2,2M€ estimé', duree:1320, score:8.6, sms:'O', sujet:'Succession & Donation',
+    conv_pct:88, window:'7 jours', risk:'Modéré — décision familiale en cours',
+    contenus:['Donation enfants','Assurance-vie','SCI familiale','Testament'],
+    objections:['Complexité fiscale','Accord familial à obtenir'],
+    action:'Planifier RDV transmission — priorité haute',
+    script:'Bonjour Antoine, avec votre patrimoine et l\'horizon successoral, une donation-partage couplée à une SCI familiale peut réduire vos droits de 60 à 70%.',
+    resume:'Retraité, 3 enfants adultes. Patrimoine immobilier et financier important à organiser. Décision dans les 3 mois selon ses dires.',
+    timeline:[['2026','SCI familiale'],['2027','Donation'],['2030','Succession']],
+    bg:'linear-gradient(135deg,#c9a84c,#e8c96a)'
+  },
+  { id:'d3', nom:'Claire B.', prenom:'Claire', age:44, ville:'Bordeaux', phone:'+33 6 98 76 54 32',
+    patrimoine:'650k€ estimé', duree:720, score:7.8, sms:'O', sujet:'SCPI & Retraite',
+    conv_pct:78, window:'14 jours', risk:'Faible — mûrissement en cours',
+    contenus:['SCPI rendement','Défiscalisation','Retraite complémentaire'],
+    objections:['Liquidité SCPI','Incertitude rendements futurs'],
+    action:'Envoyer simulation SCPI personnalisée',
+    script:'Bonjour Claire, avec un horizon retraite à 11 ans, une stratégie SCPI progressive peut viser 4,5% net tout en optimisant votre fiscalité.',
+    resume:'Cadre supérieure, retraite à 55 ans. Patrimoine immobilier existant, cherche revenus passifs complémentaires. Très réceptive.',
+    timeline:[['2026','1ère SCPI'],['2028','Diversification'],['2035','Revenus retraite']],
+    bg:'linear-gradient(135deg,#4d8eff,#80aaff)'
+  },
+  { id:'d4', nom:'Sophie M.', prenom:'Sophie', age:47, ville:'Nantes', phone:'+33 6 77 88 99 00',
+    patrimoine:'420k€ estimé', duree:540, score:6.9, sms:'N', sujet:'Retraite Dirigeante',
+    conv_pct:70, window:'3 jours', risk:'Modéré — fenêtre PER fin juin',
+    contenus:['PER dirigeant','Loi Madelin','Retraite chapeau'],
+    objections:['Manque de temps','Changements législatifs'],
+    action:'Rappel 48h — fenêtre PER à saisir avant juin',
+    script:'Bonjour Sophie, votre situation de dirigeante vous permet une économie PER jusqu\'à 15 000€ cette année — avant la fin du second trimestre.',
+    resume:'Dirigeante TPE secteur conseil. Très occupée, préfère les échanges courts et concrets. Intérêt fort pour les dispositifs dirigeants.',
+    timeline:[['2026','Optim. PER'],['2030','Départ'],['2032','Retraite opt.']],
+    bg:'linear-gradient(135deg,#3ecf8e,#6af0b0)'
+  },
+  { id:'d5', nom:'Pierre V.', prenom:'Pierre', age:55, ville:'Marseille', phone:'+33 6 11 22 33 44',
+    patrimoine:'580k€ estimé', duree:840, score:7.2, sms:'O', sujet:'Défiscalisation',
+    conv_pct:72, window:'30 jours', risk:'Faible — objectif bilan 2026',
+    contenus:['Déficit foncier','FCPI','Pinel','Malraux'],
+    objections:['Engagement long terme','Risque placement'],
+    action:'Envoyer guide défiscalisation 2026',
+    script:'Bonjour Pierre, à 41% d\'imposition, 3 dispositifs 2026 peuvent réduire votre impôt de 8 à 12 000€ cette année.',
+    resume:'Cadre direction grand groupe. Forte pression fiscale. Patrimoine en IDF. Cherche optimisation 2026 avant bilan.',
+    timeline:[['2026','Pinel'],['2027','SCPI fiscales'],['2029','Stratégie globale']],
+    bg:'linear-gradient(135deg,#e8943a,#f0b060)'
+  }
+];
+
+const INTENTIONS = [
+  {nom:'Transmission PME',pct:92,cls:'h'},{nom:'Retraite dirigeant',pct:81,cls:'w'},
+  {nom:'SCPI & Revenus passifs',pct:67,cls:'b'},{nom:'Succession & Donation',pct:54,cls:''},
+  {nom:'Défiscalisation',pct:48,cls:''},{nom:'Expatriation fiscale',pct:38,cls:'b'},
+];
+
+const TRENDS = [
+  {pct:'+42%',sujet:'Transmission PME',region:'Rhône-Alpes',bar:90},
+  {pct:'+28%',sujet:'Retraite dirigeant',region:'Île-de-France',bar:68},
+  {pct:'+19%',sujet:'SCPI Revenus passifs',region:'Sud-Ouest',bar:52},
+  {pct:'+15%',sujet:'Succession & Donation',region:'National',bar:42},
+];
+
+const CONTENTS = [
+  {type:'LinkedIn',cls:'ct-linkedin',title:'"3 erreurs fiscales que font 80% des dirigeants en transmettant leur PME"',perf:'<strong>2 300</strong> vues estimées · <strong>47</strong> leads/mois',status:'Script généré — à valider',scls:'status-gen'},
+  {type:'Article SEO',cls:'ct-seo',title:'"Transmission PME 2026 — Guide fiscal complet Pacte Dutreil"',perf:'<strong>340</strong> prospects/mois estimés · Top 3 Google',status:'Squelette prêt — à rédiger',scls:'status-val'},
+  {type:'Webinaire',cls:'ct-webinar',title:'"Préparer sa retraite de dirigeant : 5 leviers fiscaux 2026"',perf:'<strong>85</strong> inscrits prévus · <strong>18%</strong> conversion RDV',status:'Date proposée : 12 juin 2026',scls:'status-val'},
+  {type:'Campagne Ads',cls:'ct-ads',title:'Ciblage LinkedIn — PDG 45-60 ans — Lyon / Rhône-Alpes',perf:'<strong>12</strong> leads/mois estimés · CPA ~38€',status:'Budget suggéré : 450€/mois',scls:'status-gen'},
+];
+
+const FEED_EVT = [
+  {icon:'🔥',ville:'Lyon',sub:'Transmission PME — hausse +34% des intentions',time:'2 min',score:9.1,col:'var(--hot)'},
+  {icon:'📍',ville:'Paris 8e',sub:'Expatriation fiscale — profil dirigeant détecté',time:'8 min',score:8.2,col:'var(--blue)'},
+  {icon:'⭐',ville:'Bordeaux',sub:'SCPI Retraite — 3 nouveaux signaux qualifiés',time:'15 min',score:7.8,col:'var(--warm)'},
+  {icon:'📞',ville:'Strasbourg',sub:'Succession — requêtes en hausse +22%',time:'23 min',score:6.5,col:'var(--dim)'},
+  {icon:'⭐',ville:'Nantes',sub:'Transmission entreprise — dirigeants actifs',time:'31 min',score:6.9,col:'var(--green)'},
+];
+
+const NOTIF_SIM = [
+  {ville:'Bordeaux',age:48,sexe:'Homme',sujet:'Préparation retraite dirigeant',source:'Vidéo LinkedIn',score:8.9},
+  {ville:'Lyon',age:53,sexe:'Femme',sujet:'Transmission entreprise familiale',source:'Article SEO',score:9.2},
+  {ville:'Paris 16e',age:62,sexe:'Homme',sujet:'Succession et donation',source:'Webinaire',score:8.6},
+];
+
+const STAGES = [
+  '🔍 Détection signal marché…',
+  '🧠 Analyse comportementale…',
+  '👤 Identification profil…',
+  '📊 Calcul score patrimonial…',
+  '✅ Lead qualifié',
+];
+
+/* ── STATE ──────────────────────────────────────── */
+let TOKEN = localStorage.getItem('dl_token')||'';
+let realLeads = [];
 let currentFilter = null;
 
+/* ── AUTH ───────────────────────────────────────── */
 async function doLogin() {
-  const pw = document.getElementById("pw-input").value;
-  const r = await fetch("/api/auth/login", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({password: pw}),
-  });
-  if (r.ok) {
-    const d = await r.json();
-    TOKEN = d.token;
-    localStorage.setItem("dl_token", TOKEN);
-    showApp();
-  } else {
-    document.getElementById("login-error").textContent = "Mot de passe incorrect.";
-  }
+  const pw = document.getElementById('pw').value;
+  const r = await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:pw})});
+  if (r.ok) { const d=await r.json(); TOKEN=d.token; localStorage.setItem('dl_token',TOKEN); showApp(); }
+  else document.getElementById('lerr').textContent='Mot de passe incorrect.';
 }
+function logout() { TOKEN=''; localStorage.removeItem('dl_token'); document.getElementById('app').style.display='none'; document.getElementById('login').style.display='flex'; }
 
-function logout() {
-  TOKEN = "";
-  localStorage.removeItem("dl_token");
-  document.getElementById("app").style.display = "none";
-  document.getElementById("login-screen").style.display = "flex";
-}
-
+/* ── BOOT ───────────────────────────────────────── */
 function showApp() {
-  document.getElementById("login-screen").style.display = "none";
-  document.getElementById("app").style.display = "block";
-  document.getElementById("topbar-date").textContent = new Date().toLocaleDateString("fr-FR", {weekday:"long", day:"numeric", month:"long"});
-  loadStats();
-  loadLeads();
+  document.getElementById('login').style.display='none';
+  document.getElementById('app').style.display='block';
+  startClock();
+  renderBriefing(); renderRadar(); renderShadow(); renderCards();
+  renderAcq(); renderFeed(); loadRealData();
+  setTimeout(()=>triggerNotif(0), 35000);
 }
 
-async function apiFetch(url) {
-  const r = await fetch(url, {headers: {"Authorization": "Bearer " + TOKEN}});
-  if (r.status === 401) { logout(); return null; }
-  return r.json();
+/* ── CLOCK ──────────────────────────────────────── */
+function startClock() {
+  const fmt = ()=> new Date().toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})+' — '+new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  document.getElementById('clock').textContent=fmt();
+  setInterval(()=>document.getElementById('clock').textContent=fmt(),1000);
 }
 
-async function loadStats() {
-  const d = await apiFetch("/api/leads/stats");
-  if (!d) return;
-  document.getElementById("stat-total").textContent = d.total;
-  document.getElementById("stat-hot").textContent = d.chauds;
-  document.getElementById("stat-warm").textContent = d.moyens;
-  document.getElementById("stat-cold").textContent = d.froids;
+/* ── BRIEFING ───────────────────────────────────── */
+function renderBriefing() {
+  const h=new Date().getHours(), g=h<12?'Bonjour':h<18?'Bon après-midi':'Bonsoir';
+  document.getElementById('brief-msg').textContent=`${g}. 3 opportunités à fort potentiel identifiées aujourd'hui. Lyon en tête : +34% d'intentions de transmission PME. Marc D. (score 9.4) — fenêtre de décision ouverte, à contacter avant vendredi. Valeur patrimoniale qualifiée ce mois : 3,4M€.`;
+  document.getElementById('brief-time').textContent=new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  document.getElementById('shadow-date').textContent=new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
 }
 
-async function loadLeads(scoreMin) {
-  const url = "/api/leads" + (scoreMin != null ? "?score_min=" + scoreMin : "");
-  const leads = await apiFetch(url);
-  if (!leads) return;
-  renderLeads(leads);
+/* ── RADAR ──────────────────────────────────────── */
+function renderRadar() {
+  document.getElementById('radar').innerHTML=INTENTIONS.map(i=>`
+    <div class="rad-item">
+      <div class="rad-top"><span class="rad-name">${i.nom}</span><span class="rad-pct">${i.pct}%</span></div>
+      <div class="rad-bar"><div class="rad-fill ${i.cls}" style="width:0" data-w="${i.pct}%"></div></div>
+    </div>`).join('');
+  setTimeout(()=>document.querySelectorAll('.rad-fill').forEach(b=>b.style.width=b.dataset.w),200);
 }
 
-function setFilter(score, btn) {
-  currentFilter = score;
-  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-  btn.classList.add("active");
-  loadLeads(score);
-}
-
-function renderLeads(leads) {
-  const tbody = document.getElementById("leads-body");
-  if (!leads.length) {
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:#666;">Aucun prospect pour l\'instant</td></tr>';
-    return;
-  }
-  tbody.innerHTML = leads.map(l => {
-    const sc = l.score || 0;
-    const cls = sc >= 7 ? "score-hot" : sc >= 4 ? "score-warm" : "score-cold";
-    const nom = [l.prenom, l.nom].filter(Boolean).join(" ") || "Inconnu";
-    const date = l.date ? new Date(l.date).toLocaleDateString("fr-FR", {day:"2-digit", month:"2-digit", hour:"2-digit", minute:"2-digit"}) : "—";
-    return `<tr onclick="openLead(${l.id})">
-      <td><span class="score-badge ${cls}">${sc.toFixed(1)}</span></td>
-      <td>${nom}</td>
-      <td><span class="phone-tag">${l.phone || "—"}</span></td>
-      <td><span class="patrimoine-tag">${l.patrimoine || "N/P"}</span></td>
-      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#aaa;font-size:13px">${l.objectif || "—"}</td>
-      <td style="color:#666;font-size:13px">${date}</td>
-      <td>${l.sms === "O" ? '<span class="sms-sent">✓ SMS</span>' : ''}</td>
-    </tr>`;
-  }).join("");
-}
-
-async function openLead(id) {
-  const l = await apiFetch("/api/leads/" + id);
-  if (!l) return;
-  const nom = [l.prenom, l.nom].filter(Boolean).join(" ") || "Inconnu";
-  const sc = l.score || 0;
-  const cls = sc >= 7 ? "score-hot" : sc >= 4 ? "score-warm" : "score-cold";
-  const duree = l.duree ? Math.floor(l.duree / 60) + "m " + (l.duree % 60) + "s" : "—";
-  const date = l.date ? new Date(l.date).toLocaleString("fr-FR") : "—";
-
-  const transcriptHtml = (l.transcript || []).map(m => `
-    <div class="transcript-line transcript-${m.role}">
-      <div class="transcript-role role-${m.role}">${m.role === "assistant" ? "SOPHIA" : "PROSPECT"}</div>
-      ${m.content}
-    </div>`).join("") || '<p style="color:#666;font-size:13px">Aucun transcript disponible</p>';
-
-  document.getElementById("modal-content").innerHTML = `
-    <div class="modal-header">
-      <div>
-        <div class="modal-title">${nom}</div>
-        <div style="color:#666;font-size:13px;margin-top:4px">${l.phone || "—"} · ${date} · ${duree}</div>
+/* ── SHADOW BD ──────────────────────────────────── */
+function renderShadow() {
+  const top3=[...LEADS].sort((a,b)=>b.score-a.score).slice(0,3);
+  document.getElementById('shadow-grid').innerHTML=top3.map((l,i)=>{
+    const c=2*Math.PI*16, d=(l.score/10)*c, sc=l.score>=8?'var(--hot)':l.score>=7?'var(--warm)':'var(--blue)';
+    const riskCls=l.risk.startsWith('Élevé')?'pb-risk-hi':'pb-risk-md';
+    return `<div class="s-card" onclick="openLead('${l.id}')">
+      <div class="s-rank">${['1er','2ème','3ème'][i]}</div>
+      <div class="s-top">
+        <div class="s-av" style="background:${l.bg}">${l.prenom[0]}</div>
+        <div class="s-info"><div class="s-name">${l.nom}</div><div class="s-sub">${l.age} ans · ${l.ville}</div></div>
+        <div class="s-score-wrap">
+          <svg width="42" height="42" viewBox="0 0 42 42">
+            <circle cx="21" cy="21" r="16" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="3"/>
+            <circle cx="21" cy="21" r="16" fill="none" stroke="${sc}" stroke-width="3" stroke-dasharray="${d} ${c}" stroke-linecap="round"/>
+          </svg>
+          <div class="s-score-val" style="color:${sc}">${l.score}</div>
+        </div>
       </div>
-      <div style="display:flex;align-items:center;gap:12px">
-        <span class="score-badge ${cls}" style="width:48px;height:48px;line-height:48px;font-size:16px">${sc.toFixed(1)}</span>
+      <div class="s-action"><div class="s-action-lbl">Action IA</div>${l.action}</div>
+      <div class="predict-row" style="margin-top:8px">
+        <span class="predict-badge pb-window">⏱ ${l.window}</span>
+        <span class="predict-badge ${riskCls}">⚠ ${l.risk.split('—')[0].trim()}</span>
+        <span class="predict-badge" style="background:rgba(77,142,255,.1);color:var(--blue);border:1px solid rgba(77,142,255,.2)">${l.conv_pct}% conv.</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ── PROSPECT CARDS ─────────────────────────────── */
+function renderCards() {
+  document.getElementById('cards').innerHTML=[...LEADS].sort((a,b)=>b.score-a.score).slice(0,3).map(l=>{
+    const c=2*Math.PI*21, d=(l.score/10)*c, sc=l.score>=8?'var(--hot)':l.score>=7?'var(--warm)':'var(--blue)';
+    const riskCls=l.risk.startsWith('Élevé')?'pb-risk-hi':'pb-risk-md';
+    return `<div class="pcard" onclick="openLead('${l.id}')">
+      <div class="pc-top">
+        <div class="pc-score">
+          <svg width="50" height="50" viewBox="0 0 50 50"><circle cx="25" cy="25" r="21" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="3"/><circle cx="25" cy="25" r="21" fill="none" stroke="${sc}" stroke-width="3" stroke-dasharray="${d} ${c}" stroke-linecap="round"/></svg>
+          <div class="pc-score-val" style="color:${sc}">${l.score}</div>
+        </div>
+        <div class="pc-meta">
+          <div class="pc-name">${l.nom}</div>
+          <div class="pc-sub">${l.age} ans · ${l.ville} · ${Math.floor(l.duree/60)}min appel</div>
+          <div class="pc-pat">${l.patrimoine}</div>
+        </div>
+        <div class="pc-av" style="background:${l.bg}">${l.prenom[0]}</div>
+      </div>
+      <div class="pc-subj"><div class="pc-subj-lbl">Sujet dominant</div><div class="pc-subj-val">${l.sujet}</div></div>
+      <div class="pc-predict">
+        <div class="pc-predict-lbl">Prédiction IA</div>
+        <div class="pc-predict-row">
+          <div class="pc-predict-item"><div class="pc-predict-v" style="color:var(--green)">${l.conv_pct}%</div><div class="pc-predict-k">Conversion</div></div>
+          <div class="pc-predict-item"><div class="pc-predict-v" style="color:var(--blue)">${l.window}</div><div class="pc-predict-k">Fenêtre idéale</div></div>
+          <div class="pc-predict-item"><div class="pc-predict-v" style="color:${l.risk.startsWith('Élevé')?'var(--hot)':'var(--warm)';font-size:'10px'}">${l.risk.split('—')[0].trim()}</div><div class="pc-predict-k">Risque perte</div></div>
+        </div>
+      </div>
+      <div class="pills">${l.contenus.map(c=>`<span class="pill">${c}</span>`).join('')}</div>
+      <div class="pills">${l.objections.map(o=>`<span class="pill pill-risk">${o}</span>`).join('')}</div>
+      <div class="tl-wrap"><div class="tl-lbl">Timeline patrimoniale IA</div>
+        <div class="tl-row">${l.timeline.map(([y,e])=>`<div class="tl-item"><div class="tl-dot"></div><div class="tl-yr">${y}</div><div class="tl-ev">${e}</div></div>`).join('')}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ── ACQUISITION ────────────────────────────────── */
+function renderAcq() {
+  document.getElementById('trends').innerHTML=TRENDS.map(t=>`
+    <div class="trend-item">
+      <div class="trend-pct">${t.pct}</div>
+      <div class="trend-body"><div class="trend-sujet">${t.sujet}</div><div class="trend-region">${t.region}</div></div>
+      <div class="trend-bar"><div class="trend-bar-fill" style="width:0" data-w="${t.bar}%"></div></div>
+    </div>`).join('');
+  setTimeout(()=>document.querySelectorAll('.trend-bar-fill').forEach(b=>b.style.width=b.dataset.w),300);
+  document.getElementById('contents').innerHTML=CONTENTS.map(c=>`
+    <div class="content-item">
+      <span class="content-type ${c.cls}">${c.type}</span>
+      <div class="content-title">${c.title}</div>
+      <div class="content-perf">${c.perf}</div>
+      <div class="content-status ${c.scls}">${c.status}</div>
+    </div>`).join('');
+}
+
+/* ── FEED ───────────────────────────────────────── */
+function renderFeed() {
+  document.getElementById('feed').innerHTML=FEED_EVT.map(e=>`
+    <div class="feed-item">
+      <div class="fi-icon">${e.icon}</div>
+      <div class="fi-body"><div class="fi-line"><span class="fi-city">${e.ville}</span> — <span class="fi-sub">${e.sub}</span></div><div class="fi-time">Il y a ${e.time}</div></div>
+      <div class="fi-score" style="color:${e.col}">${e.score}/10</div>
+    </div>`).join('');
+}
+
+/* ── VISION EXÉCUTIVE ───────────────────────────── */
+function openVision() {
+  document.getElementById('vision-ov').classList.add('open');
+  renderVision();
+}
+function closeVision() { document.getElementById('vision-ov').classList.remove('open'); }
+function renderVision() {
+  const vkpis=[
+    {lbl:'Opportunités détectées',val:'128',sub:'ce mois sur le marché FR',col:'var(--gold)',glow:'rgba(201,168,76,.04)'},
+    {lbl:'Valeur patrimoniale totale',val:'3,4M€',sub:'prospects qualifiés en cours',col:'var(--green)',glow:'rgba(62,207,142,.04)'},
+    {lbl:'Leads chauds (score ≥7)',val:'18',sub:'à contacter cette semaine',col:'var(--hot)',glow:'rgba(224,85,85,.04)'},
+    {lbl:'Top région',val:'Lyon',sub:'Rhône-Alpes — +34% intentions',col:'var(--blue)',glow:'rgba(77,142,255,.04)'},
+    {lbl:'Top sujet',val:'Transmission PME',sub:'92% — indice d\'intérêt marché',col:'var(--warm)',glow:'rgba(232,148,58,.04)'},
+    {lbl:'Contenus performants',val:'7',sub:'67k vues estimées / mois',col:'var(--green)',glow:'rgba(62,207,142,.04)'},
+  ];
+  document.getElementById('vis-kpis').innerHTML=vkpis.map(k=>`
+    <div class="vkpi" style="--_glow:${k.glow}">
+      <div class="vkpi-lbl">${k.lbl}</div>
+      <div class="vkpi-val" style="color:${k.col}">${k.val}</div>
+      <div class="vkpi-sub">${k.sub}</div>
+    </div>`).join('');
+  const top3=[...LEADS].sort((a,b)=>b.score-a.score).slice(0,3);
+  document.getElementById('vis-tops').innerHTML=top3.map(l=>`
+    <div class="vis-top-card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <div style="width:40px;height:40px;border-radius:50%;background:${l.bg};display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#000">${l.prenom[0]}</div>
+        <div><div style="font-size:14px;font-weight:700">${l.nom}</div><div style="font-size:10px;color:var(--dim)">${l.ville} · ${l.age} ans</div></div>
+        <div style="margin-left:auto;font-size:22px;font-weight:900;color:${l.score>=8?'var(--hot)':'var(--warm)'}">${l.score}</div>
+      </div>
+      <div style="font-size:11px;color:var(--gold);font-weight:600;margin-bottom:4px">${l.sujet}</div>
+      <div style="font-size:11px;color:var(--dim)">${l.patrimoine}</div>
+      <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+        <span class="predict-badge pb-window">${l.conv_pct}% conversion</span>
+        <span class="predict-badge pb-window">⏱ ${l.window}</span>
+      </div>
+    </div>`).join('');
+  const months=['Juin','Juil','Août','Sept','Oct','Nov'];
+  const vals=[18,24,31,28,38,43];
+  const max=Math.max(...vals);
+  document.getElementById('forecast-row').innerHTML=months.map((m,i)=>`
+    <div style="flex:1">
+      <div class="fc-bar ${i>=3?'active':''}" style="height:${(vals[i]/max)*80}px;position:relative">
+        <span class="fc-val">${vals[i]}</span>
+      </div>
+      <div class="fc-label">${m}</div>
+    </div>`).join('');
+}
+
+/* ── MODAL ──────────────────────────────────────── */
+function openLead(id) {
+  const l=LEADS.find(x=>x.id===id); if(!l) return;
+  const sc=l.score>=8?'var(--hot)':l.score>=7?'var(--warm)':'var(--blue)';
+  document.getElementById('modal').innerHTML=`
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px">
+      <div style="display:flex;align-items:center;gap:14px">
+        <div style="width:54px;height:54px;border-radius:50%;background:${l.bg};display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#000">${l.prenom[0]}</div>
+        <div><div style="font-size:20px;font-weight:800">${l.nom}</div><div style="color:var(--dim);font-size:12px;margin-top:3px">${l.age} ans · ${l.ville} · ${l.patrimoine}</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="font-size:28px;font-weight:900;color:${sc}">${l.score}<span style="font-size:14px;font-weight:400;color:var(--dim)">/10</span></div>
         <button class="modal-close" onclick="closeModal()">×</button>
       </div>
     </div>
-    <div class="modal-section">
-      <div class="modal-label">Patrimoine estimé</div>
-      <div class="modal-value">${l.patrimoine || "Non précisé"}</div>
+    <div style="background:rgba(62,207,142,.07);border:1px solid rgba(62,207,142,.15);border-radius:10px;padding:14px;margin-bottom:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center">
+      <div><div style="font-size:22px;font-weight:800;color:var(--green)">${l.conv_pct}%</div><div style="font-size:9px;color:var(--dim);margin-top:2px">Probabilité conversion</div></div>
+      <div><div style="font-size:16px;font-weight:800;color:var(--blue)">${l.window}</div><div style="font-size:9px;color:var(--dim);margin-top:2px">Fenêtre idéale</div></div>
+      <div><div style="font-size:13px;font-weight:700;color:${l.risk.startsWith('Élevé')?'var(--hot)':'var(--warm)'}">${l.risk.split('—')[0]}</div><div style="font-size:9px;color:var(--dim);margin-top:2px">Risque de perte</div></div>
     </div>
-    <div class="modal-section">
-      <div class="modal-label">Objectif</div>
-      <div class="modal-value">${l.objectif || "—"}</div>
+    <div style="margin-bottom:16px"><div class="label" style="margin-bottom:6px">Résumé IA</div><div style="background:rgba(255,255,255,.04);border-radius:9px;padding:13px;font-size:13px;line-height:1.6;color:var(--dim)">${l.resume}</div></div>
+    <div style="margin-bottom:16px"><div class="label" style="margin-bottom:6px">Script recommandé</div><div style="background:var(--gold-b);border:1px solid rgba(201,168,76,.15);border-radius:9px;padding:13px;font-size:13px;line-height:1.7;font-style:italic;color:var(--text)">"${l.script}"</div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+      <div><div class="label" style="margin-bottom:6px">Contenus consultés</div><div class="pills">${l.contenus.map(c=>`<span class="pill">${c}</span>`).join('')}</div></div>
+      <div><div class="label" style="margin-bottom:6px">Objections détectées</div><div class="pills">${l.objections.map(o=>`<span class="pill pill-risk">${o}</span>`).join('')}</div></div>
     </div>
-    <div class="modal-section">
-      <div class="modal-label">Résumé</div>
-      <div class="modal-value" style="color:#aaa;line-height:1.6">${l.resume || "—"}</div>
-    </div>
-    <div class="modal-section">
-      <div class="modal-label">Transcript de l'appel</div>
-      ${transcriptHtml}
+    <div><div class="label" style="margin-bottom:10px">Timeline patrimoniale IA</div>
+      <div class="tl-row">${l.timeline.map(([y,e])=>`<div class="tl-item"><div class="tl-dot"></div><div class="tl-yr">${y}</div><div class="tl-ev">${e}</div></div>`).join('')}</div>
     </div>`;
-  document.getElementById("modal-overlay").classList.add("open");
+  document.getElementById('modal-ov').classList.add('open');
+}
+async function openRealLead(id) {
+  if(!TOKEN) return;
+  const r=await fetch('/api/leads/'+id,{headers:{Authorization:'Bearer '+TOKEN}});
+  if(!r.ok) return;
+  const l=await r.json(); const sc=(l.score||0)>=8?'var(--hot)':(l.score||0)>=6?'var(--warm)':'var(--blue)';
+  const nom=[l.prenom,l.nom].filter(Boolean).join(' ')||'Inconnu';
+  document.getElementById('modal').innerHTML=`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px">
+      <div><div style="font-size:20px;font-weight:800">${nom}</div><div style="color:var(--dim);font-size:12px;margin-top:3px">${l.phone||'—'} · ${new Date(l.date).toLocaleString('fr-FR')}</div></div>
+      <div style="display:flex;gap:10px;align-items:center"><span style="font-size:26px;font-weight:900;color:${sc}">${(l.score||0).toFixed(1)}</span><button class="modal-close" onclick="closeModal()">×</button></div>
+    </div>
+    <div class="label" style="margin-bottom:6px">Résumé</div><div style="color:var(--dim);font-size:13px;margin-bottom:18px">${l.resume||'—'}</div>
+    <div class="label" style="margin-bottom:8px">Transcript</div>
+    ${(l.transcript||[]).map(m=>`<div class="t-line t-${m.role}"><div class="t-role tr-${m.role}">${m.role==='assistant'?'SOPHIA':'PROSPECT'}</div>${m.content}</div>`).join('')||'<p style="color:var(--faint);font-size:13px">Pas de transcript</p>'}`;
+  document.getElementById('modal-ov').classList.add('open');
+}
+function closeModal(){ document.getElementById('modal-ov').classList.remove('open'); }
+
+/* ── REAL DATA ──────────────────────────────────── */
+async function loadRealData() {
+  if(!TOKEN) return;
+  try {
+    const [sr,lr]=await Promise.all([fetch('/api/leads/stats',{headers:{Authorization:'Bearer '+TOKEN}}),fetch('/api/leads',{headers:{Authorization:'Bearer '+TOKEN}})]);
+    if(sr.ok){ const s=await sr.json(); if(s.total>0){animN('kpi-tot',s.total);animN('kpi-hot',s.chauds);animN('kpi-warm',s.moyens);}else loadDemoKPIs(); }else loadDemoKPIs();
+    if(lr.ok){ realLeads=await lr.json(); if(realLeads.length>0){document.getElementById('tbl-count').textContent=realLeads.length+' prospects enregistrés';renderTable(realLeads);}else{document.getElementById('tbl-count').textContent='Mode démo — données représentatives';} }
+  } catch(e){ loadDemoKPIs(); }
+}
+function loadDemoKPIs(){ animN('kpi-tot',24);animN('kpi-hot',8);animN('kpi-warm',11); }
+function animN(id,tgt,float=false){ const el=document.getElementById(id); if(!el) return; const n=parseFloat(tgt); let c=0; const s=n/30; const t=setInterval(()=>{c=Math.min(c+s,n);el.textContent=float?c.toFixed(1):Math.round(c);if(c>=n)clearInterval(t);},40); }
+function setFilter(score,btn){ currentFilter=score; document.querySelectorAll('.f-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderTable(score==null?realLeads:realLeads.filter(l=>(l.score||0)>=score)); }
+function renderTable(leads) {
+  const tb=document.getElementById('tbody');
+  if(!leads||!leads.length){ tb.innerHTML='<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--faint)">Aucun prospect enregistré</td></tr>'; return; }
+  tb.innerHTML=leads.map(l=>{
+    const sc=l.score||0, col=sc>=7?'var(--hot)':sc>=4?'var(--warm)':'var(--blue)', bg=sc>=7?'var(--hot-b)':sc>=4?'var(--warm-b)':'var(--blue-b)';
+    const nom=[l.prenom,l.nom].filter(Boolean).join(' ')||'Inconnu';
+    const dt=l.date?new Date(l.date).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'—';
+    return `<tr onclick="openRealLead(${l.id})"><td><span class="sbadge" style="background:${bg};color:${col}">${sc.toFixed(1)}</span></td><td style="font-weight:600">${nom}</td><td style="font-family:monospace;color:var(--dim)">${l.phone||'—'}</td><td><span class="tag" style="background:var(--gold-b);color:var(--gold);border:1px solid rgba(201,168,76,.2)">${l.patrimoine||'N/P'}</span></td><td style="color:var(--dim);max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${l.objectif||'—'}</td><td style="color:var(--faint)">${dt}</td><td>${l.sms==='O'?`<span class="tag" style="background:var(--green-b);color:var(--green);border:1px solid rgba(62,207,142,.2)">✓ SMS</span>`:''}</td></tr>`;
+  }).join('');
 }
 
-function closeModal() {
-  document.getElementById("modal-overlay").classList.remove("open");
+/* ── NOTIFICATION IA PENSANTE ───────────────────── */
+function triggerNotif(idx) {
+  const ev=NOTIF_SIM[idx%NOTIF_SIM.length];
+  const notif=document.getElementById('notif');
+  document.getElementById('notif-time').textContent=new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  document.getElementById('notif-result').classList.remove('show');
+  document.getElementById('notif-stages').innerHTML=STAGES.map((s,i)=>`<div class="n-stage" id="ns${i}"><div class="n-stage-dot"></div>${s}</div>`).join('');
+  notif.classList.add('show');
+  STAGES.forEach((_,i)=>{
+    setTimeout(()=>{
+      document.querySelectorAll('.n-stage').forEach((el,j)=>{
+        if(j<i) el.classList.add('done');
+        else if(j===i) { el.classList.add('active'); el.classList.remove('done'); }
+        else { el.classList.remove('active','done'); }
+      });
+      if(i===STAGES.length-1){
+        setTimeout(()=>{
+          document.getElementById('nr-city').textContent=ev.ville;
+          document.getElementById('nr-score').textContent=ev.score+'/10';
+          document.getElementById('nr-detail').textContent=`${ev.sexe} · ${ev.age} ans · ${ev.sujet} · ${ev.source}`;
+          document.getElementById('notif-result').classList.add('show');
+        },400);
+        setTimeout(()=>{ notif.classList.remove('show'); setTimeout(()=>triggerNotif(idx+1),50000); },7000);
+      }
+    },i*1100);
+  });
 }
 
-// Auto-refresh toutes les 30 secondes
-setInterval(() => { if (TOKEN) { loadStats(); loadLeads(currentFilter); } }, 30000);
-
-// Check token au démarrage
-if (TOKEN) {
-  showApp();
-}
+setInterval(()=>{ if(TOKEN) loadRealData(); },30000);
+if(TOKEN) showApp();
 </script>
 </body>
 </html>
