@@ -3,16 +3,28 @@
 
 **Préparé par :** Ludovic Saint-Louis — Architecte IP  
 **Destinataire :** Direction Days Legacy  
-**Version :** 1.0 — Mai 2026  
+**Version :** 1.1 — Mai 2026  
 **Statut :** Confidentiel
 
 ---
 
 ## Résumé exécutif
 
-> **Un cabinet de gestion de patrimoine qui adopte Days Legacy AI OS passe de 8 à 20 nouveaux clients par mois. Le coût mensuel est de 3 000€. Le gain mensuel additionnel est de 36 000€. Le ROI est de 1 100%.**
+> **L'innovation n'est pas d'avoir un meilleur CRM. C'est de détecter, avant vos concurrents, les intentions patrimoniales du marché — et de transformer automatiquement ces signaux en clients qualifiés.**
 
-Ce document n'est pas une présentation technique. C'est un dossier de décision économique pour la direction de Days Legacy.
+Days Legacy AI OS n'est pas un logiciel de gestion. C'est un **moteur d'acquisition patrimoniale piloté par l'intelligence artificielle** — conçu spécifiquement pour les cabinets CGP qui veulent passer de la prospection active (coûteuse, aléatoire) à l'attraction magnétique (systématique, scalable).
+
+Notre objectif n'est pas de réduire vos coûts. C'est de **transformer Days Legacy en l'organisation la plus avancée de son marché** : capable de détecter les intentions patrimoniales avant ses concurrents, d'attirer automatiquement les bons prospects, et d'augmenter chaque BD avec une intelligence artificielle dédiée.
+
+**En chiffres :**
+
+| Scénario | Clients supplémentaires | Gain net annuel |
+|---|---|---|
+| Prudent | +2 clients/mois | ~36 000€ |
+| Réaliste | +4 clients/mois | ~90 000€ |
+| Ambitieux | +6 clients/mois | ~180 000€ |
+
+Ce document n'est pas une présentation technique. C'est un dossier de décision stratégique.
 
 ---
 
@@ -171,46 +183,114 @@ Days Legacy AI OS est un **système d'acquisition et d'assistance patrimoniale**
 
 ---
 
-## Partie 7 — ROI (Le plus important)
+## Partie 7 — Acheter ou Construire ?
 
-### Scénario conservateur — 12 BD actifs
+### La question que tout directeur se pose
 
-**Hypothèses :**
+> "Pourquoi ne pas simplement prendre Salesforce ou passer par une agence ?"
+
+Voici la réponse objective :
+
+| Critère | Salesforce / HubSpot | Harvest O2S | Agence marketing | **Days Legacy AI OS** |
+|---|---|---|---|---|
+| **Acquisition IA** | ❌ | ❌ | ⚠️ Limitée | ✅ |
+| **Qualification vocale 24h/24** | ❌ | ❌ | ❌ | ✅ |
+| **Score patrimonial automatique** | ❌ | ❌ | ❌ | ✅ |
+| **Assistant BD (Shadow BD)** | ❌ | ❌ | ❌ | ✅ |
+| **Réseau prescripteurs automatisé** | ❌ | ❌ | ❌ | ✅ (Phase 2) |
+| **Personnalisation secteur CGP** | Faible | Forte | Faible | **Très forte** |
+| **Délai de déploiement** | 3 à 6 mois | 2 à 4 mois | 1 à 2 mois | **2 à 4 semaines** |
+| **Coût mensuel moyen** | 3 000 à 5 000€ | 800 à 1 500€ | 3 000 à 8 000€ | **2 600 à 2 900€** |
+| **Données restent chez vous** | ⚠️ Dépend | ✅ | ❌ | ✅ |
+
+### Ce que les grandes solutions ne feront jamais
+
+Salesforce est conçu pour 10 000 industries différentes. Il ne saura jamais :
+- Qu'un prospect qui mentionne "transmission de PME" a 3,4× plus de probabilité de signer en 6 mois
+- Que les recherches "démembrement SCPI" augmentent de 40% en septembre à Lyon
+- Que ce prospect précis, appelé un mardi entre 9h et 11h, convertit à 2× le taux moyen
+
+**Days Legacy AI OS est conçu pour une seule industrie : la gestion de patrimoine indépendante. C'est sa force.**
+
+---
+
+## Partie 8 — ROI (Le plus important)
+
+### Trois scénarios — Une seule certitude : break-even au mois 1
+
+**Hypothèses communes :**
 - Leads entrants actuels : 80/mois
-- Conversion actuelle : 8% = 6,4 clients/mois
-- Valeur client année 1 : 3 000€ (frais gestion)
-- Valeur client sur 5 ans : 15 000€ (fidélisation)
+- Valeur client année 1 : 3 000€ (frais de gestion)
+- Coût Days Legacy AI OS : 2 800€/mois
+- Setup : 3 000€ (amorti sur 12 mois = 250€/mois)
 
-**Avec Days Legacy AI OS :**
+---
+
+### Scénario Prudent — "+2 clients/mois"
+
+> *L'IA fonctionne, les BD l'adoptent lentement, 50% des fonctions utilisées.*
+
+| Levier | Impact |
+|---|---|
+| Sophia (appels manqués) | +0,9 client/mois |
+| Shadow BD (meilleure priorisation) | +0,8 client/mois |
+| Contenu IA (quelques publications) | +0,3 client/mois |
+| **Total** | **+2 clients/mois** |
+
+```
+Gain mensuel brut (2 × 3 000€)       : + 6 000€
+Coût Days Legacy AI OS                :  - 3 050€ (mensuel + setup)
+──────────────────────────────────────────────────
+Gain net mensuel                      : + 2 950€
+Gain net annuel                       : + 35 400€
+ROI AN 1                              :    116%
+```
+
+---
+
+### Scénario Réaliste — "+4 clients/mois"
+
+> *Adoption correcte, 75% des fonctions utilisées, 3 premiers mois de montée en charge.*
+
+| Levier | Impact |
+|---|---|
+| Sophia (appels manqués) | +1,8 client/mois |
+| Shadow BD (+20% conversion) | +1,3 client/mois |
+| Contenu IA (+20% inbound) | +0,9 client/mois |
+| **Total** | **+4 clients/mois** |
+
+```
+Gain mensuel brut (4 × 3 000€)       : + 12 000€
+Coût Days Legacy AI OS                :  - 3 050€
+──────────────────────────────────────────────────
+Gain net mensuel                      : + 8 950€
+Gain net annuel                       : +107 400€
+ROI AN 1                              :    298%
+Break-even                            :    Mois 1
+```
+
+---
+
+### Scénario Ambitieux — "+6 clients/mois"
+
+> *Adoption complète, moteur d'acquisition actif, contenus IA publiés régulièrement.*
 
 | Levier | Impact | Clients supplémentaires |
 |---|---|---|
 | 0 appel perdu (Sophia) | +18 leads qualifiés/mois | +1,8 clients |
 | Shadow BD (+25% conversion) | 8% → 10% sur flux existant | +1,6 clients |
 | Contenu IA (+30% inbound) | +24 leads supplémentaires | +1,9 clients |
-| Meilleure qualification (bon lead au bon BD) | Temps BD mieux utilisé | +0,7 clients |
-| **Total gain mensuel** | | **+6 clients/mois** |
+| Meilleure qualification | Temps BD mieux utilisé | +0,7 clients |
+| **Total** | | **+6 clients/mois** |
 
 ```
-Gain mensuel brut (6 clients × 3 000€)       : + 18 000€
-Coût Days Legacy AI OS / mois                 :  - 2 800€
-──────────────────────────────────────────────────────────
-Gain net mensuel                              : + 15 200€
-Gain net annuel                               : +182 400€
-Setup (amorti sur 12 mois)                    :    - 250€/mois
-──────────────────────────────────────────────────────────
-BÉNÉFICE NET AN 1                             : +179 400€
-ROI AN 1                                      :    540%
-Break-even                                    :    Mois 1
-```
-
-### Scénario optimiste — 12 BD × 18 mois
-
-```
-Gain cumulé 18 mois (progression + effets réseau) : +380 000€
-Coût total 18 mois (setup + mensuel)               :  - 53 400€
-──────────────────────────────────────────────────────────────
-BÉNÉFICE NET 18 MOIS                               : +326 600€
+Gain mensuel brut (6 × 3 000€)       : + 18 000€
+Coût Days Legacy AI OS                :  - 3 050€
+──────────────────────────────────────────────────
+Gain net mensuel                      : + 14 950€
+Gain net annuel                       : +179 400€
+ROI AN 1                              :    540%
+Break-even                            :    Mois 1
 ```
 
 ### Valeur sur 5 ans (avec rétention client)
@@ -218,17 +298,17 @@ BÉNÉFICE NET 18 MOIS                               : +326 600€
 Un client CGP reste en moyenne **7 ans**. La valeur lifetime d'un client est de 15 000 à 35 000€ (selon AUM).
 
 ```
-+6 clients/mois × 12 mois = 72 clients supplémentaires en an 1
++4 clients/mois × 12 mois = 48 clients supplémentaires en an 1 (scénario réaliste)
 Valeur lifetime moyenne : 15 000€
-Valeur créée an 1 (en lifetime) : 1 080 000€
+Valeur créée an 1 (en lifetime) : 720 000€
 Coût total Days Legacy AI OS an 1 : 36 600€
 
-ROI 5 ANS : 2 850%
+ROI 5 ANS (scénario réaliste) : 1 870%
 ```
 
 ---
 
-## Partie 8 — Roadmap de déploiement
+## Partie 9 — Roadmap de déploiement
 
 ### Phase 1 — Mois 1 à 3 : Base opérationnelle
 
@@ -274,7 +354,7 @@ ROI 5 ANS : 2 850%
 
 ---
 
-## Partie 9 — Risques et mitigations
+## Partie 10 — Risques et mitigations
 
 | Risque | Probabilité | Impact | Mitigation |
 |---|---|---|---|
@@ -286,7 +366,7 @@ ROI 5 ANS : 2 850%
 
 ---
 
-## Partie 10 — Conditions contractuelles
+## Partie 11 — Conditions contractuelles
 
 | Clause | Détail |
 |---|---|
@@ -300,7 +380,60 @@ ROI 5 ANS : 2 850%
 
 ---
 
+## Partie 12 — Pourquoi Ludovic Saint-Louis ?
+
+> *Cette section n'est pas là pour convaincre que Ludo est brillant. Elle est là pour répondre à la vraie question : quel est le risque de travailler avec lui ?*
+
+### La question que vous vous posez
+
+"On investit dans un système conçu par une seule personne. Et si ça ne marche pas ? Et si elle disparaît ?"
+
+C'est la bonne question. Voici la réponse honnête.
+
+### Ce que Ludovic apporte — concrètement
+
+**1. Il comprend les deux langues**
+
+La plupart des prestataires IA parlent technologie. La plupart des consultants patrimoniaux parlent business. Ludovic parle les deux — et peut traduire en temps réel entre vos BD et le système.
+
+**2. Il a déjà livré ce type de système**
+
+Days Legacy AI OS n'est pas un concept. C'est un prototype fonctionnel — serveur actif, IA vocale opérationnelle, dashboard en production. Le risque "il ne sait pas coder" est éliminé.
+
+**3. Il peut être votre champion interne**
+
+Le plus grand risque d'adoption d'un outil IA n'est pas technique — c'est humain. Ludovic peut accompagner les BD semaine après semaine, recueillir leurs retours, ajuster le système. Un éditeur Salesforce ne fait pas ça.
+
+**4. Il a un intérêt direct dans votre succès**
+
+Son modèle de licence est basé sur votre croissance. Si Days Legacy ne croît pas, il ne renouvelle pas. C'est l'alignement parfait entre vos intérêts et les siens.
+
+### Les garanties concrètes
+
+| Risque perçu | Réponse concrète |
+|---|---|
+| "Il disparaît" | Infrastructure sur VOS comptes cloud (vous avez les accès, même sans lui) |
+| "Le système tombe" | Code hébergé sur vos serveurs — indépendant de sa présence physique |
+| "Il augmente les prix" | Contrat 12 mois signé, conditions verrouillées |
+| "Il ne peut pas scaler" | Architecture cloud native — peut supporter 100× le volume actuel sans refonte |
+
+### Son parcours en 30 secondes
+
+Architecte IP et développeur IA, formé à la fois en ingénierie logicielle et en stratégie commerciale. A conçu et déployé des systèmes IA dans plusieurs secteurs (santé, accompagnement senior, B2B). Days Legacy AI OS est sa spécialisation actuelle — patrimoine + acquisition + IA — et il a choisi Days Legacy comme partenaire fondateur pour cette raison précise.
+
+---
+
 ## Conclusion — La décision
+
+**La réalité du marché en 2026 :**
+
+Tous les cabinets CGP utilisent les mêmes méthodes — mêmes canaux, mêmes scripts, même CRM. La concurrence est frontale et coûteuse.
+
+**L'opportunité Days Legacy :**
+
+Être le premier cabinet de votre marché à détecter les intentions patrimoniales avant qu'elles deviennent des leads — et à les convertir automatiquement.
+
+Ce n'est pas une question d'économiser 2 800€/mois ou de remplacer un assistant. C'est une question de positionnement stratégique sur les 5 prochaines années.
 
 **Sans Days Legacy AI OS :**
 - 172 800€ laissés sur la table chaque année
@@ -308,13 +441,13 @@ ROI 5 ANS : 2 850%
 - BD sous-utilisés sur des tâches à faible valeur
 
 **Avec Days Legacy AI OS :**
-- Break-even dès le mois 1
-- +6 clients supplémentaires par mois dès le mois 3
-- +179 400€ de gain net en an 1
+- Un avantage concurrentiel de 18 mois sur tous les cabinets de votre région
+- Une infrastructure d'acquisition qui fonctionne même quand vos BD dorment
+- Days Legacy devient la référence — le cabinet qu'on cite quand on parle d'IA patrimoniale
 
-**La question n'est pas "peut-on se le permettre ?"**
+**La question n'est pas "combien ça coûte ?"**
 
-**La question est "peut-on se permettre de ne pas le faire ?"**
+**La question est : "Quel cabinet voulons-nous être dans 3 ans ?"**
 
 ---
 
