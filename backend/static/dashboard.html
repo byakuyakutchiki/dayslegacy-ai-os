@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Days Legacy — AI Command Center</title>
+<title>Days Legacy — Intelligence Patrimoniale</title>
 <style>
 :root {
   --bg: #050509;
@@ -148,6 +148,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .pb-window{background:rgba(62,207,142,.1);color:var(--green);border:1px solid rgba(62,207,142,.2);}
 .pb-risk-hi{background:rgba(224,85,85,.1);color:var(--hot);border:1px solid rgba(224,85,85,.2);}
 .pb-risk-md{background:rgba(232,148,58,.1);color:var(--warm);border:1px solid rgba(232,148,58,.2);}
+.btn-why{font-size:9px;color:var(--gold);background:none;border:1px solid rgba(201,168,76,.2);border-radius:20px;padding:2px 9px;cursor:pointer;margin-top:6px;transition:all .2s;display:inline-block;}
+.btn-why:hover{background:rgba(201,168,76,.08);border-color:rgba(201,168,76,.4);}
+.why-panel{display:none;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.1);border-radius:7px;padding:8px 10px;margin-top:6px;}
+.why-panel.open{display:block;}
+.why-item{font-size:10px;color:var(--dim);padding:2px 0;line-height:1.5;}
 
 /* PROSPECT CARDS */
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px;}
@@ -322,7 +327,7 @@ tr:hover td{background:rgba(255,255,255,.025);cursor:pointer;}
   <div class="lcard">
     <div class="lbrand">Intelligence Patrimoniale</div>
     <div class="llogo">Days Legacy</div>
-    <div class="ltag">AI Command Center — Accès sécurisé</div>
+    <div class="ltag">Moteur d'acquisition patrimoniale — Accès sécurisé</div>
     <input class="linput" type="password" id="pw" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')doLogin()">
     <button class="lbtn" onclick="doLogin()">Accéder au centre de commandement</button>
     <div class="lerr" id="lerr"></div>
@@ -381,9 +386,9 @@ tr:hover td{background:rgba(255,255,255,.025);cursor:pointer;}
         <div class="kpi-sub">patrimoine qualifié</div>
       </div>
       <div class="kpi" style="--_ac:linear-gradient(90deg,var(--blue),#80aaff)">
-        <div class="kpi-lbl">Taux conversion</div>
-        <div class="kpi-val" id="kpi-cvr" style="color:var(--blue)">24%</div>
-        <div class="kpi-sub">vs 8% marché</div>
+        <div class="kpi-lbl">Gain mensuel projeté</div>
+        <div class="kpi-val" id="kpi-cvr" style="color:var(--blue)">+6</div>
+        <div class="kpi-sub">clients · scénario réaliste</div>
       </div>
     </div>
 
@@ -451,25 +456,6 @@ tr:hover td{background:rgba(255,255,255,.025);cursor:pointer;}
       </div>
     </div>
 
-    <!-- SHADOW BD -->
-    <div class="shadow">
-      <div class="shadow-h">
-        <div>
-          <div class="shadow-title">⚡ Shadow Business Developer</div>
-          <div style="font-size:11px;color:var(--dim);margin-top:4px">Recommandations IA du jour — fenêtres de conversion identifiées</div>
-        </div>
-        <div id="shadow-date" style="font-size:11px;color:var(--faint)"></div>
-      </div>
-      <div class="shadow-grid" id="shadow-grid"></div>
-    </div>
-
-    <!-- PROSPECT CARDS -->
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-      <div class="label">Intelligence Prospect — Analyse complète</div>
-      <div style="font-size:10px;color:var(--faint)">Profils à fort potentiel · Prédiction IA incluse</div>
-    </div>
-    <div class="cards" id="cards"></div>
-
     <!-- ACQUISITION ENGINE -->
     <div class="acq-section">
       <div class="label">🧲 Moteur d'Acquisition — De la chasse à l'aimant</div>
@@ -493,6 +479,25 @@ tr:hover td{background:rgba(255,255,255,.025);cursor:pointer;}
       </div>
       <div class="feed-list" id="feed"></div>
     </div>
+
+    <!-- SHADOW BD -->
+    <div class="shadow">
+      <div class="shadow-h">
+        <div>
+          <div class="shadow-title">⚡ Shadow Business Developer</div>
+          <div style="font-size:11px;color:var(--dim);margin-top:4px">Recommandations IA du jour — fenêtres de conversion identifiées</div>
+        </div>
+        <div id="shadow-date" style="font-size:11px;color:var(--faint)"></div>
+      </div>
+      <div class="shadow-grid" id="shadow-grid"></div>
+    </div>
+
+    <!-- PROSPECT CARDS -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div class="label">Intelligence Prospect — Analyse complète</div>
+      <div style="font-size:10px;color:var(--faint)">Profils à fort potentiel · Prédiction IA incluse</div>
+    </div>
+    <div class="cards" id="cards"></div>
 
     <!-- TABLE -->
     <div class="tbl-section">
@@ -569,7 +574,8 @@ const LEADS = [
     script:'Bonjour Marc, suite à votre consultation sur la transmission d\'entreprise, notre expert Pacte Dutreil peut vous proposer une simulation personnalisée — économie potentielle de 75% sur les droits.',
     resume:'Dirigeant PME lyonnaise (CA ~8M€). Cession partielle envisagée d\'ici 18 mois. Fort intérêt fiscal. Patrimoine financier à structurer en parallèle.',
     timeline:[['2026','Holding'],['2027','Cession part.'],['2029','Transmission']],
-    bg:'linear-gradient(135deg,#e05555,#ff8080)'
+    bg:'linear-gradient(135deg,#e05555,#ff8080)',
+    score_detail:['✓ Durée d\'appel : 18 min','✓ Sujet haute valeur : Transmission PME','✓ Profil confirmé : dirigeant PME (CA ~8M€)','✓ Urgence exprimée : cession dans 18 mois','✓ 3 leviers fiscaux évoqués (Pacte Dutreil, holding, IS)']
   },
   { id:'d2', nom:'Antoine L.', prenom:'Antoine', age:61, ville:'Paris', phone:'+33 6 55 44 33 22',
     patrimoine:'2,2M€ estimé', duree:1320, score:8.6, sms:'O', sujet:'Succession & Donation',
@@ -580,7 +586,8 @@ const LEADS = [
     script:'Bonjour Antoine, avec votre patrimoine et l\'horizon successoral, une donation-partage couplée à une SCI familiale peut réduire vos droits de 60 à 70%.',
     resume:'Retraité, 3 enfants adultes. Patrimoine immobilier et financier important à organiser. Décision dans les 3 mois selon ses dires.',
     timeline:[['2026','SCI familiale'],['2027','Donation'],['2030','Succession']],
-    bg:'linear-gradient(135deg,#c9a84c,#e8c96a)'
+    bg:'linear-gradient(135deg,#c9a84c,#e8c96a)',
+    score_detail:['✓ Durée d\'appel : 22 min','✓ Sujet haute valeur : Succession & Donation','✓ Patrimoine estimé : 2,2M€','✓ Horizon décision confirmé : 3 mois','✓ 4 sujets couverts (SCI, donation-partage, AV, testament)']
   },
   { id:'d3', nom:'Claire B.', prenom:'Claire', age:44, ville:'Bordeaux', phone:'+33 6 98 76 54 32',
     patrimoine:'650k€ estimé', duree:720, score:7.8, sms:'O', sujet:'SCPI & Retraite',
@@ -591,7 +598,8 @@ const LEADS = [
     script:'Bonjour Claire, avec un horizon retraite à 11 ans, une stratégie SCPI progressive peut viser 4,5% net tout en optimisant votre fiscalité.',
     resume:'Cadre supérieure, retraite à 55 ans. Patrimoine immobilier existant, cherche revenus passifs complémentaires. Très réceptive.',
     timeline:[['2026','1ère SCPI'],['2028','Diversification'],['2035','Revenus retraite']],
-    bg:'linear-gradient(135deg,#4d8eff,#80aaff)'
+    bg:'linear-gradient(135deg,#4d8eff,#80aaff)',
+    score_detail:['✓ Durée d\'appel : 12 min','✓ Sujet : SCPI & Retraite','✓ Profil : cadre supérieure, retraite à 55 ans','✓ Réceptivité forte détectée (2 rappels spontanés)','✓ Patrimoine existant à structurer en revenus passifs']
   },
   { id:'d4', nom:'Sophie M.', prenom:'Sophie', age:47, ville:'Nantes', phone:'+33 6 77 88 99 00',
     patrimoine:'420k€ estimé', duree:540, score:6.9, sms:'N', sujet:'Retraite Dirigeante',
@@ -602,7 +610,8 @@ const LEADS = [
     script:'Bonjour Sophie, votre situation de dirigeante vous permet une économie PER jusqu\'à 15 000€ cette année — avant la fin du second trimestre.',
     resume:'Dirigeante TPE secteur conseil. Très occupée, préfère les échanges courts et concrets. Intérêt fort pour les dispositifs dirigeants.',
     timeline:[['2026','Optim. PER'],['2030','Départ'],['2032','Retraite opt.']],
-    bg:'linear-gradient(135deg,#3ecf8e,#6af0b0)'
+    bg:'linear-gradient(135deg,#3ecf8e,#6af0b0)',
+    score_detail:['✓ Durée d\'appel : 9 min','✓ Sujet : Retraite Dirigeante','✓ Profil : dirigeante TPE','✓ Fenêtre PER fin juin identifiée (économie ~15k€)','⚠ Appel court — disponibilité limitée, préférer SMS']
   },
   { id:'d5', nom:'Pierre V.', prenom:'Pierre', age:55, ville:'Marseille', phone:'+33 6 11 22 33 44',
     patrimoine:'580k€ estimé', duree:840, score:7.2, sms:'O', sujet:'Défiscalisation',
@@ -613,7 +622,8 @@ const LEADS = [
     script:'Bonjour Pierre, à 41% d\'imposition, 3 dispositifs 2026 peuvent réduire votre impôt de 8 à 12 000€ cette année.',
     resume:'Cadre direction grand groupe. Forte pression fiscale. Patrimoine en IDF. Cherche optimisation 2026 avant bilan.',
     timeline:[['2026','Pinel'],['2027','SCPI fiscales'],['2029','Stratégie globale']],
-    bg:'linear-gradient(135deg,#e8943a,#f0b060)'
+    bg:'linear-gradient(135deg,#e8943a,#f0b060)',
+    score_detail:['✓ Durée d\'appel : 14 min','✓ Sujet : Défiscalisation 2026','✓ Profil : cadre direction, TMI 41%','✓ Objectif chiffré exprimé (8-12k€ d\'économie)','⚠ Objection engagement long terme — à lever en RDV']
   }
 ];
 
@@ -693,7 +703,7 @@ function startClock() {
 /* ── BRIEFING ───────────────────────────────────── */
 function renderBriefing() {
   const h=new Date().getHours(), g=h<12?'Bonjour':h<18?'Bon après-midi':'Bonsoir';
-  document.getElementById('brief-msg').textContent=`${g}. 3 opportunités à fort potentiel identifiées aujourd'hui. Lyon en tête : +34% d'intentions de transmission PME. Marc D. (score 9.4) — fenêtre de décision ouverte, à contacter avant vendredi. Valeur patrimoniale qualifiée ce mois : 3,4M€.`;
+  document.getElementById('brief-msg').textContent=`${g}. 3 opportunités à fort potentiel identifiées aujourd'hui. Lyon en tête : +34% d'intentions de transmission PME. Marc D. (score 9.4) — fenêtre de décision ouverte, à contacter avant vendredi. Valeur patrimoniale qualifiée ce mois : 3,4M€. Les signaux détectés cette semaine indiquent une accélération de la demande de transmission d'entreprise — plus vite que la capacité de traitement des cabinets traditionnels.`;
   document.getElementById('brief-time').textContent=new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
   document.getElementById('shadow-date').textContent=new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
 }
@@ -733,6 +743,8 @@ function renderShadow() {
         <span class="predict-badge ${riskCls}">⚠ ${l.risk.split('—')[0].trim()}</span>
         <span class="predict-badge" style="background:rgba(77,142,255,.1);color:var(--blue);border:1px solid rgba(77,142,255,.2)">${l.conv_pct}% conv.</span>
       </div>
+      <button class="btn-why" onclick="toggleWhy('sw-why-${l.id}',event)">Pourquoi ce score ?</button>
+      <div class="why-panel" id="sw-why-${l.id}">${l.score_detail.map(r=>`<div class="why-item">${r}</div>`).join('')}</div>
     </div>`;
   }).join('');
 }
@@ -769,6 +781,8 @@ function renderCards() {
       <div class="tl-wrap"><div class="tl-lbl">Timeline patrimoniale IA</div>
         <div class="tl-row">${l.timeline.map(([y,e])=>`<div class="tl-item"><div class="tl-dot"></div><div class="tl-yr">${y}</div><div class="tl-ev">${e}</div></div>`).join('')}</div>
       </div>
+      <button class="btn-why" onclick="toggleWhy('pc-why-${l.id}',event)">Pourquoi ce score ?</button>
+      <div class="why-panel" id="pc-why-${l.id}">${l.score_detail.map(r=>`<div class="why-item">${r}</div>`).join('')}</div>
     </div>`;
   }).join('');
 }
@@ -809,7 +823,7 @@ function openVision() {
 function closeVision() { document.getElementById('vision-ov').classList.remove('open'); }
 function renderVision() {
   const vkpis=[
-    {lbl:'Opportunités détectées',val:'128',sub:'ce mois sur le marché FR',col:'var(--gold)',glow:'rgba(201,168,76,.04)'},
+    {lbl:'Leads qualifiés ce mois',val:'80',sub:'pipeline actif — signaux agrégés',col:'var(--gold)',glow:'rgba(201,168,76,.04)'},
     {lbl:'Valeur patrimoniale totale',val:'3,4M€',sub:'prospects qualifiés en cours',col:'var(--green)',glow:'rgba(62,207,142,.04)'},
     {lbl:'Leads chauds (score ≥7)',val:'18',sub:'à contacter cette semaine',col:'var(--hot)',glow:'rgba(224,85,85,.04)'},
     {lbl:'Top région',val:'Lyon',sub:'Rhône-Alpes — +34% intentions',col:'var(--blue)',glow:'rgba(77,142,255,.04)'},
@@ -897,6 +911,7 @@ async function openRealLead(id) {
   document.getElementById('modal-ov').classList.add('open');
 }
 function closeModal(){ document.getElementById('modal-ov').classList.remove('open'); }
+function toggleWhy(id,ev){ if(ev){ev.stopPropagation();} const p=document.getElementById(id); if(p) p.classList.toggle('open'); }
 
 /* ── REAL DATA ──────────────────────────────────── */
 async function loadRealData() {
