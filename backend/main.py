@@ -8,7 +8,7 @@ load_dotenv()
 
 from database import engine, Base
 import models  # noqa: F401 — enregistre les modèles SQLAlchemy
-from routers import calls, leads, auth, sophia
+from routers import calls, leads, auth, sophia, audits
 
 Base.metadata.create_all(bind=engine)
 
@@ -18,6 +18,7 @@ app.include_router(calls.router, prefix="/api")
 app.include_router(leads.router, prefix="/api")
 app.include_router(auth.router, prefix="/api")
 app.include_router(sophia.router, prefix="/api")
+app.include_router(audits.router, prefix="/api")
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 

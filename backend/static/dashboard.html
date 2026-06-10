@@ -34,7 +34,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font
   position:relative;overflow:hidden;
   background:radial-gradient(ellipse 80% 60% at 50% 0%,#0d0a00 0%,var(--bg) 55%);
 }
-/* animated aurora blobs */
 #login::before{
   content:'';position:absolute;inset:0;pointer-events:none;
   background:
@@ -44,77 +43,35 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font
   animation:aurora 8s ease-in-out infinite alternate;
 }
 #login::after{
-  content:'DAYS LEGACY';
-  position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);
+  content:'DAYS LEGACY';position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);
   font-size:clamp(80px,18vw,220px);font-weight:900;letter-spacing:-4px;
-  color:rgba(204,155,18,.03);white-space:nowrap;pointer-events:none;
-  line-height:1;
+  color:rgba(204,155,18,.03);white-space:nowrap;pointer-events:none;line-height:1;
 }
 .login-wrap{position:relative;z-index:2;width:100%;max-width:440px;padding:24px;}
-
-/* top label */
-.l-eyebrow{
-  text-align:center;margin-bottom:40px;
-  display:flex;flex-direction:column;align-items:center;gap:12px;
-}
+.l-eyebrow{text-align:center;margin-bottom:40px;display:flex;flex-direction:column;align-items:center;gap:12px;}
 .l-tagline{font-size:9px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:rgba(204,155,18,.5);}
 .l-brand-big{font-size:clamp(32px,6vw,48px);font-weight:900;letter-spacing:-1.5px;background:var(--gold-gh);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
-
-/* avatar with rotating ring */
 .l-av-wrap{position:relative;width:88px;height:88px;margin:0 auto 28px;}
-.l-av-ring{
-  position:absolute;inset:-6px;border-radius:50%;
-  background:conic-gradient(from 0deg,transparent 0%,rgba(204,155,18,.6) 20%,transparent 40%,rgba(255,238,190,.4) 60%,transparent 80%,rgba(162,119,0,.5) 100%);
-  animation:spin-ring 4s linear infinite;
-}
-.l-av-ring2{
-  position:absolute;inset:-12px;border-radius:50%;
-  background:conic-gradient(from 180deg,transparent 0%,rgba(204,155,18,.15) 20%,transparent 40%);
-  animation:spin-ring 7s linear infinite reverse;
-}
-.l-av{
-  position:relative;z-index:2;
-  width:88px;height:88px;border-radius:50%;
-  background:linear-gradient(135deg,#CC9B12 0%,#FFEEBE 50%,#A27700 100%);
-  display:flex;align-items:center;justify-content:center;
-  font-size:30px;font-weight:900;color:#0b0b0c;
-  box-shadow:0 0 40px rgba(204,155,18,.35),0 0 80px rgba(204,155,18,.12);
-}
-.l-ring-mask{position:absolute;inset:-13px;border-radius:50%;background:transparent;overflow:hidden;}
-
-/* form */
-.l-form{
-  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);
-  border-radius:24px;padding:36px 32px 28px;
-  backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);
-  box-shadow:0 0 0 1px rgba(204,155,18,.08) inset, 0 32px 80px rgba(0,0,0,.5);
-}
+.l-av-ring{position:absolute;inset:-6px;border-radius:50%;background:conic-gradient(from 0deg,transparent 0%,rgba(204,155,18,.6) 20%,transparent 40%,rgba(255,238,190,.4) 60%,transparent 80%,rgba(162,119,0,.5) 100%);animation:spin-ring 4s linear infinite;}
+.l-av-ring2{position:absolute;inset:-12px;border-radius:50%;background:conic-gradient(from 180deg,transparent 0%,rgba(204,155,18,.15) 20%,transparent 40%);animation:spin-ring 7s linear infinite reverse;}
+.l-av{position:relative;z-index:2;width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,#CC9B12 0%,#FFEEBE 50%,#A27700 100%);display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:900;color:#0b0b0c;box-shadow:0 0 40px rgba(204,155,18,.35),0 0 80px rgba(204,155,18,.12);}
+.l-form{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:24px;padding:36px 32px 28px;backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);box-shadow:0 0 0 1px rgba(204,155,18,.08) inset, 0 32px 80px rgba(0,0,0,.5);}
 .l-sophia-name{font-size:22px;font-weight:900;text-align:center;margin-bottom:4px;}
 .l-sophia-sub{font-size:11px;text-align:center;color:rgba(204,155,18,.7);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:28px;}
 .l-sep{width:40px;height:1.5px;background:var(--gold-gh);margin:0 auto 28px;border-radius:2px;}
-
 .l-input-wrap{position:relative;margin-bottom:14px;}
 .l-input-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--faint);}
-.l-input{
-  width:100%;padding:14px 18px 14px 44px;
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
-  border-radius:14px;color:var(--text);font-size:14px;font-family:var(--font);outline:none;
-  transition:border-color .3s,background .3s;
-}
+.l-input{width:100%;padding:14px 18px 14px 44px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;color:var(--text);font-size:14px;font-family:var(--font);outline:none;transition:border-color .3s,background .3s;}
 .l-input:focus{border-color:rgba(204,155,18,.55);background:rgba(255,255,255,.08);}
 .l-input::placeholder{color:rgba(255,255,255,.25);}
-
-.l-btn{
-  width:100%;padding:15px;border-radius:14px;border:none;cursor:pointer;
-  font-family:var(--font);font-weight:900;font-size:15px;letter-spacing:.3px;
-  background:var(--gold-gh);color:#0b0b0c;
-  transition:opacity .25s,transform .2s;
-  box-shadow:0 8px 24px rgba(204,155,18,.25);
-}
+.l-btn{width:100%;padding:15px;border-radius:14px;border:none;cursor:pointer;font-family:var(--font);font-weight:900;font-size:15px;letter-spacing:.3px;background:var(--gold-gh);color:#0b0b0c;transition:opacity .25s,transform .2s;box-shadow:0 8px 24px rgba(204,155,18,.25);}
 .l-btn:hover{opacity:.88;transform:translateY(-1px);}
 .l-btn:active{transform:translateY(0);}
 .l-err{color:var(--hot);font-size:12px;text-align:center;margin-top:10px;min-height:16px;}
 .l-footer{text-align:center;margin-top:20px;font-size:9px;color:rgba(255,255,255,.15);letter-spacing:1.5px;text-transform:uppercase;}
+.l-demo-row{text-align:center;margin-top:14px;}
+.l-demo-link{color:rgba(204,155,18,.6);font-size:11px;cursor:pointer;text-decoration:underline;transition:color .2s;}
+.l-demo-link:hover{color:var(--gold2);}
 
 /* ══════════════════════════════════════════════════
    APP
@@ -136,6 +93,21 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font
 .live-txt{font-size:8px;font-weight:700;letter-spacing:2px;color:var(--green);}
 .tb-right{display:flex;align-items:center;gap:12px;}
 .tb-clock{font-size:11px;color:var(--dim);}
+
+/* MODE PILL */
+.mode-pill{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:50px;padding:3px 10px;cursor:pointer;transition:all .2s;}
+.mode-pill:hover{background:rgba(255,255,255,.08);}
+.mode-pill .dot{width:6px;height:6px;border-radius:50%;}
+.mode-pill .dot.demo{background:var(--warm);box-shadow:0 0 6px var(--warm);}
+.mode-pill .dot.prod{background:var(--green);box-shadow:0 0 6px var(--green);}
+.mode-pill .txt{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--dim);}
+
+/* NAV TABS */
+.nav-tabs{display:flex;gap:4px;margin-left:20px;padding-left:20px;border-left:1px solid rgba(255,255,255,.08);}
+.nav-tab{padding:6px 14px;border-radius:50px;border:1px solid transparent;background:none;color:var(--dim);cursor:pointer;font-family:var(--font);font-size:11px;font-weight:700;transition:all .2s;}
+.nav-tab:hover{color:var(--text);background:rgba(255,255,255,.05);}
+.nav-tab.active{color:var(--gold2);background:var(--gold-b);border-color:rgba(204,155,18,.2);}
+
 .btn-ghost{display:inline-flex;align-items:center;justify-content:center;padding:8px 18px;border-radius:50px;border:1px solid rgba(255,255,255,.2);cursor:pointer;font-family:var(--font);font-weight:700;font-size:12px;background:rgba(255,255,255,.05);color:var(--dim);transition:all .25s;white-space:nowrap;}
 .btn-ghost:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.4);color:var(--text);}
 .btn-gold{display:inline-flex;align-items:center;justify-content:center;padding:11px 24px;border-radius:50px;border:none;cursor:pointer;font-family:var(--font);font-weight:700;font-size:13px;background:var(--gold-gh);color:#0b0b0c;transition:opacity .25s,transform .2s;white-space:nowrap;}
@@ -146,6 +118,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font
 
 /* MAIN */
 .main{padding:28px 28px 60px;max-width:1320px;margin:0 auto;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;animation:fadein .35s ease-out;}
 
 /* ── SOPHIA COMMAND CENTER ──────────────────────── */
 .sophia-hero{
@@ -153,20 +127,16 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font
   background:linear-gradient(160deg,#0e0c06 0%,#0b0b0c 60%);
   border:1px solid rgba(204,155,18,.2);
 }
-/* top shimmer bar */
 .sophia-hero::before{
   content:'';position:absolute;top:0;left:0;right:0;height:1px;
   background:linear-gradient(90deg,transparent,#CC9B12 25%,#FFEEBE 50%,#A27700 75%,transparent);
   animation:shimmer 4s ease-in-out infinite;
 }
-/* right glow */
 .sophia-hero::after{
   content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;
   background:radial-gradient(circle,rgba(204,155,18,.07) 0%,transparent 60%);
   pointer-events:none;
 }
-
-/* identity row */
 .sh-id{
   display:flex;align-items:center;justify-content:space-between;
   padding:14px 28px;border-bottom:1px solid rgba(255,255,255,.05);
@@ -176,11 +146,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font
 .sh-status-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 2.5s infinite;}
 .sh-label{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(204,155,18,.65);}
 .sh-model{font-size:9px;color:var(--faint);letter-spacing:.5px;}
-
-/* content row */
 .sh-body{display:flex;align-items:flex-start;gap:28px;padding:26px 28px 20px;position:relative;z-index:1;}
-
-/* avatar */
 .sh-av-wrap{position:relative;width:76px;height:76px;flex-shrink:0;}
 .sh-av-ring{
   position:absolute;inset:-7px;border-radius:50%;
@@ -199,8 +165,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font
 .sh-name{font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:2px;}
 .sh-sub{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(204,155,18,.6);margin-bottom:12px;}
 .sh-msg{font-size:14px;line-height:1.75;color:rgba(255,255,255,.72);max-width:740px;}
-
-/* stats band */
 .sh-stats{
   display:flex;border-top:1px solid rgba(255,255,255,.05);
   position:relative;z-index:1;
@@ -212,8 +176,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font
 .sh-stat:last-child{border-right:none;}
 .sh-stat-n{font-size:22px;font-weight:900;background:var(--gold-gh);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
 .sh-stat-l{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--faint);margin-top:3px;}
-
-/* input zone */
 .sh-input-zone{padding:18px 28px 22px;position:relative;z-index:1;}
 .sh-chat{display:flex;gap:10px;align-items:center;}
 .sh-input{
@@ -226,7 +188,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font
 .sh-input:focus{border-color:rgba(204,155,18,.5);background:rgba(255,255,255,.08);}
 .sh-input::placeholder{color:rgba(255,255,255,.22);}
 
-/* voice button */
 .btn-voice{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;
   padding:13px 20px;border-radius:50px;flex-shrink:0;cursor:pointer;
@@ -237,7 +198,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font
 }
 .btn-voice:hover{border-color:rgba(204,155,18,.7);background:rgba(204,155,18,.14);box-shadow:0 0 20px rgba(204,155,18,.18);}
 .btn-voice.listening{border-color:rgba(255,64,96,.6);background:rgba(255,64,96,.1);color:#ff8090;box-shadow:0 0 28px rgba(255,64,96,.2);}
-/* waveform */
 .wv{display:flex;align-items:center;gap:2px;height:14px;}
 .wv span{display:block;width:2.5px;border-radius:2px;background:currentColor;height:4px;transition:height .1s;}
 .btn-voice.listening .wv span{animation:wave-bar .65s ease-in-out infinite;}
@@ -247,12 +207,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font
 .btn-voice.listening .wv span:nth-child(4){animation-delay:.1s;}
 .btn-voice.listening .wv span:nth-child(5){animation-delay:0s;}
 
-/* voice listening bar */
 .voice-bar{display:none;align-items:center;gap:10px;margin-top:10px;padding:10px 18px;background:rgba(255,64,96,.05);border:1px solid rgba(255,64,96,.15);border-radius:12px;font-size:11px;color:rgba(255,140,160,.85);}
 .voice-bar.show{display:flex;}
 .voice-dot2{width:7px;height:7px;border-radius:50%;background:var(--hot);flex-shrink:0;box-shadow:0 0 6px var(--hot);animation:blink .7s infinite;}
 
-/* response */
 .sh-resp{
   margin-top:14px;padding:18px 22px;
   background:rgba(204,155,18,.05);
@@ -348,6 +306,63 @@ tr:hover td{background:rgba(255,255,255,.02);cursor:pointer;}
 .sbadge{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;font-weight:900;font-size:11px;}
 .tag{display:inline-block;padding:3px 8px;border-radius:50px;font-size:9px;font-weight:700;}
 
+/* ── AUDIT SECTION ────────────────────────────── */
+.audit-hero{
+  position:relative;border-radius:24px;margin-bottom:28px;overflow:hidden;
+  background:linear-gradient(160deg,#0e0c06 0%,#0b0b0c 60%);
+  border:1px solid rgba(204,155,18,.2);
+}
+.audit-hero::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,#CC9B12 25%,#FFEEBE 50%,#A27700 75%,transparent);
+  animation:shimmer 4s ease-in-out infinite;
+}
+.audit-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 28px;border-bottom:1px solid rgba(255,255,255,.05);
+  background:rgba(255,255,255,.02);position:relative;z-index:1;
+}
+.audit-h-left{display:flex;align-items:center;gap:14px;}
+.audit-logo{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#1a5aff,#4d8eff);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;color:#fff;flex-shrink:0;}
+.audit-h-title{font-size:20px;font-weight:900;letter-spacing:-.3px;}
+.audit-h-sub{font-size:10px;color:var(--dim);margin-top:2px;}
+.audit-h-score{text-align:right;}
+.audit-h-n{font-size:32px;font-weight:900;background:var(--gold-gh);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
+.audit-h-l{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--faint);margin-top:3px;}
+
+.audit-body{padding:24px 28px 28px;position:relative;z-index:1;}
+.audit-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+.audit-kpi{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:14px 16px;
+}
+.audit-kpi-lbl{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--faint);margin-bottom:6px;}
+.audit-kpi-val{font-size:17px;font-weight:900;}
+.audit-kpi-sub{font-size:10px;color:var(--dim);margin-top:2px;}
+
+.findings-list{display:grid;gap:10px;}
+.finding-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:18px 20px;
+  transition:border-color .2s;
+}
+.finding-card:hover{border-color:rgba(204,155,18,.2);}
+.finding-card.critical{border-left:3px solid var(--hot);}
+.finding-card.eleve{border-left:3px solid var(--warm);}
+.finding-card.moyen{border-left:3px solid var(--gold);}
+.finding-card.faible{border-left:3px solid var(--blue);}
+.finding-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.finding-cat{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:50px;background:rgba(255,255,255,.06);color:var(--dim);}
+.finding-sev{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:50px;}
+.finding-sev.critical{background:rgba(255,64,96,.1);color:var(--hot);}
+.finding-sev.eleve{background:rgba(255,154,60,.1);color:var(--warm);}
+.finding-sev.moyen{background:rgba(204,155,18,.1);color:var(--gold);}
+.finding-sev.faible{background:rgba(0,130,243,.1);color:var(--blue);}
+.finding-title{font-size:15px;font-weight:700;margin-bottom:6px;}
+.finding-desc{font-size:12px;color:var(--dim);line-height:1.65;margin-bottom:10px;}
+.finding-reco{background:rgba(204,155,18,.05);border:1px solid rgba(204,155,18,.12);border-radius:10px;padding:10px 14px;margin-bottom:8px;}
+.finding-reco-lbl{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(204,155,18,.6);margin-bottom:3px;}
+.finding-reco-txt{font-size:12px;font-weight:600;color:var(--gold2);line-height:1.5;}
+.finding-gain{font-size:10px;color:var(--green);font-weight:700;}
+
 /* ── MODAL ────────────────────────────────────── */
 .modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(12px);align-items:center;justify-content:center;z-index:200;}
 .modal-ov.open{display:flex;}
@@ -362,13 +377,11 @@ tr:hover td{background:rgba(255,255,255,.02);cursor:pointer;}
 @keyframes aurora{0%{opacity:.6;transform:scale(1)}100%{opacity:1;transform:scale(1.08)}}
 @keyframes spin-ring{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 @keyframes av-breathe{0%,100%{box-shadow:0 0 28px rgba(204,155,18,.28)}50%{box-shadow:0 0 48px rgba(204,155,18,.5)}}
-@keyframes av-pulse{0%,100%{box-shadow:0 0 0 0 rgba(204,155,18,.35)}50%{box-shadow:0 0 0 12px rgba(204,155,18,0)}}
-@keyframes ring-expand{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.5);opacity:0}}
 @keyframes wave-bar{0%,100%{height:3px}50%{height:14px}}
 
 /* ── RESPONSIVE ───────────────────────────────── */
-@media(max-width:1024px){.p-grid,.qa-grid{grid-template-columns:1fr 1fr;}.main{padding:18px 18px 48px;}}
-@media(max-width:600px){.p-grid,.qa-grid{grid-template-columns:1fr;}.topbar{padding:0 16px;}.sh-body{flex-direction:column;gap:16px;}.sh-stats{flex-wrap:wrap;}.sh-stat{min-width:50%;}}
+@media(max-width:1024px){.p-grid,.qa-grid,.audit-grid{grid-template-columns:1fr 1fr;}.main{padding:18px 18px 48px;}}
+@media(max-width:600px){.p-grid,.qa-grid,.audit-grid{grid-template-columns:1fr;}.topbar{padding:0 16px;}.sh-body{flex-direction:column;gap:16px;}.sh-stats{flex-wrap:wrap;}.sh-stat{min-width:50%;}}
 </style>
 </head>
 <body>
@@ -403,6 +416,9 @@ tr:hover td{background:rgba(255,255,255,.02);cursor:pointer;}
       <div class="l-err" id="lerr"></div>
     </div>
 
+    <div class="l-demo-row">
+      <span class="l-demo-link" onclick="enterDemoMode()">🎬 Accéder à la version démo (sans mot de passe)</span>
+    </div>
     <div class="l-footer">Accès réservé · Business Developer Days Legacy · Confidentiel</div>
   </div>
 </div>
@@ -420,152 +436,169 @@ tr:hover td{background:rgba(255,255,255,.02);cursor:pointer;}
         <div class="tb-name">Days Legacy</div>
       </div>
       <div class="live-pill"><div class="live-dot"></div><div class="live-txt">SOPHIA ACTIVE</div></div>
+      <div class="nav-tabs">
+        <button class="nav-tab active" data-tab="pipeline" onclick="switchTab('pipeline')">Pipeline</button>
+        <button class="nav-tab" data-tab="audits" onclick="switchTab('audits')">Audits Clients</button>
+      </div>
     </div>
     <div class="tb-right">
       <span class="tb-clock" id="clock"></span>
+      <div class="mode-pill" id="mode-pill" onclick="toggleMode()" title="Cliquer pour changer de mode">
+        <div class="dot prod" id="mode-dot"></div>
+        <div class="txt" id="mode-txt">PROD</div>
+      </div>
       <button class="btn-ghost btn-sm" onclick="logout()">Déconnexion</button>
     </div>
   </div>
 
   <div class="main">
 
-    <!-- SOPHIA COMMAND CENTER -->
-    <div class="sophia-hero">
+    <!-- ════════════════════════════════════════════
+      TAB : PIPELINE
+    ════════════════════════════════════════════ -->
+    <div class="tab-panel active" id="tab-pipeline">
 
-      <!-- identity band -->
-      <div class="sh-id">
-        <div class="sh-id-left">
-          <div class="sh-status-dot"></div>
-          <div class="sh-label">Sophia · Assistante IA Patrimoniale</div>
+      <!-- SOPHIA COMMAND CENTER -->
+      <div class="sophia-hero">
+        <div class="sh-id">
+          <div class="sh-id-left">
+            <div class="sh-status-dot"></div>
+            <div class="sh-label">Sophia · Assistante IA Patrimoniale</div>
+          </div>
+          <div class="sh-model">Days Legacy AI OS · gpt-4o</div>
         </div>
-        <div class="sh-model">Days Legacy AI OS · gpt-4o</div>
+        <div class="sh-body">
+          <div class="sh-av-wrap">
+            <div class="sh-av-ring"></div>
+            <div class="sh-av">S</div>
+          </div>
+          <div class="sh-meta">
+            <div class="sh-name">Sophia</div>
+            <div class="sh-sub">Votre intelligence patrimoniale</div>
+            <div class="sh-msg" id="sophia-msg">Analyse du marché en cours…</div>
+          </div>
+        </div>
+        <div class="sh-stats" id="sh-stats">
+          <div class="sh-stat"><div class="sh-stat-n" id="stat-priorities">3</div><div class="sh-stat-l">Priorités aujourd'hui</div></div>
+          <div class="sh-stat"><div class="sh-stat-n" id="stat-topscore">9.4</div><div class="sh-stat-l">Score top prospect</div></div>
+          <div class="sh-stat"><div class="sh-stat-n" id="stat-signal">+42%</div><div class="sh-stat-l">Signal marché Rhône-Alpes</div></div>
+          <div class="sh-stat"><div class="sh-stat-n" id="stat-window">48h</div><div class="sh-stat-l">Fenêtre décision Marc D.</div></div>
+        </div>
+        <div class="sh-input-zone">
+          <div class="sh-chat">
+            <input class="sh-input" id="sophia-q"
+              placeholder="Demandez à Sophia… ou appuyez sur Vocal pour parler"
+              onkeydown="if(event.key==='Enter')askSophia()">
+            <button class="btn-voice" id="voice-btn" onclick="toggleVoice()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" y1="19" x2="12" y2="23"/>
+                <line x1="8" y1="23" x2="16" y2="23"/>
+              </svg>
+              <span id="voice-label">Vocal</span>
+              <div class="wv"><span></span><span></span><span></span><span></span><span></span></div>
+            </button>
+            <button class="btn-gold" id="sophia-btn" onclick="askSophia()">Envoyer →</button>
+          </div>
+          <div class="voice-bar" id="voice-bar">
+            <div class="voice-dot2"></div>
+            <span id="voice-status">Sophia vous écoute… parlez maintenant</span>
+            <button class="btn-ghost btn-sm" onclick="stopListening()" style="margin-left:auto;border-color:rgba(255,64,96,.3);color:var(--hot)">Annuler</button>
+          </div>
+          <div class="sh-resp" id="sophia-resp"></div>
+          <div id="speak-bar" style="display:none;margin-top:8px;align-items:center;gap:8px">
+            <button class="btn-ghost btn-sm" onclick="speakLast()">🔊 Réécouter</button>
+            <button class="btn-ghost btn-sm" id="stop-speak" onclick="stopSpeaking()" style="display:none">⏹ Stop</button>
+          </div>
+        </div>
       </div>
 
-      <!-- avatar + message -->
-      <div class="sh-body">
-        <div class="sh-av-wrap">
-          <div class="sh-av-ring"></div>
-          <div class="sh-av">S</div>
+      <!-- PRIORITÉS -->
+      <div class="sec-hdr">
+        <div class="sec-title">⚡ Priorités du jour — Recommandées par Sophia</div>
+        <div style="font-size:10px;color:var(--faint)" id="priority-date"></div>
+      </div>
+      <div class="p-grid" id="p-grid"></div>
+
+      <!-- QUICK ACTIONS -->
+      <div class="sec-hdr"><div class="sec-title">Actions rapides</div></div>
+      <div class="qa-grid">
+        <div class="qa-card" onclick="showContentModal()">
+          <div class="qa-icon">🧲</div>
+          <div class="qa-label">Créer un contenu</div>
+          <div class="qa-sub">LinkedIn · SEO · Email · Vidéo</div>
         </div>
-        <div class="sh-meta">
-          <div class="sh-name">Sophia</div>
-          <div class="sh-sub">Votre intelligence patrimoniale</div>
-          <div class="sh-msg" id="sophia-msg">Analyse du marché en cours…</div>
+        <div class="qa-card" onclick="showSignalsModal()">
+          <div class="qa-icon">📡</div>
+          <div class="qa-label">Signaux marché</div>
+          <div class="qa-sub">Intentions patrimoniales live</div>
+        </div>
+        <div class="qa-card" onclick="document.getElementById('all-leads').scrollIntoView({behavior:'smooth'})">
+          <div class="qa-icon">📋</div>
+          <div class="qa-label">Tous les prospects</div>
+          <div class="qa-sub">Pipeline qualifié Sophia</div>
+        </div>
+        <div class="qa-card" onclick="askSophiaAuto('Bilan de la semaine : quels besoins patrimoniaux sont les plus exprimés, quels profils sont prioritaires, et quelles sont tes 3 recommandations ?')">
+          <div class="qa-icon">📊</div>
+          <div class="qa-label">Bilan semaine</div>
+          <div class="qa-sub">Rapport Sophia · 30 sec</div>
         </div>
       </div>
 
-      <!-- stats band -->
-      <div class="sh-stats">
-        <div class="sh-stat">
-          <div class="sh-stat-n">3</div>
-          <div class="sh-stat-l">Priorités aujourd'hui</div>
+      <!-- SIGNALS -->
+      <div class="signals-box">
+        <div class="sec-hdr" style="margin-bottom:14px">
+          <div class="sec-title">📡 Signaux du marché — Besoins détectés cette semaine</div>
+          <div style="font-size:10px;color:var(--green);font-weight:700" id="signals-trend">↑ +37% intentions patrimoniales</div>
         </div>
-        <div class="sh-stat">
-          <div class="sh-stat-n">9.4</div>
-          <div class="sh-stat-l">Score top prospect</div>
-        </div>
-        <div class="sh-stat">
-          <div class="sh-stat-n">+42%</div>
-          <div class="sh-stat-l">Signal marché Rhône-Alpes</div>
-        </div>
-        <div class="sh-stat">
-          <div class="sh-stat-n">48h</div>
-          <div class="sh-stat-l">Fenêtre décision Marc D.</div>
-        </div>
+        <div id="signals-list"></div>
       </div>
 
-      <!-- input -->
-      <div class="sh-input-zone">
-        <div class="sh-chat">
-          <input class="sh-input" id="sophia-q"
-            placeholder="Demandez à Sophia… ou appuyez sur Vocal pour parler"
-            onkeydown="if(event.key==='Enter')askSophia()">
-          <button class="btn-voice" id="voice-btn" onclick="toggleVoice()">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
-              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-              <line x1="12" y1="19" x2="12" y2="23"/>
-              <line x1="8" y1="23" x2="16" y2="23"/>
-            </svg>
-            <span id="voice-label">Vocal</span>
-            <div class="wv"><span></span><span></span><span></span><span></span><span></span></div>
-          </button>
-          <button class="btn-gold" id="sophia-btn" onclick="askSophia()">Envoyer →</button>
+      <!-- TABLE -->
+      <div class="table-box" id="all-leads">
+        <div class="sec-hdr" style="margin-bottom:12px">
+          <div class="sec-title">Tous les prospects qualifiés</div>
+          <div style="font-size:10px;color:var(--faint)" id="tbl-count"></div>
         </div>
-
-        <div class="voice-bar" id="voice-bar">
-          <div class="voice-dot2"></div>
-          <span id="voice-status">Sophia vous écoute… parlez maintenant</span>
-          <button class="btn-ghost btn-sm" onclick="stopListening()" style="margin-left:auto;border-color:rgba(255,64,96,.3);color:var(--hot)">Annuler</button>
+        <div class="filters">
+          <button class="f-btn active" onclick="setFilter(null,this)">Tous</button>
+          <button class="f-btn" onclick="setFilter(7,this)">🔥 Prioritaires</button>
+          <button class="f-btn" onclick="setFilter(4,this)">⭐ En maturation</button>
         </div>
-
-        <div class="sh-resp" id="sophia-resp"></div>
-
-        <div id="speak-bar" style="display:none;margin-top:8px;align-items:center;gap:8px">
-          <button class="btn-ghost btn-sm" onclick="speakLast()">🔊 Réécouter</button>
-          <button class="btn-ghost btn-sm" id="stop-speak" onclick="stopSpeaking()" style="display:none">⏹ Stop</button>
-        </div>
+        <table>
+          <thead><tr><th>Score</th><th>Prospect</th><th>Téléphone</th><th>Patrimoine</th><th>Besoin</th><th>Date</th><th>Statut</th></tr></thead>
+          <tbody id="tbody">
+            <tr><td colspan="7" style="text-align:center;padding:48px;color:var(--faint)">Les prospects apparaissent ici après chaque qualification par Sophia</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
-    <!-- PRIORITÉS -->
-    <div class="sec-hdr">
-      <div class="sec-title">⚡ Priorités du jour — Recommandées par Sophia</div>
-      <div style="font-size:10px;color:var(--faint)" id="priority-date"></div>
-    </div>
-    <div class="p-grid" id="p-grid"></div>
-
-    <!-- QUICK ACTIONS -->
-    <div class="sec-hdr"><div class="sec-title">Actions rapides</div></div>
-    <div class="qa-grid">
-      <div class="qa-card" onclick="showContentModal()">
-        <div class="qa-icon">🧲</div>
-        <div class="qa-label">Créer un contenu</div>
-        <div class="qa-sub">LinkedIn · SEO · Email · Vidéo</div>
+    <!-- ════════════════════════════════════════════
+      TAB : AUDITS CLIENTS
+    ════════════════════════════════════════════ -->
+    <div class="tab-panel" id="tab-audits">
+      <div class="audit-hero" id="audit-hero">
+        <div class="audit-header">
+          <div class="audit-h-left">
+            <div class="audit-logo">Y</div>
+            <div>
+              <div class="audit-h-title">YAWatch Industries</div>
+              <div class="audit-h-sub">Industrie horlogère de précision · Genève / Paris</div>
+            </div>
+          </div>
+          <div class="audit-h-score">
+            <div class="audit-h-n" id="audit-score">7.8</div>
+            <div class="audit-h-l">Score Audit</div>
+          </div>
+        </div>
+        <div class="audit-body">
+          <div class="audit-grid" id="audit-kpis"></div>
+          <div class="sec-hdr" style="margin-bottom:14px"><div class="sec-title">🔍 Recommandations stratégiques</div></div>
+          <div class="findings-list" id="findings-list"></div>
+        </div>
       </div>
-      <div class="qa-card" onclick="showSignalsModal()">
-        <div class="qa-icon">📡</div>
-        <div class="qa-label">Signaux marché</div>
-        <div class="qa-sub">Intentions patrimoniales live</div>
-      </div>
-      <div class="qa-card" onclick="document.getElementById('all-leads').scrollIntoView({behavior:'smooth'})">
-        <div class="qa-icon">📋</div>
-        <div class="qa-label">Tous les prospects</div>
-        <div class="qa-sub">Pipeline qualifié Sophia</div>
-      </div>
-      <div class="qa-card" onclick="askSophiaAuto('Bilan de la semaine : quels besoins patrimoniaux sont les plus exprimés, quels profils sont prioritaires, et quelles sont tes 3 recommandations ?')">
-        <div class="qa-icon">📊</div>
-        <div class="qa-label">Bilan semaine</div>
-        <div class="qa-sub">Rapport Sophia · 30 sec</div>
-      </div>
-    </div>
-
-    <!-- SIGNALS -->
-    <div class="signals-box">
-      <div class="sec-hdr" style="margin-bottom:14px">
-        <div class="sec-title">📡 Signaux du marché — Besoins détectés cette semaine</div>
-        <div style="font-size:10px;color:var(--green);font-weight:700">↑ +37% intentions patrimoniales</div>
-      </div>
-      <div id="signals-list"></div>
-    </div>
-
-    <!-- TABLE -->
-    <div class="table-box" id="all-leads">
-      <div class="sec-hdr" style="margin-bottom:12px">
-        <div class="sec-title">Tous les prospects qualifiés</div>
-        <div style="font-size:10px;color:var(--faint)" id="tbl-count"></div>
-      </div>
-      <div class="filters">
-        <button class="f-btn active" onclick="setFilter(null,this)">Tous</button>
-        <button class="f-btn" onclick="setFilter(7,this)">🔥 Prioritaires</button>
-        <button class="f-btn" onclick="setFilter(4,this)">⭐ En maturation</button>
-      </div>
-      <table>
-        <thead><tr><th>Score</th><th>Prospect</th><th>Téléphone</th><th>Patrimoine</th><th>Besoin</th><th>Date</th><th>Statut</th></tr></thead>
-        <tbody id="tbody">
-          <tr><td colspan="7" style="text-align:center;padding:48px;color:var(--faint)">Les prospects apparaissent ici après chaque qualification par Sophia</td></tr>
-        </tbody>
-      </table>
     </div>
 
   </div>
@@ -577,73 +610,139 @@ tr:hover td{background:rgba(255,255,255,.02);cursor:pointer;}
 </div>
 
 <script>
-/* ── DATA ──────────────────────────────────────── */
-var LEADS = [
-  {
-    id:'d1', nom:'Marc D.', prenom:'Marc', age:52, ville:'Lyon', phone:'+33 6 12 34 56 78',
-    patrimoine:'1,8M€ déclaré', score:9.4, sms:'O',
-    besoin:'Transmission de son entreprise',
-    sujet:'Transmission PME — Pacte Dutreil',
-    window:'48 heures', risk:'Élevé', urgency:'hot',
-    bg:'linear-gradient(135deg,#CC9B12,#FFEEBE)',
-    source:'Formulaire web',
-    contexte:'A téléchargé le guide "Transmettre sa PME" · Consulté 4 articles fiscaux en 48h',
-    validation:'Patrimoine déclaré par le prospect · Dirigeant confirmé · Cession envisagée',
-    contact_canal:'Appel téléphonique',
-    contact_moment:'Mardi ou jeudi, 9h–11h',
-    contact_rappel:'A demandé à être rappelé avant vendredi',
-    action:'Appeler avant vendredi — décision imminente',
-    script:'Bonjour Marc, suite à votre démarche sur la transmission d\'entreprise, notre expert Pacte Dutreil peut vous proposer une simulation personnalisée — économie potentielle de 75% sur les droits de cession. Est-ce que jeudi matin vous conviendrait pour un échange de 20 minutes ?',
-    resume:'Dirigeant PME lyonnaise (CA ~8M€). Cession partielle envisagée d\'ici 18 mois. Fort intérêt fiscal. Patrimoine financier à structurer en parallèle.',
-    score_detail:['✓ Durée d\'appel Sophia : 18 min','✓ Besoin déclaré : Transmission PME','✓ Profil confirmé : dirigeant PME (CA ~8M€)','✓ Urgence exprimée : cession dans 18 mois','✓ 3 leviers fiscaux évoqués spontanément'],
-    objections:['Timing pas encore décidé','Consulte d\'autres cabinets'],
-  },
-  {
-    id:'d2', nom:'Antoine L.', prenom:'Antoine', age:61, ville:'Paris', phone:'+33 6 55 44 33 22',
-    patrimoine:'2,2M€ estimé', score:8.6, sms:'O',
-    besoin:'Organiser sa succession pour ses enfants',
-    sujet:'Succession & Donation — SCI Familiale',
-    window:'7 jours', risk:'Modéré', urgency:'warm',
-    bg:'linear-gradient(135deg,#888,#ccc)',
-    source:'Recommandation client',
-    contexte:'Recommandé par un client existant · A regardé la vidéo "Succession" 2 fois',
-    validation:'Patrimoine estimé (à confirmer) · Retraité · 3 enfants adultes',
-    contact_canal:'Rendez-vous visio ou présentiel',
-    contact_moment:'En semaine, l\'après-midi',
-    contact_rappel:'Pas de contrainte particulière, décision dans 3 mois',
-    action:'Planifier un RDV découverte — priorité haute',
-    script:'Bonjour Antoine, avec votre patrimoine et l\'horizon successoral que vous avez évoqué, une donation-partage couplée à une SCI familiale peut réduire vos droits de 60 à 70%. Souhaitez-vous qu\'on organise un rendez-vous pour une première simulation sans engagement ?',
-    resume:'Retraité, 3 enfants adultes. Patrimoine immobilier et financier important. Décision envisagée dans les 3 mois.',
-    score_detail:['✓ Durée d\'appel Sophia : 22 min','✓ Besoin déclaré : Succession & Donation','✓ Patrimoine estimé : 2,2M€','✓ Horizon décision confirmé : 3 mois','✓ 4 sujets couverts spontanément'],
-    objections:['Complexité fiscale perçue','Accord familial à obtenir'],
-  },
-  {
-    id:'d3', nom:'Claire B.', prenom:'Claire', age:44, ville:'Bordeaux', phone:'+33 6 98 76 54 32',
-    patrimoine:'650k€ estimé', score:7.8, sms:'O',
-    besoin:'Préparer sa retraite et générer des revenus passifs',
-    sujet:'SCPI & Optimisation Retraite',
-    window:'14 jours', risk:'Faible', urgency:'cool',
-    bg:'linear-gradient(135deg,#1a5aff,#4d8eff)',
-    source:'Article SEO',
-    contexte:'Arrivée via "SCPI retraite 2026" sur Google · A lu 3 articles · A demandé un guide',
-    validation:'Cadre supérieure confirmée · Objectif retraite à 55 ans déclaré',
-    contact_canal:'Email d\'abord, puis appel',
-    contact_moment:'Le matin avant 10h',
-    contact_rappel:'Préfère recevoir une simulation avant de prendre RDV',
-    action:'Envoyer simulation SCPI personnalisée puis proposer RDV',
-    script:'Bonjour Claire, avec un horizon retraite à 11 ans, une stratégie SCPI progressive peut viser 4,5% net tout en optimisant votre fiscalité. Je vous prépare une simulation sur mesure — je vous l\'envoie dès demain, et on en discute à votre rythme ?',
-    resume:'Cadre supérieure, retraite souhaitée à 55 ans. Cherche revenus passifs complémentaires. Très réceptive, préfère être autonome dans sa réflexion.',
-    score_detail:['✓ Durée d\'appel Sophia : 12 min','✓ Besoin déclaré : Revenus passifs retraite','✓ Profil : cadre supérieure, 44 ans','✓ Réceptivité forte (2 interactions spontanées)','✓ Patrimoine existant à structurer'],
-    objections:['Liquidité des SCPI','Incertitude sur les rendements futurs'],
-  },
-];
-
-var SIGNALS = [
-  {pct:'+42%', topic:'Vente d\'entreprise et fiscalité', region:'Rhône-Alpes', bar:90},
-  {pct:'+28%', topic:'Préparer sa retraite de dirigeant', region:'Île-de-France', bar:68},
-  {pct:'+19%', topic:'Revenus passifs et immobilier', region:'Sud-Ouest', bar:52},
-  {pct:'+15%', topic:'Donation aux enfants', region:'National', bar:42},
-];
+/* ══════════════════════════════════════════════════
+   DEMO DATA — Complètement isolé des données réelles
+══════════════════════════════════════════════════ */
+var DEMO_DATA = {
+  leads: [
+    {
+      id:'d1', nom:'Marc D.', prenom:'Marc', age:52, ville:'Lyon', phone:'+33 6 12 34 56 78',
+      patrimoine:'1,8M€ déclaré', score:9.4, sms:'O',
+      besoin:'Transmission de son entreprise',
+      sujet:'Transmission PME — Pacte Dutreil',
+      window:'48 heures', risk:'Élevé', urgency:'hot',
+      bg:'linear-gradient(135deg,#CC9B12,#FFEEBE)',
+      source:'Formulaire web',
+      contexte:'A téléchargé le guide "Transmettre sa PME" · Consulté 4 articles fiscaux en 48h',
+      validation:'Patrimoine déclaré par le prospect · Dirigeant confirmé · Cession envisagée',
+      contact_canal:'Appel téléphonique',
+      contact_moment:'Mardi ou jeudi, 9h–11h',
+      contact_rappel:'A demandé à être rappelé avant vendredi',
+      action:'Appeler avant vendredi — décision imminente',
+      script:'Bonjour Marc, suite à votre démarche sur la transmission d\'entreprise, notre expert Pacte Dutreil peut vous proposer une simulation personnalisée — économie potentielle de 75% sur les droits de cession. Est-ce que jeudi matin vous conviendrait pour un échange de 20 minutes ?',
+      resume:'Dirigeant PME lyonnaise (CA ~8M€). Cession partielle envisagée d\'ici 18 mois. Fort intérêt fiscal. Patrimoine financier à structurer en parallèle.',
+      score_detail:['✓ Durée d\'appel Sophia : 18 min','✓ Besoin déclaré : Transmission PME','✓ Profil confirmé : dirigeant PME (CA ~8M€)','✓ Urgence exprimée : cession dans 18 mois','✓ 3 leviers fiscaux évoqués spontanément'],
+      objections:['Timing pas encore décidé','Consulte d\'autres cabinets'],
+    },
+    {
+      id:'d2', nom:'Antoine L.', prenom:'Antoine', age:61, ville:'Paris', phone:'+33 6 55 44 33 22',
+      patrimoine:'2,2M€ estimé', score:8.6, sms:'O',
+      besoin:'Organiser sa succession pour ses enfants',
+      sujet:'Succession & Donation — SCI Familiale',
+      window:'7 jours', risk:'Modéré', urgency:'warm',
+      bg:'linear-gradient(135deg,#888,#ccc)',
+      source:'Recommandation client',
+      contexte:'Recommandé par un client existant · A regardé la vidéo "Succession" 2 fois',
+      validation:'Patrimoine estimé (à confirmer) · Retraité · 3 enfants adultes',
+      contact_canal:'Rendez-vous visio ou présentiel',
+      contact_moment:'En semaine, l\'après-midi',
+      contact_rappel:'Pas de contrainte particulière, décision dans 3 mois',
+      action:'Planifier un RDV découverte — priorité haute',
+      script:'Bonjour Antoine, avec votre patrimoine et l\'horizon successoral que vous avez évoqué, une donation-partage couplée à une SCI familiale peut réduire vos droits de 60 à 70%. Souhaitez-vous qu\'on organise un rendez-vous pour une première simulation sans engagement ?',
+      resume:'Retraité, 3 enfants adultes. Patrimoine immobilier et financier important. Décision envisagée dans les 3 mois.',
+      score_detail:['✓ Durée d\'appel Sophia : 22 min','✓ Besoin déclaré : Succession & Donation','✓ Patrimoine estimé : 2,2M€','✓ Horizon décision confirmé : 3 mois','✓ 4 sujets couverts spontanément'],
+      objections:['Complexité fiscale perçue','Accord familial à obtenir'],
+    },
+    {
+      id:'d3', nom:'Claire B.', prenom:'Claire', age:44, ville:'Bordeaux', phone:'+33 6 98 76 54 32',
+      patrimoine:'650k€ estimé', score:7.8, sms:'O',
+      besoin:'Préparer sa retraite et générer des revenus passifs',
+      sujet:'SCPI & Optimisation Retraite',
+      window:'14 jours', risk:'Faible', urgency:'cool',
+      bg:'linear-gradient(135deg,#1a5aff,#4d8eff)',
+      source:'Article SEO',
+      contexte:'Arrivée via "SCPI retraite 2026" sur Google · A lu 3 articles · A demandé un guide',
+      validation:'Cadre supérieure confirmée · Objectif retraite à 55 ans déclaré',
+      contact_canal:'Email d\'abord, puis appel',
+      contact_moment:'Le matin avant 10h',
+      contact_rappel:'Préfère recevoir une simulation avant de prendre RDV',
+      action:'Envoyer simulation SCPI personnalisée puis proposer RDV',
+      script:'Bonjour Claire, avec un horizon retraite à 11 ans, une stratégie SCPI progressive peut viser 4,5% net tout en optimisant votre fiscalité. Je vous prépare une simulation sur mesure — je vous l\'envoie dès demain, et on en discute à votre rythme ?',
+      resume:'Cadre supérieure, retraite souhaitée à 55 ans. Cherche revenus passifs complémentaires. Très réceptive, préfère être autonome dans sa réflexion.',
+      score_detail:['✓ Durée d\'appel Sophia : 12 min','✓ Besoin déclaré : Revenus passifs retraite','✓ Profil : cadre supérieure, 44 ans','✓ Réceptivité forte (2 interactions spontanées)','✓ Patrimoine existant à structurer'],
+      objections:['Liquidité des SCPI','Incertitude sur les rendements futurs'],
+    },
+    {
+      id:'d4', nom:'Thomas R.', prenom:'Thomas', age:58, ville:'Annecy', phone:'+33 6 11 22 33 44',
+      patrimoine:'3,5M€ déclaré', score:9.1, sms:'N',
+      besoin:'Structurer un holding familial avant transmission',
+      sujet:'Holding Familiale & LBO Familial',
+      window:'5 jours', risk:'Élevé', urgency:'hot',
+      bg:'linear-gradient(135deg,#CC9B12,#A27700)',
+      source:'Webinar',
+      contexte:'Participé au webinar "Holding familiale" · A posé 3 questions sur le LBO familial · A demandé un entretien privé',
+      validation:'Dirigeant confirmé (CA 12M€) · 2 enfants en école de commerce · Très mûr',
+      contact_canal:'Appel téléphonique',
+      contact_moment:'Mercredi ou vendredi matin',
+      contact_rappel:'Disponible la semaine prochaine — veut une réponse avant le 15',
+      action:'Appel prioritaire — structuration holding à anticiper',
+      script:'Bonjour Thomas, merci pour votre participation au webinar. Votre situation — holding + LBO familial — est exactement le cœur de métier de Days Legacy. Notre expert a déjà structuré 14 holdings familiales cette année. Puis-je vous proposer un échange confidentiel mercredi ou vendredi matin ?',
+      resume:'Dirigeant agroalimentaire, CA 12M€. Vision claire : transmettre à ses 2 enfants via holding. Déjà rencontré 2 concurrents. Décision rapide attendue.',
+      score_detail:['✓ Durée d\'appel Sophia : 25 min','✓ Besoin déclaré : Holding familiale + LBO','✓ Patrimoine déclaré : 3,5M€','✓ Urgence confirmée : décision avant le 15','✓ 3 questions techniques sur le LBO familial'],
+      objections:['A déjà rencontré 2 concurrents','Attend un chiffrage rapide'],
+    },
+    {
+      id:'d5', nom:'Sophie M.', prenom:'Sophie', age:49, ville:'Aix-en-Provence', phone:'+33 6 77 88 99 00',
+      patrimoine:'1,2M€ estimé', score:7.2, sms:'O',
+      besoin:'Optimiser sa fiscalité avant départ à l\'étranger',
+      sujet:'Expatriation Fiscale & Exit Tax',
+      window:'21 jours', risk:'Modéré', urgency:'warm',
+      bg:'linear-gradient(135deg,#ff9a3c,#ffcc88)',
+      source:'LinkedIn',
+      contexte:'Contactée via LinkedIn · A commenté 2 posts sur l\'expatriation fiscale · Profil consulté par notre page 5 fois',
+      validation:'Profil C-suite confirmé · Départ pour Lisbonne dans 8 mois · Actionnaire minoritaire de sa boîte',
+      contact_canal:'Visio puis présentiel',
+      contact_moment:'Lundi ou jeudi après-midi',
+      contact_rappel:'Veut un bilan patrimonial complet avant de signer son contrat à l\'étranger',
+      action:'Proposer un bilan patrimonial complet + simulation exit tax',
+      script:'Bonjour Sophie, votre départ pour Lisbonne représente une fenêtre fiscale à sécuriser maintenant. Days Legacy accompagne chaque année une dizaine de dirigeants dans leur expatriation. Puis-je vous proposer un bilan patrimonial complet, incluant une simulation de l\'exit tax, d\'ici la fin du mois ?',
+      resume:'Directrice marketing, 49 ans. Départ Lisbonne dans 8 mois. Actionnaire minoritaire (valorisation à structurer). Attentive à l\'optimisation fiscale pré-départ.',
+      score_detail:['✓ Interaction LinkedIn qualifiée','✓ Besoin déclaré : Expatriation fiscale','✓ Patrimoine estimé : 1,2M€','✓ Horizon : 8 mois','✓ 5 visites sur notre page LinkedIn'],
+      objections:['Attend la signature du contrat étranger','Budget conseiller non alloué'],
+    }
+  ],
+  signals: [
+    {pct:'+42%', topic:'Vente d\'entreprise et fiscalité', region:'Rhône-Alpes', bar:90},
+    {pct:'+28%', topic:'Préparer sa retraite de dirigeant', region:'Île-de-France', bar:68},
+    {pct:'+19%', topic:'Revenus passifs et immobilier', region:'Sud-Ouest', bar:52},
+    {pct:'+15%', topic:'Donation aux enfants', region:'National', bar:42},
+    {pct:'+33%', topic:'Holding familiale et LBO familial', region:'Auvergne-Rhône-Alpes', bar:78},
+  ],
+  auditYawatch: {
+    client_name: 'YAWatch Industries',
+    sector: 'Industrie horlogère de précision',
+    contact_name: 'M. Laurent Vaucher',
+    ca_estime: '28M€',
+    effectif: 87,
+    patrimoine_dirigeant: '4,2M€ estimé',
+    score_audit: 7.8,
+    resume_global: 'PME familiale suisse-française avec un fort potentiel de structuration patrimoniale. Risques fiscaux modérés mais opportunités importantes sur la transmission et l\'optimisation du dirigeant.',
+    kpis: [
+      {label:'CA estimé',val:'28M€',sub:'Croissance +12%'},
+      {label:'Effectif',val:'87',sub:'Dont 12 cadres'},
+      {label:'Patrimoine dirigeant',val:'4,2M€',sub:'À structurer'},
+      {label:'Findings',val:'6',sub:'2 critiques · 2 élevés'},
+    ],
+    findings: [
+      {category:'fiscal',severity:'critical',title:'Absence de holding familiale malgré une volonté de transmission',description:'Le dirigeant détient 100% des parts en direct. Aucune structuration n\'a été mise en place pour optimiser la transmission aux deux enfants (24 et 27 ans), pourtant intégrés dans l\'entreprise.',recommendation:'Création d\'une holding familiale avec apport des titres en vue d\'une transmission optimisée (abattement 75% sous conditions Pacte Dutreil ou Dutreil renforcé).',potential_gain:'~800k€ d\'économie fiscale estimée'},
+      {category:'patrimonial',severity:'critical',title:'Trésorerie personnelle sous-utilisée (1,8M€ sur livret)',description:'1,8M€ reposent sur des produits monétaires à faible rendement. Aucune stratégie d\'optimisation du rendement net de fiscalité n\'est en place.',recommendation:'Structuration progressive via PER entreprise (abondement), SCPI de rendement sélectionnées et assurance-vie en démembrement pour la transmission.',potential_gain:'+2,1% net de rendement annuel estimé (~38k€/an)'},
+      {category:'strategique',severity:'eleve',title:'Aucun contrat de travail optimisé pour le dirigeant',description:'Le dirigeant perçoit une rémunération brute classique sans optimisation des avantages en nature, de la participation ni de l\'intéressement.',recommendation:'Mise en place d\'un package dirigeant optimisé : participation + intéressement + PER collectif avec abondement majoré.',potential_gain:'~45k€ d\'optimisation annuelle'},
+      {category:'juridique',severity:'eleve',title:'Statut SAS sans pacte d\'actionnaires ni clause d\'agrément',description:'La société est une SAS sans pacte d\'actionnaires structuré. En cas de décès du dirigeant, les héritiers hériteraient des parts sans contrainte ni mécanisme de sortie encadré.',recommendation:'Rédaction d\'un pacte d\'actionnaires avec clause d\'agrément, droit de préemption et mécanisme de sortie encadrée pour les héritiers non-actifs.',potential_gain:'Sécurisation juridique majeure'},
+      {category:'social',severity:'moyen',title:'Contrats cadres non optimisés en vue de la retraite',description:'Les 12 cadres de l\'entreprise ne bénéficient pas d\'un dispositif d\'épargne salariale attractif, ce qui fragilise la fidélisation des talents clés.',recommendation:'Mise en place d\'un PER collectif avec abondement employeur et communication interne sur la stratégie retraite.',potential_gain:'Fidélisation + avantage social compétitif'},
+      {category:'fiscal',severity:'faible',title:'Immobilier d\'entreprise détenu en pleine propriété',description:'Le siège social est détenu en pleine propriété par la société. Une optimisation via une SCI à l\'IS ou un démembrement pourrait être pertinente.',recommendation:'Étude de faisabilité pour un montage SCI familiale / holding pour détenir l\'immobilier.',potential_gain:'Flexibilité successorale + optimisation IS'},
+    ]
+  }
+};
 
 var URGENCY = {
   hot:  {bg:'rgba(255,64,96,.1)',  border:'rgba(255,64,96,.25)',  score:'#ff4060', icon:'🔥'},
@@ -651,15 +750,130 @@ var URGENCY = {
   cool: {bg:'rgba(0,130,243,.1)',  border:'rgba(0,130,243,.25)',  score:'#0082f3', icon:'📞'},
 };
 
-/* ── STATE ─────────────────────────────────────── */
+/* ══════════════════════════════════════════════════
+   MODE & STATE
+══════════════════════════════════════════════════ */
+var MODE = 'prod'; // 'demo' | 'prod'
 var TOKEN = localStorage.getItem('dl_token') || '';
 var realLeads = [];
 var lastResponse = '';
 var synth = window.speechSynthesis;
 var voiceActive = false;
 var recognition = null;
+var _originalFetch = window.fetch;
 
-/* ── AUTH ──────────────────────────────────────── */
+function isDemo() { return MODE === 'demo'; }
+
+function getLeads() {
+  return isDemo() ? DEMO_DATA.leads : realLeads;
+}
+function getSignals() {
+  return isDemo() ? DEMO_DATA.signals : [];
+}
+function getTopLead() {
+  var ls = getLeads();
+  return ls.length ? ls[0] : null;
+}
+function getHotCount() {
+  return getLeads().filter(function(l){ return l.urgency === 'hot'; }).length;
+}
+function getWarmCount() {
+  return getLeads().filter(function(l){ return l.urgency === 'warm'; }).length;
+}
+
+/* Intercepte fetch en mode démo pour simuler les réponses API */
+function installDemoMock() {
+  window.fetch = function(url, opts) {
+    if (typeof url === 'string' && url.indexOf('/api/sophia/chat') !== -1) {
+      var body = opts && opts.body ? JSON.parse(opts.body) : {};
+      var q = (body.message || '').toLowerCase();
+      var resp = mockSophiaResponse(q);
+      return Promise.resolve({
+        ok: true, json: function(){ return Promise.resolve({response: resp}); }
+      });
+    }
+    if (typeof url === 'string' && url.indexOf('/api/leads') !== -1) {
+      return Promise.resolve({
+        ok: true, json: function(){ return Promise.resolve(DEMO_DATA.leads); }
+      });
+    }
+    if (typeof url === 'string' && url.indexOf('/api/audits') !== -1) {
+      return Promise.resolve({
+        ok: true, json: function(){ return Promise.resolve([{id:1,client_name:'YAWatch Industries',sector:'Industrie horlogère',statut:'valide',score_audit:7.8,created_at:new Date().toISOString()}]); }
+      });
+    }
+    return _originalFetch.apply(window, arguments);
+  };
+}
+function uninstallDemoMock() {
+  window.fetch = _originalFetch;
+}
+
+function mockSophiaResponse(q) {
+  if (q.indexOf('bilan') !== -1 || q.indexOf('semaine') !== -1) {
+    return "Bilan de la semaine — 5 prospects qualifiés.\n\n🔥 Priorité 1 : Marc D. (Lyon) — transmission PME, fenêtre 48h.\n🔥 Priorité 2 : Thomas R. (Annecy) — holding familiale, fenêtre 5 jours.\n⭐ Priorité 3 : Antoine L. (Paris) — succession SCI, fenêtre 7 jours.\n\nTendance : +33% sur les holdings familiales et LBO familiaux en Auvergne-Rhône-Alpes.\n\n[Disclaimer] Ces informations sont fournies à titre indicatif uniquement et ne constituent pas un conseil en investissement personnalisé. Elles doivent être validées par un expert patrimonial agréé avant toute décision.";
+  }
+  if (q.indexOf('script') !== -1 || q.indexOf('appel') !== -1) {
+    return "Script suggéré pour votre prochain appel :\n\n— Accroche personnalisée sur le besoin exprimé\n— 1 question ouverte pour qualifier le niveau de maturité\n— Proposition d'une simulation chiffrée sans engagement\n— Fixation d'un créneau court (20 min max)\n\nJe peux aussi vous préparer les objections probables si vous me donnez le nom du prospect.\n\n[Disclaimer] Ces informations sont fournies à titre indicatif uniquement et ne constituent pas un conseil en investissement personnalisé. Elles doivent être validées par un expert patrimonial agréé avant toute décision.";
+  }
+  if (q.indexOf('stratégie') !== -1) {
+    return "Stratégie de prospection suggérée :\n\n1. Ciblage : dirigeants 50-65 ans, CA >5M€, secteur industrie / PME familiale\n2. Canal : LinkedIn + webinar thématique (Pacte Dutreil ou holding familiale)\n3. Contenu : 1 post + 1 guide PDF à télécharger\n4. Relance : séquence 3 emails sur 10 jours\n5. Conversion : appel Sophia en aval pour qualification automatique\n\n[Disclaimer] Ces informations sont fournies à titre indicatif uniquement et ne constituent pas un conseil en investissement personnalisé. Elles doivent être validées par un expert patrimonial agréé avant toute décision.";
+  }
+  return "Je suis Sophia, l'assistante IA patrimoniale de Days Legacy. Je peux vous aider à préparer vos appels, analyser vos prospects, générer du contenu ou répondre à vos questions sur le marché patrimonial français.\n\nN'oubliez pas : je ne suis pas habilitée à donner de conseil financier personnalisé. Pour toute décision patrimoniale concrète, un rendez-vous avec l'un de nos experts est indispensable.\n\n[Disclaimer] Ces informations sont fournies à titre indicatif uniquement et ne constituent pas un conseil en investissement personnalisé. Elles doivent être validées par un expert patrimonial agréé avant toute décision.";
+}
+
+/* ══════════════════════════════════════════════════
+   AUTH & BOOT
+══════════════════════════════════════════════════ */
+function checkDemoParam() {
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('demo') === '1' || params.get('mode') === 'demo') {
+    enterDemoMode();
+    return true;
+  }
+  return false;
+}
+
+function enterDemoMode() {
+  MODE = 'demo';
+  installDemoMock();
+  document.getElementById('login').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  updateModePill();
+  startClock();
+  renderBriefing();
+  renderPriorities();
+  renderSignals();
+  renderTable(getLeads());
+  renderAudit();
+  document.getElementById('tbl-count').textContent = DEMO_DATA.leads.length + ' prospects (démonstration)';
+}
+
+function toggleMode() {
+  if (MODE === 'demo') {
+    // Passage en prod : demande auth
+    MODE = 'prod';
+    uninstallDemoMock();
+    logout();
+  } else {
+    // Passage en démo
+    enterDemoMode();
+  }
+}
+
+function updateModePill() {
+  var dot = document.getElementById('mode-dot');
+  var txt = document.getElementById('mode-txt');
+  if (!dot || !txt) return;
+  if (MODE === 'demo') {
+    dot.className = 'dot demo';
+    txt.textContent = 'DÉMO';
+  } else {
+    dot.className = 'dot prod';
+    txt.textContent = 'PROD';
+  }
+}
+
 async function doLogin() {
   var pw = document.getElementById('pw').value;
   var r = await fetch('/api/auth/login', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password:pw})});
@@ -667,6 +881,8 @@ async function doLogin() {
     var d = await r.json();
     TOKEN = d.token;
     localStorage.setItem('dl_token', TOKEN);
+    MODE = 'prod';
+    uninstallDemoMock();
     showApp();
   } else {
     document.getElementById('lerr').textContent = 'Mot de passe incorrect.';
@@ -675,22 +891,38 @@ async function doLogin() {
 function logout() {
   TOKEN = '';
   localStorage.removeItem('dl_token');
+  MODE = 'prod';
+  uninstallDemoMock();
   document.getElementById('app').style.display = 'none';
   document.getElementById('login').style.display = 'flex';
+  document.getElementById('pw').value = '';
 }
 
-/* ── BOOT ──────────────────────────────────────── */
 function showApp() {
   document.getElementById('login').style.display = 'none';
   document.getElementById('app').style.display = 'block';
+  updateModePill();
   startClock();
   renderBriefing();
   renderPriorities();
   renderSignals();
   loadRealData();
+  loadAudits();
 }
 
-/* ── CLOCK ─────────────────────────────────────── */
+/* ══════════════════════════════════════════════════
+   TABS
+══════════════════════════════════════════════════ */
+function switchTab(tab) {
+  document.querySelectorAll('.nav-tab').forEach(function(t){ t.classList.remove('active'); });
+  document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelector('.nav-tab[data-tab="'+tab+'"]').classList.add('active');
+  document.getElementById('tab-'+tab).classList.add('active');
+}
+
+/* ══════════════════════════════════════════════════
+   CLOCK & BRIEFING
+══════════════════════════════════════════════════ */
 function startClock() {
   function fmt() {
     return new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})
@@ -700,15 +932,19 @@ function startClock() {
   setInterval(function(){ document.getElementById('clock').textContent = fmt(); }, 1000);
 }
 
-/* ── BRIEFING ──────────────────────────────────── */
 function renderBriefing() {
   var h = new Date().getHours();
   var g = h < 12 ? 'Bonjour' : h < 18 ? 'Bon après-midi' : 'Bonsoir';
-  document.getElementById('sophia-msg').textContent = g + '. Cette semaine, 37 personnes ont exprimé un besoin lié à la retraite, la fiscalité ou la transmission. J\'ai identifié 3 contacts pour qui un échange avec un expert Days Legacy aurait une vraie valeur. Marc D. est le plus urgent — il cherche à sécuriser la transmission de son entreprise avant une décision à vendredi.';
+  var topL = getTopLead();
+  var msg = g + '. Cette semaine, '+ (isDemo() ? '47' : '37') +' personnes ont exprimé un besoin lié à la retraite, la fiscalité ou la transmission. J\'ai identifié '+ getLeads().length +' contacts pour qui un échange avec un expert Days Legacy aurait une vraie valeur.';
+  if (topL) msg += ' ' + topL.prenom + ' ' + topL.nom.split(' ')[0] + ' est le plus urgent — il cherche à ' + topL.besoin.toLowerCase() + '.';
+  document.getElementById('sophia-msg').textContent = msg;
   document.getElementById('priority-date').textContent = new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
 }
 
-/* ── VOICE ─────────────────────────────────────── */
+/* ══════════════════════════════════════════════════
+   VOICE
+══════════════════════════════════════════════════ */
 function toggleVoice() {
   if (voiceActive) { stopListening(); } else { startListening(); }
 }
@@ -772,23 +1008,25 @@ function stopSpeaking() {
   if (sb) sb.style.display = 'none';
 }
 
-/* ── SOPHIA CONTEXT ────────────────────────────── */
+/* ══════════════════════════════════════════════════
+   SOPHIA CONTEXT & CHAT
+══════════════════════════════════════════════════ */
 function buildSophiaContext() {
-  var hot = LEADS.filter(function(l){ return l.urgency === 'hot'; }).length;
-  var warm = LEADS.filter(function(l){ return l.urgency === 'warm'; }).length;
+  var ls = getLeads();
+  var hot = ls.filter(function(l){ return l.urgency === 'hot'; }).length;
+  var warm = ls.filter(function(l){ return l.urgency === 'warm'; }).length;
   var ctx = '[CONTEXTE BD DAYS LEGACY]\n';
   ctx += 'Date : ' + new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}) + '\n';
-  ctx += 'Pipeline : ' + LEADS.length + ' prospects (' + hot + ' chaud, ' + warm + ' tiède)\n';
-  ctx += 'Top prospect : Marc D. 52 ans Lyon — Transmission PME score 9.4/10 fenêtre 48h\n';
-  ctx += 'Priorité 2 : Antoine L. 61 ans Paris — Succession SCI Familiale score 8.6/10\n';
-  ctx += 'Priorité 3 : Claire B. 44 ans Bordeaux — SCPI Retraite score 7.8/10\n';
-  ctx += 'Signaux : +42% vente entreprise (Rhône-Alpes), +28% retraite dirigeant (IDF)\n';
-  if (realLeads.length > 0) ctx += 'Base réelle : ' + realLeads.length + ' prospects\n';
+  ctx += 'Mode : ' + (isDemo() ? 'DÉMONSTRATION' : 'PRODUCTION') + '\n';
+  ctx += 'Pipeline : ' + ls.length + ' prospects (' + hot + ' chaud, ' + warm + ' tiède)\n';
+  if (ls.length > 0) {
+    ctx += 'Top prospect : ' + ls[0].prenom + ' ' + ls[0].nom + ' — ' + ls[0].besoin + ' score ' + ls[0].score + '/10\n';
+  }
+  if (!isDemo() && realLeads.length > 0) ctx += 'Base réelle : ' + realLeads.length + ' prospects\n';
   ctx += '[FIN CONTEXTE]\n\n';
   return ctx;
 }
 
-/* ── SOPHIA CHAT ───────────────────────────────── */
 async function askSophia() {
   var q = document.getElementById('sophia-q').value.trim();
   if (!q) return;
@@ -829,12 +1067,15 @@ async function _callSophia(question, speakReply) {
   btn.disabled = false; btn.textContent = 'Envoyer →';
 }
 
-/* ── PRIORITIES ────────────────────────────────── */
+/* ══════════════════════════════════════════════════
+   PRIORITIES
+══════════════════════════════════════════════════ */
 function renderPriorities() {
-  var ranks = ['1ère priorité','2ème priorité','3ème priorité'];
+  var ls = getLeads();
+  var ranks = ['1ère priorité','2ème priorité','3ème priorité','4ème priorité','5ème priorité'];
   var html = '';
-  for (var i = 0; i < Math.min(LEADS.length, 3); i++) {
-    var l = LEADS[i];
+  for (var i = 0; i < Math.min(ls.length, 5); i++) {
+    var l = ls[i];
     var u = URGENCY[l.urgency] || URGENCY.cool;
     html += '<div class="p-card' + (l.urgency === 'hot' ? ' urgent' : '') + '" style="border-color:' + u.border + '">'
       + '<div class="p-rank-row">'
@@ -868,13 +1109,23 @@ function renderPriorities() {
       + '</div>';
   }
   document.getElementById('p-grid').innerHTML = html;
+  // Update stats band
+  var top = getTopLead();
+  document.getElementById('stat-priorities').textContent = ls.length;
+  document.getElementById('stat-topscore').textContent = top ? top.score : '—';
+  var sigs = getSignals();
+  document.getElementById('stat-signal').textContent = sigs.length ? sigs[0].pct : '—';
+  document.getElementById('stat-window').textContent = top ? top.window : '—';
 }
 
-/* ── SIGNALS ───────────────────────────────────── */
+/* ══════════════════════════════════════════════════
+   SIGNALS
+══════════════════════════════════════════════════ */
 function renderSignals() {
+  var sigs = getSignals();
   var html = '';
-  for (var i = 0; i < SIGNALS.length; i++) {
-    var s = SIGNALS[i];
+  for (var i = 0; i < sigs.length; i++) {
+    var s = sigs[i];
     html += '<div class="sig-item">'
       + '<div class="sig-pct">' + s.pct + '</div>'
       + '<div class="sig-body"><div class="sig-topic">' + s.topic + '</div><div class="sig-region">' + s.region + '</div></div>'
@@ -885,10 +1136,13 @@ function renderSignals() {
   document.getElementById('signals-list').innerHTML = html;
 }
 
-/* ── SCRIPT MODAL ──────────────────────────────── */
+/* ══════════════════════════════════════════════════
+   SCRIPT MODAL
+══════════════════════════════════════════════════ */
 function openScript(id) {
+  var ls = getLeads();
   var l = null;
-  for (var i = 0; i < LEADS.length; i++) { if (LEADS[i].id === id) { l = LEADS[i]; break; } }
+  for (var i = 0; i < ls.length; i++) { if (ls[i].id === id) { l = ls[i]; break; } }
   if (!l) return;
   var u = URGENCY[l.urgency] || URGENCY.cool;
   var scoreHtml = '';
@@ -942,8 +1196,9 @@ function openScript(id) {
 }
 
 async function generateScript(id) {
+  var ls = getLeads();
   var l = null;
-  for (var i = 0; i < LEADS.length; i++) { if (LEADS[i].id === id) { l = LEADS[i]; break; } }
+  for (var i = 0; i < ls.length; i++) { if (ls[i].id === id) { l = ls[i]; break; } }
   if (!l) return;
   var out = document.getElementById('gen-out');
   out.style.display = 'block';
@@ -965,7 +1220,9 @@ async function generateScript(id) {
 
 function closeModal() { document.getElementById('modal-ov').classList.remove('open'); }
 
-/* ── CONTENT MODAL ─────────────────────────────── */
+/* ══════════════════════════════════════════════════
+   CONTENT MODAL
+══════════════════════════════════════════════════ */
 function showContentModal() {
   var items = [
     {type:'Post LinkedIn', icon:'💼', desc:'Dirigeants 45-60 ans · Vente d\'entreprise et fiscalité'},
@@ -1012,11 +1269,14 @@ async function generateContent(type, desc) {
   } catch(e) { out.innerHTML = '<div style="color:var(--hot);font-size:12px;padding:8px">Erreur.</div>'; }
 }
 
-/* ── SIGNALS MODAL ─────────────────────────────── */
+/* ══════════════════════════════════════════════════
+   SIGNALS MODAL
+══════════════════════════════════════════════════ */
 function showSignalsModal() {
+  var sigs = getSignals();
   var html = '';
-  for (var i = 0; i < SIGNALS.length; i++) {
-    var s = SIGNALS[i];
+  for (var i = 0; i < sigs.length; i++) {
+    var s = sigs[i];
     html += '<div style="display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.05)">'
       + '<div style="font-size:22px;font-weight:900;color:var(--green);width:62px">' + s.pct + '</div>'
       + '<div style="flex:1"><div style="font-size:14px;font-weight:700">' + s.topic + '</div><div style="font-size:11px;color:var(--dim);margin-top:2px">' + s.region + '</div></div>'
@@ -1033,18 +1293,35 @@ function showSignalsModal() {
   document.getElementById('modal-ov').classList.add('open');
 }
 
-/* ── REAL DATA ─────────────────────────────────── */
+/* ══════════════════════════════════════════════════
+   REAL DATA
+══════════════════════════════════════════════════ */
 async function loadRealData() {
-  if (!TOKEN) return;
+  if (!TOKEN || isDemo()) return;
   try {
     var lr = await fetch('/api/leads', {headers:{Authorization:'Bearer '+TOKEN}});
     if (lr.ok) {
       realLeads = await lr.json();
-      if (realLeads.length > 0) {
-        document.getElementById('tbl-count').textContent = realLeads.length + ' prospects qualifiés';
-        renderTable(realLeads);
-      } else {
-        document.getElementById('tbl-count').textContent = 'Prospects réels après les appels Sophia';
+      document.getElementById('tbl-count').textContent = realLeads.length + ' prospects qualifiés';
+      renderPriorities();
+      renderSignals();
+      renderTable(realLeads);
+    }
+  } catch(e) {}
+}
+
+async function loadAudits() {
+  if (isDemo()) {
+    renderAudit(DEMO_DATA.auditYawatch);
+    return;
+  }
+  if (!TOKEN) return;
+  try {
+    var r = await fetch('/api/audits', {headers:{Authorization:'Bearer '+TOKEN}});
+    if (r.ok) {
+      var audits = await r.json();
+      if (audits.length > 0) {
+        renderAudit(audits[0]);
       }
     }
   } catch(e) {}
@@ -1053,7 +1330,7 @@ async function loadRealData() {
 function setFilter(score, btn) {
   document.querySelectorAll('.f-btn').forEach(function(b){ b.classList.remove('active'); });
   btn.classList.add('active');
-  renderTable(score == null ? realLeads : realLeads.filter(function(l){ return (l.score||0) >= score; }));
+  renderTable(score == null ? getLeads() : getLeads().filter(function(l){ return (l.score||0) >= score; }));
 }
 
 function renderTable(leads) {
@@ -1083,8 +1360,55 @@ function renderTable(leads) {
   tb.innerHTML = html;
 }
 
-setInterval(function(){ if(TOKEN) loadRealData(); }, 30000);
-if (TOKEN) showApp();
+/* ══════════════════════════════════════════════════
+   AUDIT YAWATCH
+══════════════════════════════════════════════════ */
+function renderAudit(auditData) {
+  var a = auditData || DEMO_DATA.auditYawatch;
+  // KPIs
+  var kpiHtml = '';
+  for (var i = 0; i < a.kpis.length; i++) {
+    var k = a.kpis[i];
+    kpiHtml += '<div class="audit-kpi">'
+      + '<div class="audit-kpi-lbl">' + k.label + '</div>'
+      + '<div class="audit-kpi-val">' + k.val + '</div>'
+      + '<div class="audit-kpi-sub">' + k.sub + '</div>'
+      + '</div>';
+  }
+  document.getElementById('audit-kpis').innerHTML = kpiHtml;
+  document.getElementById('audit-score').textContent = a.score_audit;
+
+  // Findings
+  var sevMap = {'critical':'critical','eleve':'eleve','moyen':'moyen','faible':'faible'};
+  var sevLabel = {'critical':'CRITIQUE','eleve':'ÉLEVÉ','moyen':'MOYEN','faible':'FAIBLE'};
+  var catLabel = {'fiscal':'FISCAL','social':'SOCIAL','juridique':'JURIDIQUE','patrimonial':'PATRIMONIAL','strategique':'STRATÉGIQUE'};
+  var fHtml = '';
+  for (var j = 0; j < a.findings.length; j++) {
+    var f = a.findings[j];
+    var sev = sevMap[f.severity] || 'faible';
+    fHtml += '<div class="finding-card ' + sev + '">'
+      + '<div class="finding-top">'
+      +   '<div class="finding-cat">' + (catLabel[f.category] || f.category.toUpperCase()) + '</div>'
+      +   '<div class="finding-sev ' + sev + '">' + (sevLabel[f.severity] || f.severity.toUpperCase()) + '</div>'
+      + '</div>'
+      + '<div class="finding-title">' + f.title + '</div>'
+      + '<div class="finding-desc">' + f.description + '</div>'
+      + '<div class="finding-reco">'
+      +   '<div class="finding-reco-lbl">💡 Recommandation Days Legacy</div>'
+      +   '<div class="finding-reco-txt">' + f.recommendation + '</div>'
+      + '</div>'
+      + '<div class="finding-gain">📈 Gain potentiel : ' + f.potential_gain + '</div>'
+      + '</div>';
+  }
+  document.getElementById('findings-list').innerHTML = fHtml;
+}
+
+setInterval(function(){ if(TOKEN && MODE === 'prod') loadRealData(); }, 30000);
+if (checkDemoParam()) {
+  // déjà initialisé par enterDemoMode
+} else if (TOKEN) {
+  showApp();
+}
 </script>
 </body>
 </html>
