@@ -30,6 +30,10 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 def dashboard():
     return FileResponse("static/dashboard.html")
 
+@app.get("/workspace")
+def workspace():
+    return FileResponse("static/workspace.html")
+
 @app.get("/")
 def root():
     return FileResponse("static/dashboard.html")
