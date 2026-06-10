@@ -940,7 +940,7 @@ function renderBriefing() {
   var g = h < 12 ? 'Bonjour' : h < 18 ? 'Bon après-midi' : 'Bonsoir';
   var topL = getTopLead();
   var msg = g + '. Cette semaine, '+ (isDemo() ? '47' : '37') +' personnes ont exprimé un besoin lié à la retraite, la fiscalité ou la transmission. J\'ai identifié '+ getLeads().length +' contacts pour qui un échange avec un expert Days Legacy aurait une vraie valeur.';
-  if (topL) msg += ' ' + topL.prenom + ' ' + topL.nom + ' est le plus urgent — il cherche à ' + topL.besoin.toLowerCase() + '.';
+  if (topL) msg += ' ' + topL.nom + ' est le plus urgent — il cherche à ' + topL.besoin.toLowerCase() + '.';
   document.getElementById('sophia-msg').textContent = msg;
   document.getElementById('priority-date').textContent = new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
 }
@@ -1023,7 +1023,7 @@ function buildSophiaContext() {
   ctx += 'Mode : ' + (isDemo() ? 'DÉMONSTRATION' : 'PRODUCTION') + '\n';
   ctx += 'Pipeline : ' + ls.length + ' prospects (' + hot + ' chaud, ' + warm + ' tiède)\n';
   if (ls.length > 0) {
-    ctx += 'Top prospect : ' + ls[0].prenom + ' ' + ls[0].nom + ' — ' + ls[0].besoin + ' score ' + ls[0].score + '/10\n';
+    ctx += 'Top prospect : ' + ls[0].nom + ' — ' + ls[0].besoin + ' score ' + ls[0].score + '/10\n';
   }
   if (!isDemo() && realLeads.length > 0) ctx += 'Base réelle : ' + realLeads.length + ' prospects\n';
   ctx += '[FIN CONTEXTE]\n\n';
