@@ -1,0 +1,19 @@
+LANCEMENT DEMO HTTPS
+====================
+
+1. Ouvre un terminal
+2. Copie-colle ces 4 lignes :
+
+cd PROJETS/DAYSLEGACY_AI/backend
+source venv/bin/activate
+uvicorn main:app --host 0.0.0.0 --port 8000 &
+ngrok http 8000
+
+3. Attends 10 secondes
+4. Copie l'URL https://xxx.ngrok.io affichée
+5. Ouvre-la sur ton PC et ton téléphone
+6. Ajoute ?demo=1 à la fin pour le mode démo
+
+Exemple : https://abc123.ngrok.io/dashboard?demo=1
+
+Arrêt : Ctrl+C puis kill %1
