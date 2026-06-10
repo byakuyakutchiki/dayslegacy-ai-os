@@ -616,7 +616,7 @@ tr:hover td{background:rgba(255,255,255,.02);cursor:pointer;}
 var DEMO_DATA = {
   leads: [
     {
-      id:'d1', nom:'Marc D.', prenom:'Marc', age:52, ville:'Lyon', phone:'+33 6 12 34 56 78',
+      id:'d1', nom:'Marc D.', prenom:'Marc', age:52, ville:'Lyon', phone:'+33 6 12 34 56 78', date:'2026-06-09T09:30:00',
       patrimoine:'1,8M€ déclaré', score:9.4, sms:'O',
       besoin:'Transmission de son entreprise',
       sujet:'Transmission PME — Pacte Dutreil',
@@ -635,7 +635,7 @@ var DEMO_DATA = {
       objections:['Timing pas encore décidé','Consulte d\'autres cabinets'],
     },
     {
-      id:'d2', nom:'Antoine L.', prenom:'Antoine', age:61, ville:'Paris', phone:'+33 6 55 44 33 22',
+      id:'d2', nom:'Antoine L.', prenom:'Antoine', age:61, ville:'Paris', phone:'+33 6 55 44 33 22', date:'2026-06-09T11:15:00',
       patrimoine:'2,2M€ estimé', score:8.6, sms:'O',
       besoin:'Organiser sa succession pour ses enfants',
       sujet:'Succession & Donation — SCI Familiale',
@@ -654,7 +654,7 @@ var DEMO_DATA = {
       objections:['Complexité fiscale perçue','Accord familial à obtenir'],
     },
     {
-      id:'d3', nom:'Claire B.', prenom:'Claire', age:44, ville:'Bordeaux', phone:'+33 6 98 76 54 32',
+      id:'d3', nom:'Claire B.', prenom:'Claire', age:44, ville:'Bordeaux', phone:'+33 6 98 76 54 32', date:'2026-06-08T14:45:00',
       patrimoine:'650k€ estimé', score:7.8, sms:'O',
       besoin:'Préparer sa retraite et générer des revenus passifs',
       sujet:'SCPI & Optimisation Retraite',
@@ -673,7 +673,7 @@ var DEMO_DATA = {
       objections:['Liquidité des SCPI','Incertitude sur les rendements futurs'],
     },
     {
-      id:'d4', nom:'Thomas R.', prenom:'Thomas', age:58, ville:'Annecy', phone:'+33 6 11 22 33 44',
+      id:'d4', nom:'Thomas R.', prenom:'Thomas', age:58, ville:'Annecy', phone:'+33 6 11 22 33 44', date:'2026-06-10T08:00:00',
       patrimoine:'3,5M€ déclaré', score:9.1, sms:'N',
       besoin:'Structurer un holding familial avant transmission',
       sujet:'Holding Familiale & LBO Familial',
@@ -692,7 +692,7 @@ var DEMO_DATA = {
       objections:['A déjà rencontré 2 concurrents','Attend un chiffrage rapide'],
     },
     {
-      id:'d5', nom:'Sophie M.', prenom:'Sophie', age:49, ville:'Aix-en-Provence', phone:'+33 6 77 88 99 00',
+      id:'d5', nom:'Sophie M.', prenom:'Sophie', age:49, ville:'Aix-en-Provence', phone:'+33 6 77 88 99 00', date:'2026-06-07T16:20:00',
       patrimoine:'1,2M€ estimé', score:7.2, sms:'O',
       besoin:'Optimiser sa fiscalité avant départ à l\'étranger',
       sujet:'Expatriation Fiscale & Exit Tax',
@@ -819,6 +819,9 @@ function mockSophiaResponse(q) {
   if (q.indexOf('stratégie') !== -1) {
     return "Stratégie de prospection suggérée :\n\n1. Ciblage : dirigeants 50-65 ans, CA >5M€, secteur industrie / PME familiale\n2. Canal : LinkedIn + webinar thématique (Pacte Dutreil ou holding familiale)\n3. Contenu : 1 post + 1 guide PDF à télécharger\n4. Relance : séquence 3 emails sur 10 jours\n5. Conversion : appel Sophia en aval pour qualification automatique\n\n[Disclaimer] Ces informations sont fournies à titre indicatif uniquement et ne constituent pas un conseil en investissement personnalisé. Elles doivent être validées par un expert patrimonial agréé avant toute décision.";
   }
+  if (q.indexOf('génère') !== -1 || q.indexOf('générer') !== -1) {
+    return "Voici le contenu généré pour Days Legacy :\n\n— Introduction personnalisée sur le besoin patrimonial exprimé\n— 2-3 arguments clés adaptés au profil du prospect\n— Proposition d'un rendez-vous sans engagement\n— Formulation premium et accessible, sans jargon\n\n[Version complète disponible en production avec OpenAI]\n\n[Disclaimer] Ces informations sont fournies à titre indicatif uniquement et ne constituent pas un conseil en investissement personnalisé. Elles doivent être validées par un expert patrimonial agréé avant toute décision.";
+  }
   return "Je suis Sophia, l'assistante IA patrimoniale de Days Legacy. Je peux vous aider à préparer vos appels, analyser vos prospects, générer du contenu ou répondre à vos questions sur le marché patrimonial français.\n\nN'oubliez pas : je ne suis pas habilitée à donner de conseil financier personnalisé. Pour toute décision patrimoniale concrète, un rendez-vous avec l'un de nos experts est indispensable.\n\n[Disclaimer] Ces informations sont fournies à titre indicatif uniquement et ne constituent pas un conseil en investissement personnalisé. Elles doivent être validées par un expert patrimonial agréé avant toute décision.";
 }
 
@@ -937,7 +940,7 @@ function renderBriefing() {
   var g = h < 12 ? 'Bonjour' : h < 18 ? 'Bon après-midi' : 'Bonsoir';
   var topL = getTopLead();
   var msg = g + '. Cette semaine, '+ (isDemo() ? '47' : '37') +' personnes ont exprimé un besoin lié à la retraite, la fiscalité ou la transmission. J\'ai identifié '+ getLeads().length +' contacts pour qui un échange avec un expert Days Legacy aurait une vraie valeur.';
-  if (topL) msg += ' ' + topL.prenom + ' ' + topL.nom.split(' ')[0] + ' est le plus urgent — il cherche à ' + topL.besoin.toLowerCase() + '.';
+  if (topL) msg += ' ' + topL.prenom + ' ' + topL.nom + ' est le plus urgent — il cherche à ' + topL.besoin.toLowerCase() + '.';
   document.getElementById('sophia-msg').textContent = msg;
   document.getElementById('priority-date').textContent = new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
 }
@@ -1345,14 +1348,14 @@ function renderTable(leads) {
     var sc = l.score || 0;
     var col = sc >= 7 ? '#ff4060' : sc >= 4 ? '#ff9a3c' : '#0082f3';
     var bg  = sc >= 7 ? 'rgba(255,64,96,.1)' : sc >= 4 ? 'rgba(255,154,60,.1)' : 'rgba(0,130,243,.1)';
-    var nom = [l.prenom, l.nom].filter(Boolean).join(' ') || 'Inconnu';
+    var nom = l.nom || 'Inconnu';
     var dt  = l.date ? new Date(l.date).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '—';
     html += '<tr>'
       + '<td><span class="sbadge" style="background:' + bg + ';color:' + col + '">' + sc.toFixed(1) + '</span></td>'
       + '<td style="font-weight:700">' + nom + '</td>'
       + '<td style="font-family:monospace;color:var(--dim)">' + (l.phone||'—') + '</td>'
       + '<td><span class="tag" style="background:var(--gold-b);color:var(--gold2);border:1px solid rgba(204,155,18,.2)">' + (l.patrimoine||'N/P') + '</span></td>'
-      + '<td style="color:var(--dim)">' + (l.objectif||'—') + '</td>'
+      + '<td style="color:var(--dim)">' + (l.objectif||l.besoin||'—') + '</td>'
       + '<td style="color:var(--faint)">' + dt + '</td>'
       + '<td>' + (l.sms === 'O' ? '<span class="tag" style="background:var(--green-b);color:var(--green);border:1px solid rgba(34,201,132,.2)">✓ SMS</span>' : '') + '</td>'
       + '</tr>';
