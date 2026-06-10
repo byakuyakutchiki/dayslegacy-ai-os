@@ -3,516 +3,568 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Days Legacy — Intelligence Patrimoniale</title>
+<title>Days Legacy — Sophia IA Patrimoniale</title>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,700,900&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #050509;
-  --s1: rgba(255,255,255,.025);
-  --s2: rgba(255,255,255,.018);
-  --s3: rgba(255,255,255,.012);
-  --bd: rgba(255,255,255,.06);
-  --bd2: rgba(255,255,255,.04);
-  --gold: #c9a84c;
-  --gold-b: rgba(201,168,76,.12);
-  --gold-g: linear-gradient(135deg,#c9a84c 0%,#e8c96a 100%);
-  --hot: #e05555;
-  --hot-b: rgba(224,85,85,.1);
-  --warm: #e8943a;
-  --warm-b: rgba(232,148,58,.1);
-  --blue: #4d8eff;
-  --blue-b: rgba(77,142,255,.1);
-  --green: #3ecf8e;
-  --green-b: rgba(62,207,142,.1);
-  --text: #eeeef8;
-  --dim: #7878a0;
-  --faint: #38385a;
-  --font: 'Segoe UI',system-ui,-apple-system,sans-serif;
+:root{
+  --bg:#0b0b0c;--bg2:#0f0f11;
+  --gold:#CC9B12;--gold2:#FFEEBE;--gold3:#A27700;
+  --gold-g:linear-gradient(180deg,#CC9B12 0%,#FFEEBE 50%,#A27700 100%);
+  --gold-gh:linear-gradient(90deg,#CC9B12,#FFEEBE,#A27700);
+  --gold-b:rgba(204,155,18,.14);
+  --glass:rgba(255,255,255,.07);
+  --bd:rgba(255,255,255,.1);--bd2:rgba(255,255,255,.06);
+  --blue:#0082f3;--blue-b:rgba(0,130,243,.12);
+  --hot:#ff4060;--hot-b:rgba(255,64,96,.1);
+  --warm:#ff9a3c;--warm-b:rgba(255,154,60,.1);
+  --green:#22c984;--green-b:rgba(34,201,132,.1);
+  --text:rgba(255,255,255,.92);--dim:rgba(255,255,255,.45);--faint:rgba(255,255,255,.18);
+  --font:'Satoshi',system-ui,-apple-system,sans-serif;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;font-variant-numeric:tabular-nums;}
+html,body{height:100%;}
+body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums;}
 
-/* ── UTILS ───────────────────────────────────────── */
-.glass{background:var(--s1);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);}
-.label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim);}
-.gold-text{background:var(--gold-g);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+/* ══════════════════════════════════════════════════
+   LOGIN
+══════════════════════════════════════════════════ */
+#login{
+  display:flex;align-items:center;justify-content:center;min-height:100vh;
+  position:relative;overflow:hidden;
+  background:radial-gradient(ellipse 80% 60% at 50% 0%,#0d0a00 0%,var(--bg) 55%);
+}
+/* animated aurora blobs */
+#login::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 55% 40% at 20% 80%,rgba(204,155,18,.06) 0%,transparent 60%),
+    radial-gradient(ellipse 45% 35% at 80% 20%,rgba(162,119,0,.05) 0%,transparent 60%),
+    radial-gradient(ellipse 35% 25% at 50% 50%,rgba(204,155,18,.04) 0%,transparent 70%);
+  animation:aurora 8s ease-in-out infinite alternate;
+}
+#login::after{
+  content:'DAYS LEGACY';
+  position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);
+  font-size:clamp(80px,18vw,220px);font-weight:900;letter-spacing:-4px;
+  color:rgba(204,155,18,.03);white-space:nowrap;pointer-events:none;
+  line-height:1;
+}
+.login-wrap{position:relative;z-index:2;width:100%;max-width:440px;padding:24px;}
 
-/* ── LOGIN ───────────────────────────────────────── */
-#login{display:flex;align-items:center;justify-content:center;min-height:100vh;
-  background:radial-gradient(ellipse 60% 80% at 30% 50%,rgba(201,168,76,.05) 0%,transparent 100%),var(--bg);}
-.lcard{background:rgba(255,255,255,.03);border:1px solid var(--bd);border-radius:20px;
-  padding:52px 44px;width:380px;text-align:center;backdrop-filter:blur(40px);}
-.lbrand{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--dim);margin-bottom:10px;}
-.llogo{font-size:30px;font-weight:800;background:var(--gold-g);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px;}
-.ltag{font-size:12px;color:var(--faint);margin-bottom:40px;}
-.linput{width:100%;padding:13px 16px;background:rgba(255,255,255,.04);border:1px solid var(--bd);
-  border-radius:10px;color:var(--text);font-size:14px;margin-bottom:14px;outline:none;transition:border-color .2s;}
-.linput:focus{border-color:rgba(201,168,76,.5);}
-.lbtn{width:100%;padding:13px;border:none;border-radius:10px;cursor:pointer;
-  background:var(--gold-g);color:#000;font-weight:800;font-size:14px;letter-spacing:.3px;transition:opacity .2s;}
-.lbtn:hover{opacity:.88;}
-.lerr{color:var(--hot);font-size:12px;margin-top:10px;min-height:16px;}
+/* top label */
+.l-eyebrow{
+  text-align:center;margin-bottom:40px;
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+}
+.l-tagline{font-size:9px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:rgba(204,155,18,.5);}
+.l-brand-big{font-size:clamp(32px,6vw,48px);font-weight:900;letter-spacing:-1.5px;background:var(--gold-gh);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
 
-/* ── APP ─────────────────────────────────────────── */
-#app{display:none;}
+/* avatar with rotating ring */
+.l-av-wrap{position:relative;width:88px;height:88px;margin:0 auto 28px;}
+.l-av-ring{
+  position:absolute;inset:-6px;border-radius:50%;
+  background:conic-gradient(from 0deg,transparent 0%,rgba(204,155,18,.6) 20%,transparent 40%,rgba(255,238,190,.4) 60%,transparent 80%,rgba(162,119,0,.5) 100%);
+  animation:spin-ring 4s linear infinite;
+}
+.l-av-ring2{
+  position:absolute;inset:-12px;border-radius:50%;
+  background:conic-gradient(from 180deg,transparent 0%,rgba(204,155,18,.15) 20%,transparent 40%);
+  animation:spin-ring 7s linear infinite reverse;
+}
+.l-av{
+  position:relative;z-index:2;
+  width:88px;height:88px;border-radius:50%;
+  background:linear-gradient(135deg,#CC9B12 0%,#FFEEBE 50%,#A27700 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-size:30px;font-weight:900;color:#0b0b0c;
+  box-shadow:0 0 40px rgba(204,155,18,.35),0 0 80px rgba(204,155,18,.12);
+}
+.l-ring-mask{position:absolute;inset:-13px;border-radius:50%;background:transparent;overflow:hidden;}
+
+/* form */
+.l-form{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);
+  border-radius:24px;padding:36px 32px 28px;
+  backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);
+  box-shadow:0 0 0 1px rgba(204,155,18,.08) inset, 0 32px 80px rgba(0,0,0,.5);
+}
+.l-sophia-name{font-size:22px;font-weight:900;text-align:center;margin-bottom:4px;}
+.l-sophia-sub{font-size:11px;text-align:center;color:rgba(204,155,18,.7);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:28px;}
+.l-sep{width:40px;height:1.5px;background:var(--gold-gh);margin:0 auto 28px;border-radius:2px;}
+
+.l-input-wrap{position:relative;margin-bottom:14px;}
+.l-input-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--faint);}
+.l-input{
+  width:100%;padding:14px 18px 14px 44px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+  border-radius:14px;color:var(--text);font-size:14px;font-family:var(--font);outline:none;
+  transition:border-color .3s,background .3s;
+}
+.l-input:focus{border-color:rgba(204,155,18,.55);background:rgba(255,255,255,.08);}
+.l-input::placeholder{color:rgba(255,255,255,.25);}
+
+.l-btn{
+  width:100%;padding:15px;border-radius:14px;border:none;cursor:pointer;
+  font-family:var(--font);font-weight:900;font-size:15px;letter-spacing:.3px;
+  background:var(--gold-gh);color:#0b0b0c;
+  transition:opacity .25s,transform .2s;
+  box-shadow:0 8px 24px rgba(204,155,18,.25);
+}
+.l-btn:hover{opacity:.88;transform:translateY(-1px);}
+.l-btn:active{transform:translateY(0);}
+.l-err{color:var(--hot);font-size:12px;text-align:center;margin-top:10px;min-height:16px;}
+.l-footer{text-align:center;margin-top:20px;font-size:9px;color:rgba(255,255,255,.15);letter-spacing:1.5px;text-transform:uppercase;}
+
+/* ══════════════════════════════════════════════════
+   APP
+══════════════════════════════════════════════════ */
+#app{display:none;min-height:100vh;}
 
 /* TOPBAR */
-.topbar{position:sticky;top:0;z-index:60;background:rgba(5,5,9,.88);backdrop-filter:blur(24px);
-  border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;
-  padding:0 28px;height:56px;}
-.tb-left{display:flex;align-items:center;gap:14px;}
-.tb-logo-wrap{display:flex;flex-direction:column;}
+.topbar{
+  position:sticky;top:0;z-index:60;height:58px;
+  background:rgba(11,11,12,.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid rgba(255,255,255,.07);
+  display:flex;align-items:center;justify-content:space-between;padding:0 28px;
+}
+.tb-left{display:flex;align-items:center;gap:16px;}
 .tb-brand{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--faint);}
-.tb-name{font-size:15px;font-weight:800;background:var(--gold-g);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.2;}
-.live-badge{display:flex;align-items:center;gap:5px;background:rgba(62,207,142,.08);
-  border:1px solid rgba(62,207,142,.2);border-radius:20px;padding:3px 9px;}
-.live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 1.8s infinite;}
-.live-txt{font-size:9px;font-weight:800;letter-spacing:1.5px;color:var(--green);}
+.tb-name{font-size:17px;font-weight:900;letter-spacing:-.4px;background:var(--gold-gh);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.live-pill{display:flex;align-items:center;gap:5px;background:rgba(34,201,132,.08);border:1px solid rgba(34,201,132,.2);border-radius:50px;padding:3px 11px;}
+.live-dot{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);animation:blink 2.5s infinite;}
+.live-txt{font-size:8px;font-weight:700;letter-spacing:2px;color:var(--green);}
 .tb-right{display:flex;align-items:center;gap:12px;}
-.tb-clock{font-size:12px;color:var(--dim);}
-.btn-vision{padding:8px 18px;border-radius:8px;border:1px solid rgba(201,168,76,.3);
-  background:rgba(201,168,76,.07);color:var(--gold);font-size:11px;font-weight:700;
-  letter-spacing:1px;cursor:pointer;transition:all .2s;}
-.btn-vision:hover{background:rgba(201,168,76,.14);border-color:rgba(201,168,76,.5);}
-.btn-logout{background:none;border:1px solid var(--bd);border-radius:7px;
-  padding:6px 12px;color:var(--dim);cursor:pointer;font-size:11px;transition:all .2s;}
-.btn-logout:hover{color:var(--text);}
+.tb-clock{font-size:11px;color:var(--dim);}
+.btn-ghost{display:inline-flex;align-items:center;justify-content:center;padding:8px 18px;border-radius:50px;border:1px solid rgba(255,255,255,.2);cursor:pointer;font-family:var(--font);font-weight:700;font-size:12px;background:rgba(255,255,255,.05);color:var(--dim);transition:all .25s;white-space:nowrap;}
+.btn-ghost:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.4);color:var(--text);}
+.btn-gold{display:inline-flex;align-items:center;justify-content:center;padding:11px 24px;border-radius:50px;border:none;cursor:pointer;font-family:var(--font);font-weight:700;font-size:13px;background:var(--gold-gh);color:#0b0b0c;transition:opacity .25s,transform .2s;white-space:nowrap;}
+.btn-gold:hover{opacity:.85;transform:translateY(-1px);}
+.btn-sm{padding:6px 14px;font-size:11px;}
+.btn-blue{display:inline-flex;align-items:center;justify-content:center;padding:10px 20px;border-radius:50px;border:none;cursor:pointer;font-family:var(--font);font-weight:700;font-size:12px;background:var(--blue);color:#fff;transition:opacity .25s;}
+.btn-blue:hover{opacity:.85;}
 
 /* MAIN */
-.main{padding:24px 28px;max-width:1380px;margin:0 auto;}
+.main{padding:28px 28px 60px;max-width:1320px;margin:0 auto;}
 
-/* AI BRIEFING */
-.briefing{background:linear-gradient(135deg,rgba(201,168,76,.06) 0%,rgba(77,142,255,.04) 100%);
-  border:1px solid rgba(201,168,76,.14);border-radius:14px;padding:18px 24px;
-  margin-bottom:24px;display:flex;align-items:center;gap:18px;}
-.briefing-av{width:44px;height:44px;border-radius:50%;background:var(--gold-g);
-  display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:900;
-  color:#000;flex-shrink:0;box-shadow:0 0 16px rgba(201,168,76,.25);}
-.briefing-body{flex:1;}
-.briefing-lbl{font-size:9px;font-weight:700;letter-spacing:2px;color:var(--gold);margin-bottom:4px;}
-.briefing-msg{font-size:13px;color:var(--text);line-height:1.55;}
-.briefing-time{font-size:11px;color:var(--faint);white-space:nowrap;align-self:flex-start;}
+/* ── SOPHIA COMMAND CENTER ──────────────────────── */
+.sophia-hero{
+  position:relative;border-radius:24px;margin-bottom:28px;overflow:hidden;
+  background:linear-gradient(160deg,#0e0c06 0%,#0b0b0c 60%);
+  border:1px solid rgba(204,155,18,.2);
+}
+/* top shimmer bar */
+.sophia-hero::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,#CC9B12 25%,#FFEEBE 50%,#A27700 75%,transparent);
+  animation:shimmer 4s ease-in-out infinite;
+}
+/* right glow */
+.sophia-hero::after{
+  content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;
+  background:radial-gradient(circle,rgba(204,155,18,.07) 0%,transparent 60%);
+  pointer-events:none;
+}
 
-/* KPI */
-.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px;}
-.kpi{background:var(--s1);border:1px solid var(--bd);border-radius:13px;padding:16px 18px;
-  backdrop-filter:blur(20px);position:relative;overflow:hidden;}
-.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:1.5px;background:var(--_ac,var(--gold-g));}
-.kpi-lbl{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:7px;}
-.kpi-val{font-size:30px;font-weight:800;line-height:1;letter-spacing:-1px;}
-.kpi-sub{font-size:10px;color:var(--faint);margin-top:4px;}
+/* identity row */
+.sh-id{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 28px;border-bottom:1px solid rgba(255,255,255,.05);
+  background:rgba(255,255,255,.02);position:relative;z-index:1;
+}
+.sh-id-left{display:flex;align-items:center;gap:10px;}
+.sh-status-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 2.5s infinite;}
+.sh-label{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(204,155,18,.65);}
+.sh-model{font-size:9px;color:var(--faint);letter-spacing:.5px;}
 
-/* INTEL ROW (map + radar) */
-.intel{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
-.panel{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:20px 22px;backdrop-filter:blur(20px);}
-.panel-h{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:16px;}
+/* content row */
+.sh-body{display:flex;align-items:flex-start;gap:28px;padding:26px 28px 20px;position:relative;z-index:1;}
 
-/* FRANCE MAP */
-.city-ring{animation:ring 2.5s infinite;transform-origin:center;}
-.city-ring2{animation:ring 2.5s infinite .9s;transform-origin:center;}
+/* avatar */
+.sh-av-wrap{position:relative;width:76px;height:76px;flex-shrink:0;}
+.sh-av-ring{
+  position:absolute;inset:-7px;border-radius:50%;
+  background:conic-gradient(from 0deg,transparent,rgba(204,155,18,.55) 20%,rgba(255,238,190,.35) 50%,transparent 70%);
+  animation:spin-ring 5s linear infinite;
+}
+.sh-av{
+  position:relative;z-index:2;width:76px;height:76px;border-radius:50%;
+  background:linear-gradient(135deg,#CC9B12,#FFEEBE 50%,#A27700);
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;font-weight:900;color:#0b0b0c;
+  box-shadow:0 0 32px rgba(204,155,18,.3);
+  animation:av-breathe 4s ease-in-out infinite;
+}
+.sh-meta{flex:1;min-width:0;}
+.sh-name{font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:2px;}
+.sh-sub{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(204,155,18,.6);margin-bottom:12px;}
+.sh-msg{font-size:14px;line-height:1.75;color:rgba(255,255,255,.72);max-width:740px;}
 
-/* RADAR */
-.rad-item{margin-bottom:14px;}
-.rad-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
-.rad-name{font-size:12px;color:var(--text);}
-.rad-pct{font-size:12px;font-weight:800;color:var(--gold);}
-.rad-bar{height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;}
-.rad-fill{height:100%;border-radius:2px;background:var(--gold-g);transition:width 1.4s cubic-bezier(.22,1,.36,1);}
-.rad-fill.h{background:linear-gradient(90deg,var(--hot),#ff7777);}
-.rad-fill.w{background:linear-gradient(90deg,var(--warm),#f0b060);}
-.rad-fill.b{background:linear-gradient(90deg,var(--blue),#80aaff);}
+/* stats band */
+.sh-stats{
+  display:flex;border-top:1px solid rgba(255,255,255,.05);
+  position:relative;z-index:1;
+}
+.sh-stat{
+  flex:1;padding:14px 20px;text-align:center;
+  border-right:1px solid rgba(255,255,255,.05);
+}
+.sh-stat:last-child{border-right:none;}
+.sh-stat-n{font-size:22px;font-weight:900;background:var(--gold-gh);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
+.sh-stat-l{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--faint);margin-top:3px;}
 
-/* SHADOW BD */
-.shadow{background:linear-gradient(135deg,rgba(77,142,255,.05) 0%,rgba(62,207,142,.03) 100%);
-  border:1px solid rgba(77,142,255,.14);border-radius:14px;padding:20px 22px;margin-bottom:24px;}
-.shadow-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
-.shadow-title{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);}
-.shadow-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-.s-card{background:rgba(255,255,255,.03);border:1px solid var(--bd);border-radius:11px;
-  padding:16px;cursor:pointer;transition:border-color .2s;position:relative;}
-.s-card:hover{border-color:rgba(201,168,76,.3);}
-.s-rank{position:absolute;top:-9px;left:14px;background:var(--bg);border:1px solid var(--bd);
-  border-radius:20px;padding:1px 9px;font-size:9px;font-weight:700;color:var(--dim);}
-.s-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
-.s-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-  font-size:14px;font-weight:800;color:#000;flex-shrink:0;}
-.s-info{flex:1;}
-.s-name{font-size:13px;font-weight:700;}
-.s-sub{font-size:10px;color:var(--dim);}
-.s-score-wrap{position:relative;width:42px;height:42px;flex-shrink:0;}
-.s-score-wrap svg{transform:rotate(-90deg);}
-.s-score-val{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;}
-.s-action{background:rgba(255,255,255,.04);border-left:2px solid var(--gold);border-radius:6px;padding:8px 10px;font-size:11px;margin-bottom:8px;}
-.s-action-lbl{font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:2px;}
-.predict-row{display:flex;gap:6px;flex-wrap:wrap;}
-.predict-badge{font-size:9px;padding:2px 7px;border-radius:20px;font-weight:600;}
-.pb-window{background:rgba(62,207,142,.1);color:var(--green);border:1px solid rgba(62,207,142,.2);}
-.pb-risk-hi{background:rgba(224,85,85,.1);color:var(--hot);border:1px solid rgba(224,85,85,.2);}
-.pb-risk-md{background:rgba(232,148,58,.1);color:var(--warm);border:1px solid rgba(232,148,58,.2);}
-.btn-why{font-size:9px;color:var(--gold);background:none;border:1px solid rgba(201,168,76,.2);border-radius:20px;padding:2px 9px;cursor:pointer;margin-top:6px;transition:all .2s;display:inline-block;}
-.btn-why:hover{background:rgba(201,168,76,.08);border-color:rgba(201,168,76,.4);}
-.why-panel{display:none;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.1);border-radius:7px;padding:8px 10px;margin-top:6px;}
-.why-panel.open{display:block;}
-.why-item{font-size:10px;color:var(--dim);padding:2px 0;line-height:1.5;}
+/* input zone */
+.sh-input-zone{padding:18px 28px 22px;position:relative;z-index:1;}
+.sh-chat{display:flex;gap:10px;align-items:center;}
+.sh-input{
+  flex:1;padding:14px 20px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);border-radius:50px;
+  color:var(--text);font-size:13px;font-family:var(--font);outline:none;
+  transition:border-color .3s,background .3s;
+}
+.sh-input:focus{border-color:rgba(204,155,18,.5);background:rgba(255,255,255,.08);}
+.sh-input::placeholder{color:rgba(255,255,255,.22);}
 
-/* PROSPECT CARDS */
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px;}
-.pcard{background:var(--s1);border:1px solid var(--bd);border-radius:13px;padding:18px;
-  cursor:pointer;transition:all .2s;backdrop-filter:blur(20px);position:relative;overflow:hidden;}
-.pcard:hover{border-color:rgba(201,168,76,.25);transform:translateY(-1px);}
-.pcard::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
-  background:var(--gold-g);transform:scaleX(0);transition:transform .3s;transform-origin:left;}
-.pcard:hover::after{transform:scaleX(1);}
-.pc-top{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;}
-.pc-score{position:relative;width:50px;height:50px;flex-shrink:0;}
-.pc-score svg{transform:rotate(-90deg);}
-.pc-score-val{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;}
-.pc-meta{flex:1;}
-.pc-name{font-size:14px;font-weight:700;}
-.pc-sub{font-size:10px;color:var(--dim);margin-top:2px;}
-.pc-pat{font-size:11px;color:var(--gold);font-weight:700;margin-top:3px;}
-.pc-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#000;flex-shrink:0;}
-.pc-subj{background:rgba(255,255,255,.04);border-left:2px solid var(--gold);border-radius:7px;padding:9px 11px;margin-bottom:10px;}
-.pc-subj-lbl{font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:2px;}
-.pc-subj-val{font-size:12px;font-weight:600;}
-.pills{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;}
-.pill{font-size:9px;padding:2px 7px;border-radius:20px;background:rgba(255,255,255,.05);color:var(--dim);border:1px solid var(--bd);}
-.pill-risk{color:var(--hot);border-color:rgba(224,85,85,.15);}
-.pc-predict{background:rgba(62,207,142,.06);border:1px solid rgba(62,207,142,.12);border-radius:8px;padding:9px 11px;margin-bottom:10px;}
-.pc-predict-lbl{font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--green);margin-bottom:6px;}
-.pc-predict-row{display:flex;justify-content:space-between;gap:6px;}
-.pc-predict-item{text-align:center;flex:1;}
-.pc-predict-v{font-size:14px;font-weight:800;}
-.pc-predict-k{font-size:8px;color:var(--dim);}
-.tl-wrap{margin-top:10px;}
-.tl-lbl{font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--faint);margin-bottom:7px;}
-.tl-row{display:flex;}
-.tl-item{flex:1;text-align:center;}
-.tl-item:not(:last-child){position:relative;}
-.tl-item:not(:last-child)::after{content:'';position:absolute;top:5px;left:50%;right:0;height:1px;background:var(--bd);}
-.tl-dot{width:10px;height:10px;border-radius:50%;background:var(--gold);margin:0 auto 4px;position:relative;z-index:1;box-shadow:0 0 5px rgba(201,168,76,.4);}
-.tl-yr{font-size:9px;color:var(--gold);font-weight:700;}
-.tl-ev{font-size:8px;color:var(--faint);margin-top:2px;}
+/* voice button */
+.btn-voice{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:13px 20px;border-radius:50px;flex-shrink:0;cursor:pointer;
+  border:1.5px solid rgba(204,155,18,.35);
+  background:rgba(204,155,18,.07);
+  color:var(--gold2);font-family:var(--font);font-size:12px;font-weight:700;
+  transition:all .3s;white-space:nowrap;
+}
+.btn-voice:hover{border-color:rgba(204,155,18,.7);background:rgba(204,155,18,.14);box-shadow:0 0 20px rgba(204,155,18,.18);}
+.btn-voice.listening{border-color:rgba(255,64,96,.6);background:rgba(255,64,96,.1);color:#ff8090;box-shadow:0 0 28px rgba(255,64,96,.2);}
+/* waveform */
+.wv{display:flex;align-items:center;gap:2px;height:14px;}
+.wv span{display:block;width:2.5px;border-radius:2px;background:currentColor;height:4px;transition:height .1s;}
+.btn-voice.listening .wv span{animation:wave-bar .65s ease-in-out infinite;}
+.btn-voice.listening .wv span:nth-child(1){animation-delay:0s;}
+.btn-voice.listening .wv span:nth-child(2){animation-delay:.1s;}
+.btn-voice.listening .wv span:nth-child(3){animation-delay:.2s;}
+.btn-voice.listening .wv span:nth-child(4){animation-delay:.1s;}
+.btn-voice.listening .wv span:nth-child(5){animation-delay:0s;}
 
-/* ACQUISITION ENGINE */
-.acq-section{background:rgba(255,255,255,.02);border:1px solid var(--bd);border-radius:14px;
-  padding:20px 22px;margin-bottom:24px;backdrop-filter:blur(20px);}
-.acq-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;}
-.acq-panel{background:rgba(255,255,255,.025);border:1px solid var(--bd);border-radius:11px;padding:16px;}
-.acq-panel-h{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:12px;}
-.trend-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--bd2);}
-.trend-item:last-child{border-bottom:none;}
-.trend-pct{font-size:15px;font-weight:800;color:var(--green);width:42px;flex-shrink:0;}
-.trend-body{flex:1;}
-.trend-sujet{font-size:12px;font-weight:600;}
-.trend-region{font-size:10px;color:var(--dim);}
-.trend-bar{width:50px;height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;flex-shrink:0;}
-.trend-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--green),#6af0b0);}
-.content-item{padding:10px 0;border-bottom:1px solid var(--bd2);}
-.content-item:last-child{border-bottom:none;}
-.content-type{font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:4px;padding:2px 7px;display:inline-block;margin-bottom:5px;}
-.ct-linkedin{background:rgba(77,142,255,.12);color:var(--blue);}
-.ct-seo{background:rgba(62,207,142,.12);color:var(--green);}
-.ct-webinar{background:rgba(201,168,76,.12);color:var(--gold);}
-.ct-ads{background:rgba(224,85,85,.12);color:var(--hot);}
-.content-title{font-size:12px;font-weight:600;margin-bottom:4px;}
-.content-perf{font-size:10px;color:var(--dim);}
-.content-perf strong{color:var(--text);}
-.content-status{font-size:9px;margin-top:4px;font-style:italic;}
-.status-gen{color:var(--green);}
-.status-val{color:var(--gold);}
+/* voice listening bar */
+.voice-bar{display:none;align-items:center;gap:10px;margin-top:10px;padding:10px 18px;background:rgba(255,64,96,.05);border:1px solid rgba(255,64,96,.15);border-radius:12px;font-size:11px;color:rgba(255,140,160,.85);}
+.voice-bar.show{display:flex;}
+.voice-dot2{width:7px;height:7px;border-radius:50%;background:var(--hot);flex-shrink:0;box-shadow:0 0 6px var(--hot);animation:blink .7s infinite;}
 
-/* FEED */
-.feed{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:20px 22px;margin-bottom:24px;backdrop-filter:blur(20px);}
-.feed-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
-.feed-title{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--green);}
-.feed-list{display:flex;flex-direction:column;gap:7px;}
-.feed-item{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.03);
-  border:1px solid var(--bd);border-radius:9px;padding:11px 14px;animation:slidein .4s ease-out;}
-.fi-icon{font-size:16px;flex-shrink:0;}
-.fi-body{flex:1;}
-.fi-line{font-size:12px;}
-.fi-city{font-weight:700;}
-.fi-sub{color:var(--dim);}
-.fi-time{font-size:10px;color:var(--faint);}
-.fi-score{font-size:12px;font-weight:800;white-space:nowrap;}
+/* response */
+.sh-resp{
+  margin-top:14px;padding:18px 22px;
+  background:rgba(204,155,18,.05);
+  border:1px solid rgba(204,155,18,.15);border-radius:16px;
+  font-size:13px;line-height:1.82;color:rgba(255,255,255,.82);display:none;
+  position:relative;overflow:visible;
+}
+.sh-resp::before{
+  content:'SOPHIA';position:absolute;top:-9px;left:18px;
+  font-size:8px;font-weight:700;letter-spacing:2.5px;color:rgba(204,155,18,.65);
+  background:#0d0b05;padding:0 8px;
+}
+.sh-resp.show{display:block;animation:fadein .35s ease-out;}
+.typing{color:var(--dim);font-style:italic;}
 
-/* TABLE */
-.tbl-section{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:20px 22px;backdrop-filter:blur(20px);}
-.tbl-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+/* ── SECTION HEADERS ──────────────────────────── */
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.sec-title{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.35);}
+
+/* ── PRIORITY CARDS ───────────────────────────── */
+.p-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px;}
+.p-card{
+  background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);
+  border-radius:20px;padding:20px;position:relative;overflow:hidden;
+  transition:transform .2s,border-color .2s,box-shadow .2s;
+}
+.p-card:hover{transform:translateY(-4px);border-color:rgba(204,155,18,.28);box-shadow:0 20px 60px rgba(0,0,0,.4),0 0 40px rgba(204,155,18,.05);}
+.p-card.urgent{border-color:rgba(255,64,96,.18);}
+.p-card.urgent:hover{border-color:rgba(255,64,96,.38);}
+.p-card::before{content:'';position:absolute;top:0;left:20px;right:20px;height:1px;background:var(--gold-gh);opacity:.4;border-radius:0 0 2px 2px;}
+.p-card.urgent::before{background:linear-gradient(90deg,var(--hot),#ff9090);}
+
+.p-rank-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.p-rank{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:6px;}
+.p-window-pill{font-size:9px;font-weight:700;padding:3px 9px;border-radius:50px;}
+
+.p-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;}
+.p-av{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:#0b0b0c;flex-shrink:0;}
+.p-info{flex:1;min-width:0;}
+.p-name{font-size:16px;font-weight:900;line-height:1.1;}
+.p-loc{font-size:10px;color:var(--dim);margin-top:2px;}
+.p-score{font-size:25px;font-weight:900;line-height:1;}
+
+.p-subject{background:rgba(204,155,18,.06);border:1px solid rgba(204,155,18,.12);border-radius:10px;padding:9px 13px;margin-bottom:12px;}
+.p-subj-lbl{font-size:7px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(204,155,18,.6);margin-bottom:2px;}
+.p-subj-val{font-size:12px;font-weight:700;color:var(--gold2);}
+.p-pat{font-size:10px;color:var(--dim);margin-top:1px;}
+
+.p-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.p-cell{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:8px 11px;}
+.p-cell-lbl{font-size:7px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--faint);margin-bottom:3px;}
+.p-cell-val{font-size:11px;font-weight:700;line-height:1.3;}
+
+.p-contact-block{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:9px 13px;margin-bottom:14px;}
+.p-contact-lbl{font-size:7px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--faint);margin-bottom:5px;}
+.p-contact-row{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text);margin-bottom:3px;}
+.p-contact-row:last-child{margin-bottom:0;}
+.p-actions{display:flex;gap:8px;}
+
+/* ── QUICK ACTIONS ────────────────────────────── */
+.qa-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px;}
+.qa-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+  border-radius:18px;padding:20px 16px;cursor:pointer;
+  transition:all .2s;text-align:center;
+}
+.qa-card:hover{background:rgba(255,255,255,.08);border-color:rgba(204,155,18,.22);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.25);}
+.qa-icon{font-size:24px;margin-bottom:10px;}
+.qa-label{font-size:13px;font-weight:700;margin-bottom:3px;}
+.qa-sub{font-size:10px;color:var(--dim);}
+
+/* ── SIGNALS ──────────────────────────────────── */
+.signals-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:20px 24px;margin-bottom:28px;}
+.sig-item{display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.sig-item:last-child{border-bottom:none;}
+.sig-pct{font-size:17px;font-weight:900;color:var(--green);width:55px;flex-shrink:0;}
+.sig-body{flex:1;}
+.sig-topic{font-size:13px;font-weight:700;}
+.sig-region{font-size:10px;color:var(--dim);margin-top:1px;}
+.sig-bar{width:80px;height:3px;background:rgba(255,255,255,.05);border-radius:50px;overflow:hidden;flex-shrink:0;}
+.sig-fill{height:100%;border-radius:50px;background:linear-gradient(90deg,var(--green),#6af0b0);}
+.sig-action{flex-shrink:0;}
+
+/* ── TABLE ────────────────────────────────────── */
+.table-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:20px 24px;}
 .filters{display:flex;gap:7px;margin-bottom:14px;}
-.f-btn{padding:4px 13px;border-radius:20px;border:1px solid var(--bd);background:none;color:var(--dim);cursor:pointer;font-size:11px;transition:all .2s;}
-.f-btn.active{background:var(--gold-b);border-color:rgba(201,168,76,.3);color:var(--gold);font-weight:700;}
+.f-btn{padding:5px 15px;border-radius:50px;border:1px solid rgba(255,255,255,.1);background:none;color:var(--dim);cursor:pointer;font-size:10px;font-family:var(--font);font-weight:700;transition:all .2s;}
+.f-btn.active{background:var(--gold-b);border-color:rgba(204,155,18,.3);color:var(--gold2);}
 table{width:100%;border-collapse:collapse;}
-th{text-align:left;padding:7px 12px;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--faint);border-bottom:1px solid var(--bd);}
+th{text-align:left;padding:7px 12px;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--faint);border-bottom:1px solid rgba(255,255,255,.06);}
 td{padding:11px 12px;border-bottom:1px solid rgba(255,255,255,.03);font-size:12px;}
-tr:hover td{background:rgba(255,255,255,.025);cursor:pointer;}
-.sbadge{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;font-weight:800;font-size:11px;}
-.tag{display:inline-block;padding:2px 7px;border-radius:20px;font-size:9px;font-weight:600;}
+tr:hover td{background:rgba(255,255,255,.02);cursor:pointer;}
+.sbadge{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;font-weight:900;font-size:11px;}
+.tag{display:inline-block;padding:3px 8px;border-radius:50px;font-size:9px;font-weight:700;}
 
-/* MODAL */
-.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);
-  align-items:center;justify-content:center;z-index:100;}
+/* ── MODAL ────────────────────────────────────── */
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(12px);align-items:center;justify-content:center;z-index:200;}
 .modal-ov.open{display:flex;}
-.modal{background:rgba(10,10,20,.95);border:1px solid var(--bd);border-radius:18px;
-  width:680px;max-height:85vh;overflow-y:auto;padding:34px;box-shadow:0 0 80px rgba(0,0,0,.6);}
-.modal-close{background:none;border:none;color:var(--dim);cursor:pointer;font-size:22px;line-height:1;}
-.t-line{padding:9px 13px;border-radius:9px;margin-bottom:7px;font-size:13px;line-height:1.6;}
-.t-user{background:rgba(255,255,255,.04);}
-.t-ass{background:var(--gold-b);border:1px solid rgba(201,168,76,.1);}
-.t-role{font-size:9px;font-weight:700;letter-spacing:1px;margin-bottom:3px;}
-.tr-user{color:var(--dim);}
-.tr-ass{color:var(--gold);}
+.modal{background:#0f0f11;border:1px solid rgba(204,155,18,.15);border-radius:22px;width:700px;max-height:90vh;overflow-y:auto;padding:32px;box-shadow:0 0 100px rgba(204,155,18,.07),0 40px 80px rgba(0,0,0,.6);}
+.modal-close{background:none;border:none;color:var(--dim);cursor:pointer;font-size:22px;font-family:var(--font);}
+.lbl{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim);}
 
-/* VISION OVERLAY */
-#vision-ov{display:none;position:fixed;inset:0;z-index:200;
-  background:rgba(3,3,8,.97);backdrop-filter:blur(30px);overflow-y:auto;}
-#vision-ov.open{display:block;}
-.vis-inner{max-width:1100px;margin:0 auto;padding:48px 32px;}
-.vis-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:48px;}
-.vis-title{font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--dim);margin-bottom:6px;}
-.vis-headline{font-size:36px;font-weight:800;letter-spacing:-1px;}
-.vis-close{background:none;border:1px solid var(--bd);border-radius:8px;padding:8px 16px;color:var(--dim);cursor:pointer;font-size:12px;}
-.vis-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:40px;}
-.vkpi{background:rgba(255,255,255,.03);border:1px solid var(--bd);border-radius:14px;padding:28px 24px;position:relative;overflow:hidden;}
-.vkpi::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 100%,var(--_glow,.transparent),transparent);}
-.vkpi-lbl{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:10px;}
-.vkpi-val{font-size:48px;font-weight:800;letter-spacing:-2px;line-height:1;}
-.vkpi-sub{font-size:12px;color:var(--dim);margin-top:6px;}
-.vis-divider{border:none;border-top:1px solid var(--bd);margin:32px 0;}
-.vis-section-h{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:20px;}
-.vis-tops{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:32px;}
-.vis-top-card{background:rgba(255,255,255,.03);border:1px solid var(--bd);border-radius:12px;padding:20px;}
-.vis-forecast{background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.12);border-radius:12px;padding:24px;}
-.forecast-row{display:flex;align-items:flex-end;gap:6px;margin-top:16px;}
-.fc-bar{flex:1;border-radius:4px 4px 0 0;background:var(--gold-b);position:relative;transition:height .5s;}
-.fc-bar.active{background:var(--gold-g);}
-.fc-label{font-size:9px;color:var(--dim);text-align:center;margin-top:5px;}
-.fc-val{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;color:var(--gold);white-space:nowrap;}
+/* ── ANIMATIONS ───────────────────────────────── */
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shimmer{0%{opacity:.4}50%{opacity:1}100%{opacity:.4}}
+@keyframes aurora{0%{opacity:.6;transform:scale(1)}100%{opacity:1;transform:scale(1.08)}}
+@keyframes spin-ring{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes av-breathe{0%,100%{box-shadow:0 0 28px rgba(204,155,18,.28)}50%{box-shadow:0 0 48px rgba(204,155,18,.5)}}
+@keyframes av-pulse{0%,100%{box-shadow:0 0 0 0 rgba(204,155,18,.35)}50%{box-shadow:0 0 0 12px rgba(204,155,18,0)}}
+@keyframes ring-expand{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.5);opacity:0}}
+@keyframes wave-bar{0%,100%{height:3px}50%{height:14px}}
 
-/* NOTIF */
-.notif{display:none;position:fixed;bottom:28px;right:28px;width:330px;z-index:300;
-  background:rgba(5,5,12,.95);border:1px solid rgba(62,207,142,.25);border-radius:14px;
-  padding:18px 20px;box-shadow:0 0 40px rgba(62,207,142,.1);}
-.notif.show{display:block;animation:slideup .35s ease-out;}
-.notif-stages{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
-.n-stage{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--faint);transition:color .3s;}
-.n-stage.active{color:var(--text);}
-.n-stage.done{color:var(--green);}
-.n-stage-dot{width:5px;height:5px;border-radius:50%;background:var(--faint);flex-shrink:0;transition:background .3s;}
-.n-stage.active .n-stage-dot{background:var(--text);box-shadow:0 0 6px rgba(255,255,255,.5);}
-.n-stage.done .n-stage-dot{background:var(--green);}
-.notif-result{background:rgba(62,207,142,.08);border:1px solid rgba(62,207,142,.15);border-radius:9px;padding:12px;display:none;}
-.notif-result.show{display:block;}
-.nr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
-.nr-city{font-size:18px;font-weight:800;}
-.nr-score{font-size:22px;font-weight:900;color:var(--green);}
-.nr-detail{font-size:11px;color:var(--dim);}
-
-/* ANIMATIONS */
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
-@keyframes ring{0%{opacity:.5;transform:scale(1)}100%{opacity:0;transform:scale(3.5)}}
-@keyframes slidein{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
-@keyframes slideup{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-@keyframes countup{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-
-/* RESPONSIVE */
-@media(max-width:1100px){.intel,.acq-grid,.shadow-grid,.cards,.vis-kpis,.vis-tops{grid-template-columns:1fr 1fr;}}
-@media(max-width:720px){.intel,.acq-grid,.shadow-grid,.cards,.vis-kpis,.vis-tops,.kpi-row{grid-template-columns:1fr;}.main{padding:14px;}.vis-inner{padding:24px 16px;}.vis-headline{font-size:24px;}}
+/* ── RESPONSIVE ───────────────────────────────── */
+@media(max-width:1024px){.p-grid,.qa-grid{grid-template-columns:1fr 1fr;}.main{padding:18px 18px 48px;}}
+@media(max-width:600px){.p-grid,.qa-grid{grid-template-columns:1fr;}.topbar{padding:0 16px;}.sh-body{flex-direction:column;gap:16px;}.sh-stats{flex-wrap:wrap;}.sh-stat{min-width:50%;}}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
+<!-- ════════════════════════════════════════════════
+  LOGIN
+════════════════════════════════════════════════ -->
 <div id="login">
-  <div class="lcard">
-    <div class="lbrand">Intelligence Patrimoniale</div>
-    <div class="llogo">Days Legacy</div>
-    <div class="ltag">Moteur d'acquisition patrimoniale — Accès sécurisé</div>
-    <input class="linput" type="password" id="pw" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')doLogin()">
-    <button class="lbtn" onclick="doLogin()">Accéder au centre de commandement</button>
-    <div class="lerr" id="lerr"></div>
+  <div class="login-wrap">
+    <div class="l-eyebrow">
+      <div class="l-tagline">Plateforme Patrimoniale Intelligence Artificielle</div>
+      <div class="l-brand-big">Days Legacy</div>
+    </div>
+
+    <div class="l-av-wrap">
+      <div class="l-av-ring2"></div>
+      <div class="l-av-ring"></div>
+      <div class="l-av">S</div>
+    </div>
+
+    <div class="l-form">
+      <div class="l-sophia-name">Sophia</div>
+      <div class="l-sophia-sub">Assistante IA Patrimoniale</div>
+      <div class="l-sep"></div>
+
+      <div class="l-input-wrap">
+        <svg class="l-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <input class="l-input" type="password" id="pw" placeholder="Mot de passe accès BD" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+
+      <button class="l-btn" onclick="doLogin()">Accéder à mon espace →</button>
+      <div class="l-err" id="lerr"></div>
+    </div>
+
+    <div class="l-footer">Accès réservé · Business Developer Days Legacy · Confidentiel</div>
   </div>
 </div>
 
-<!-- APP -->
+<!-- ════════════════════════════════════════════════
+  APP
+════════════════════════════════════════════════ -->
 <div id="app">
+
+  <!-- TOPBAR -->
   <div class="topbar">
     <div class="tb-left">
-      <div class="tb-logo-wrap">
+      <div>
         <div class="tb-brand">Intelligence Patrimoniale IA</div>
         <div class="tb-name">Days Legacy</div>
       </div>
-      <div class="live-badge"><div class="live-dot"></div><div class="live-txt">LIVE</div></div>
+      <div class="live-pill"><div class="live-dot"></div><div class="live-txt">SOPHIA ACTIVE</div></div>
     </div>
     <div class="tb-right">
       <span class="tb-clock" id="clock"></span>
-      <button class="btn-vision" onclick="openVision()">⚡ VISION EXÉCUTIVE</button>
-      <button class="btn-logout" onclick="logout()">Déconnexion</button>
+      <button class="btn-ghost btn-sm" onclick="logout()">Déconnexion</button>
     </div>
   </div>
 
   <div class="main">
 
-    <!-- BRIEFING -->
-    <div class="briefing">
-      <div class="briefing-av">S</div>
-      <div class="briefing-body">
-        <div class="briefing-lbl">SOPHIA — IA PATRIMONIALE</div>
-        <div class="briefing-msg" id="brief-msg">Analyse du marché en cours…</div>
-      </div>
-      <div class="briefing-time" id="brief-time"></div>
-    </div>
+    <!-- SOPHIA COMMAND CENTER -->
+    <div class="sophia-hero">
 
-    <!-- KPIs -->
-    <div class="kpi-row">
-      <div class="kpi" style="--_ac:var(--gold-g)">
-        <div class="kpi-lbl">Prospects total</div>
-        <div class="kpi-val" id="kpi-tot" style="color:var(--text)">—</div>
-        <div class="kpi-sub">ce mois</div>
-      </div>
-      <div class="kpi" style="--_ac:linear-gradient(90deg,var(--hot),#ff7777)">
-        <div class="kpi-lbl">🔥 Chauds ≥7</div>
-        <div class="kpi-val" id="kpi-hot" style="color:var(--hot)">—</div>
-        <div class="kpi-sub">à rappeler aujourd'hui</div>
-      </div>
-      <div class="kpi" style="--_ac:linear-gradient(90deg,var(--warm),#f0b060)">
-        <div class="kpi-lbl">⭐ Tièdes 4–6</div>
-        <div class="kpi-val" id="kpi-warm" style="color:var(--warm)">—</div>
-        <div class="kpi-sub">en maturation</div>
-      </div>
-      <div class="kpi" style="--_ac:linear-gradient(90deg,var(--green),#6af0b0)">
-        <div class="kpi-lbl">Valeur potentielle</div>
-        <div class="kpi-val" id="kpi-val" style="color:var(--green)">3,4M€</div>
-        <div class="kpi-sub">patrimoine qualifié</div>
-      </div>
-      <div class="kpi" style="--_ac:linear-gradient(90deg,var(--blue),#80aaff)">
-        <div class="kpi-lbl">Gain mensuel projeté</div>
-        <div class="kpi-val" id="kpi-cvr" style="color:var(--blue)">+6</div>
-        <div class="kpi-sub">clients · scénario réaliste</div>
-      </div>
-    </div>
-
-    <!-- MAP + RADAR -->
-    <div class="intel">
-      <div class="panel">
-        <div class="panel-h">🗺 Intentions patrimoniales — Territoire France</div>
-        <svg viewBox="0 0 280 310" width="100%" style="max-height:310px;display:block">
-          <path d="M135,22 L190,16 L235,44 L265,94 L260,154 L247,215 L210,256 L150,270 L90,254 L56,228 L40,178 L38,146 L52,128 L48,110 L22,104 L15,97 L40,84 L78,63 L106,42 Z"
-            fill="rgba(201,168,76,.03)" stroke="rgba(201,168,76,.2)" stroke-width="1.2" stroke-linejoin="round"/>
-          <!-- Paris -->
-          <g style="cursor:pointer">
-            <circle cx="165" cy="83" r="16" fill="rgba(224,85,85,.04)" class="city-ring"/>
-            <circle cx="165" cy="83" r="10" fill="rgba(224,85,85,.05)" class="city-ring2"/>
-            <circle cx="165" cy="83" r="5" fill="var(--hot)"/>
-            <text x="173" y="80" font-size="9" fill="var(--dim)" font-family="'Segoe UI',system-ui">Paris</text>
-            <text x="173" y="90" font-size="8" fill="var(--gold)" font-family="'Segoe UI',system-ui" font-weight="600">Expatriation fiscale</text>
-          </g>
-          <!-- Lyon -->
-          <g style="cursor:pointer">
-            <circle cx="212" cy="158" r="18" fill="rgba(201,168,76,.04)" class="city-ring"/>
-            <circle cx="212" cy="158" r="11" fill="rgba(201,168,76,.05)" class="city-ring2"/>
-            <circle cx="212" cy="158" r="6" fill="var(--gold)"/>
-            <text x="221" y="155" font-size="9" fill="var(--dim)" font-family="'Segoe UI',system-ui">Lyon</text>
-            <text x="221" y="165" font-size="8" fill="var(--gold)" font-family="'Segoe UI',system-ui" font-weight="600">Transmission PME</text>
-          </g>
-          <!-- Bordeaux -->
-          <g style="cursor:pointer">
-            <circle cx="80" cy="185" r="14" fill="rgba(77,142,255,.04)" class="city-ring"/>
-            <circle cx="80" cy="185" r="8" fill="rgba(77,142,255,.05)" class="city-ring2"/>
-            <circle cx="80" cy="185" r="5" fill="var(--blue)"/>
-            <text x="28" y="182" font-size="9" fill="var(--dim)" font-family="'Segoe UI',system-ui" text-anchor="end">Bordeaux</text>
-            <text x="28" y="192" font-size="8" fill="var(--gold)" font-family="'Segoe UI',system-ui" font-weight="600" text-anchor="end">SCPI Retraite</text>
-          </g>
-          <!-- Marseille -->
-          <g style="cursor:pointer">
-            <circle cx="205" cy="247" r="13" fill="rgba(232,148,58,.04)" class="city-ring"/>
-            <circle cx="205" cy="247" r="8" fill="rgba(232,148,58,.05)" class="city-ring2"/>
-            <circle cx="205" cy="247" r="4" fill="var(--warm)"/>
-            <text x="153" y="244" font-size="9" fill="var(--dim)" font-family="'Segoe UI',system-ui" text-anchor="end">Marseille</text>
-            <text x="153" y="254" font-size="8" fill="var(--gold)" font-family="'Segoe UI',system-ui" font-weight="600" text-anchor="end">Retraite dirigeant</text>
-          </g>
-          <!-- Nantes -->
-          <g style="cursor:pointer">
-            <circle cx="72" cy="124" r="11" fill="rgba(62,207,142,.04)" class="city-ring"/>
-            <circle cx="72" cy="124" r="7" fill="rgba(62,207,142,.05)" class="city-ring2"/>
-            <circle cx="72" cy="124" r="4" fill="var(--green)"/>
-            <text x="80" y="121" font-size="9" fill="var(--dim)" font-family="'Segoe UI',system-ui">Nantes</text>
-            <text x="80" y="131" font-size="8" fill="var(--gold)" font-family="'Segoe UI',system-ui" font-weight="600">Transmission</text>
-          </g>
-          <!-- Strasbourg -->
-          <g style="cursor:pointer">
-            <circle cx="256" cy="98" r="10" fill="rgba(201,168,76,.04)" class="city-ring"/>
-            <circle cx="256" cy="98" r="6" fill="rgba(201,168,76,.05)" class="city-ring2"/>
-            <circle cx="256" cy="98" r="3.5" fill="var(--gold)"/>
-            <text x="210" y="95" font-size="9" fill="var(--dim)" font-family="'Segoe UI',system-ui" text-anchor="end">Strasbourg</text>
-            <text x="210" y="105" font-size="8" fill="var(--gold)" font-family="'Segoe UI',system-ui" font-weight="600" text-anchor="end">Succession</text>
-          </g>
-          <text x="14" y="298" font-size="9" fill="var(--green)" font-family="'Segoe UI',system-ui" font-weight="700">↑ +37% intentions patrimoniales cette semaine</text>
-        </svg>
-      </div>
-      <div class="panel">
-        <div class="panel-h">📡 Radar d'intentions — Marché national</div>
-        <div id="radar"></div>
-      </div>
-    </div>
-
-    <!-- ACQUISITION ENGINE -->
-    <div class="acq-section">
-      <div class="label">🧲 Moteur d'Acquisition — De la chasse à l'aimant</div>
-      <div class="acq-grid">
-        <div class="acq-panel">
-          <div class="acq-panel-h">Tendances détectées</div>
-          <div id="trends"></div>
+      <!-- identity band -->
+      <div class="sh-id">
+        <div class="sh-id-left">
+          <div class="sh-status-dot"></div>
+          <div class="sh-label">Sophia · Assistante IA Patrimoniale</div>
         </div>
-        <div class="acq-panel">
-          <div class="acq-panel-h">Contenus recommandés par l'IA</div>
-          <div id="contents"></div>
+        <div class="sh-model">Days Legacy AI OS · gpt-4o</div>
+      </div>
+
+      <!-- avatar + message -->
+      <div class="sh-body">
+        <div class="sh-av-wrap">
+          <div class="sh-av-ring"></div>
+          <div class="sh-av">S</div>
+        </div>
+        <div class="sh-meta">
+          <div class="sh-name">Sophia</div>
+          <div class="sh-sub">Votre intelligence patrimoniale</div>
+          <div class="sh-msg" id="sophia-msg">Analyse du marché en cours…</div>
+        </div>
+      </div>
+
+      <!-- stats band -->
+      <div class="sh-stats">
+        <div class="sh-stat">
+          <div class="sh-stat-n">3</div>
+          <div class="sh-stat-l">Priorités aujourd'hui</div>
+        </div>
+        <div class="sh-stat">
+          <div class="sh-stat-n">9.4</div>
+          <div class="sh-stat-l">Score top prospect</div>
+        </div>
+        <div class="sh-stat">
+          <div class="sh-stat-n">+42%</div>
+          <div class="sh-stat-l">Signal marché Rhône-Alpes</div>
+        </div>
+        <div class="sh-stat">
+          <div class="sh-stat-n">48h</div>
+          <div class="sh-stat-l">Fenêtre décision Marc D.</div>
+        </div>
+      </div>
+
+      <!-- input -->
+      <div class="sh-input-zone">
+        <div class="sh-chat">
+          <input class="sh-input" id="sophia-q"
+            placeholder="Demandez à Sophia… ou appuyez sur Vocal pour parler"
+            onkeydown="if(event.key==='Enter')askSophia()">
+          <button class="btn-voice" id="voice-btn" onclick="toggleVoice()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+              <line x1="12" y1="19" x2="12" y2="23"/>
+              <line x1="8" y1="23" x2="16" y2="23"/>
+            </svg>
+            <span id="voice-label">Vocal</span>
+            <div class="wv"><span></span><span></span><span></span><span></span><span></span></div>
+          </button>
+          <button class="btn-gold" id="sophia-btn" onclick="askSophia()">Envoyer →</button>
+        </div>
+
+        <div class="voice-bar" id="voice-bar">
+          <div class="voice-dot2"></div>
+          <span id="voice-status">Sophia vous écoute… parlez maintenant</span>
+          <button class="btn-ghost btn-sm" onclick="stopListening()" style="margin-left:auto;border-color:rgba(255,64,96,.3);color:var(--hot)">Annuler</button>
+        </div>
+
+        <div class="sh-resp" id="sophia-resp"></div>
+
+        <div id="speak-bar" style="display:none;margin-top:8px;align-items:center;gap:8px">
+          <button class="btn-ghost btn-sm" onclick="speakLast()">🔊 Réécouter</button>
+          <button class="btn-ghost btn-sm" id="stop-speak" onclick="stopSpeaking()" style="display:none">⏹ Stop</button>
         </div>
       </div>
     </div>
 
-    <!-- FEED -->
-    <div class="feed">
-      <div class="feed-h">
-        <div class="feed-title">⚡ Flux temps réel — Détections IA</div>
-        <div style="font-size:10px;color:var(--faint)">Intentions patrimoniales · Marché live</div>
+    <!-- PRIORITÉS -->
+    <div class="sec-hdr">
+      <div class="sec-title">⚡ Priorités du jour — Recommandées par Sophia</div>
+      <div style="font-size:10px;color:var(--faint)" id="priority-date"></div>
+    </div>
+    <div class="p-grid" id="p-grid"></div>
+
+    <!-- QUICK ACTIONS -->
+    <div class="sec-hdr"><div class="sec-title">Actions rapides</div></div>
+    <div class="qa-grid">
+      <div class="qa-card" onclick="showContentModal()">
+        <div class="qa-icon">🧲</div>
+        <div class="qa-label">Créer un contenu</div>
+        <div class="qa-sub">LinkedIn · SEO · Email · Vidéo</div>
       </div>
-      <div class="feed-list" id="feed"></div>
+      <div class="qa-card" onclick="showSignalsModal()">
+        <div class="qa-icon">📡</div>
+        <div class="qa-label">Signaux marché</div>
+        <div class="qa-sub">Intentions patrimoniales live</div>
+      </div>
+      <div class="qa-card" onclick="document.getElementById('all-leads').scrollIntoView({behavior:'smooth'})">
+        <div class="qa-icon">📋</div>
+        <div class="qa-label">Tous les prospects</div>
+        <div class="qa-sub">Pipeline qualifié Sophia</div>
+      </div>
+      <div class="qa-card" onclick="askSophiaAuto('Bilan de la semaine : quels besoins patrimoniaux sont les plus exprimés, quels profils sont prioritaires, et quelles sont tes 3 recommandations ?')">
+        <div class="qa-icon">📊</div>
+        <div class="qa-label">Bilan semaine</div>
+        <div class="qa-sub">Rapport Sophia · 30 sec</div>
+      </div>
     </div>
 
-    <!-- SHADOW BD -->
-    <div class="shadow">
-      <div class="shadow-h">
-        <div>
-          <div class="shadow-title">⚡ Shadow Business Developer</div>
-          <div style="font-size:11px;color:var(--dim);margin-top:4px">Recommandations IA du jour — fenêtres de conversion identifiées</div>
-        </div>
-        <div id="shadow-date" style="font-size:11px;color:var(--faint)"></div>
+    <!-- SIGNALS -->
+    <div class="signals-box">
+      <div class="sec-hdr" style="margin-bottom:14px">
+        <div class="sec-title">📡 Signaux du marché — Besoins détectés cette semaine</div>
+        <div style="font-size:10px;color:var(--green);font-weight:700">↑ +37% intentions patrimoniales</div>
       </div>
-      <div class="shadow-grid" id="shadow-grid"></div>
+      <div id="signals-list"></div>
     </div>
-
-    <!-- PROSPECT CARDS -->
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-      <div class="label">Intelligence Prospect — Analyse complète</div>
-      <div style="font-size:10px;color:var(--faint)">Profils à fort potentiel · Prédiction IA incluse</div>
-    </div>
-    <div class="cards" id="cards"></div>
 
     <!-- TABLE -->
-    <div class="tbl-section">
-      <div class="tbl-h">
-        <div class="label">Tous les prospects</div>
-        <div id="tbl-count" style="font-size:11px;color:var(--faint)"></div>
+    <div class="table-box" id="all-leads">
+      <div class="sec-hdr" style="margin-bottom:12px">
+        <div class="sec-title">Tous les prospects qualifiés</div>
+        <div style="font-size:10px;color:var(--faint)" id="tbl-count"></div>
       </div>
       <div class="filters">
         <button class="f-btn active" onclick="setFilter(null,this)">Tous</button>
-        <button class="f-btn" onclick="setFilter(7,this)">🔥 Chauds</button>
-        <button class="f-btn" onclick="setFilter(4,this)">⭐ Tièdes</button>
+        <button class="f-btn" onclick="setFilter(7,this)">🔥 Prioritaires</button>
+        <button class="f-btn" onclick="setFilter(4,this)">⭐ En maturation</button>
       </div>
       <table>
-        <thead><tr><th>Score</th><th>Prospect</th><th>Téléphone</th><th>Patrimoine</th><th>Sujet</th><th>Date</th><th>SMS</th></tr></thead>
-        <tbody id="tbody"><tr><td colspan="7" style="text-align:center;padding:40px;color:var(--faint)">Aucun appel enregistré — les prospects apparaissent ici après le premier appel</td></tr></tbody>
+        <thead><tr><th>Score</th><th>Prospect</th><th>Téléphone</th><th>Patrimoine</th><th>Besoin</th><th>Date</th><th>Statut</th></tr></thead>
+        <tbody id="tbody">
+          <tr><td colspan="7" style="text-align:center;padding:48px;color:var(--faint)">Les prospects apparaissent ici après chaque qualification par Sophia</td></tr>
+        </tbody>
       </table>
     </div>
 
@@ -524,448 +576,515 @@ tr:hover td{background:rgba(255,255,255,.025);cursor:pointer;}
   <div class="modal" id="modal"></div>
 </div>
 
-<!-- VISION EXÉCUTIVE -->
-<div id="vision-ov">
-  <div class="vis-inner">
-    <div class="vis-header">
-      <div>
-        <div class="vis-title">Days Legacy AI — Vue Stratégique</div>
-        <div class="vis-headline gold-text" id="vis-headline">Vision Exécutive</div>
-      </div>
-      <button class="vis-close" onclick="closeVision()">✕ Fermer</button>
-    </div>
-    <div class="vis-kpis" id="vis-kpis"></div>
-    <hr class="vis-divider">
-    <div class="vis-section-h">Top opportunités du moment</div>
-    <div class="vis-tops" id="vis-tops"></div>
-    <div class="vis-forecast">
-      <div class="label" style="margin-bottom:6px">Prévision leads — 6 prochains mois</div>
-      <div style="font-size:12px;color:var(--dim);margin-bottom:16px">Projection basée sur les tendances actuelles et la saisonnalité patrimoniale</div>
-      <div class="forecast-row" id="forecast-row"></div>
-    </div>
-  </div>
-</div>
-
-<!-- NOTIFICATION IA -->
-<div class="notif" id="notif">
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-    <div style="font-size:9px;font-weight:700;letter-spacing:2px;color:var(--green)">NOUVEAU SIGNAL DÉTECTÉ</div>
-    <div style="font-size:10px;color:var(--faint)" id="notif-time"></div>
-  </div>
-  <div class="notif-stages" id="notif-stages"></div>
-  <div class="notif-result" id="notif-result">
-    <div class="nr-top">
-      <div class="nr-city" id="nr-city"></div>
-      <div class="nr-score" id="nr-score"></div>
-    </div>
-    <div class="nr-detail" id="nr-detail"></div>
-  </div>
-</div>
-
 <script>
-/* ── DATA ───────────────────────────────────────── */
-const LEADS = [
-  { id:'d1', nom:'Marc D.', prenom:'Marc', age:52, ville:'Lyon', phone:'+33 6 12 34 56 78',
-    patrimoine:'1,8M€ estimé', duree:1080, score:9.4, sms:'O', sujet:'Transmission PME',
-    conv_pct:94, window:'48 heures', risk:'Élevé — fenêtre ferme vendredi',
-    contenus:['Transmission PME','Fiscalité cession','Holding familiale','Pacte Dutreil'],
-    objections:['Timing non décidé','Autres cabinets consultés'],
+/* ── DATA ──────────────────────────────────────── */
+var LEADS = [
+  {
+    id:'d1', nom:'Marc D.', prenom:'Marc', age:52, ville:'Lyon', phone:'+33 6 12 34 56 78',
+    patrimoine:'1,8M€ déclaré', score:9.4, sms:'O',
+    besoin:'Transmission de son entreprise',
+    sujet:'Transmission PME — Pacte Dutreil',
+    window:'48 heures', risk:'Élevé', urgency:'hot',
+    bg:'linear-gradient(135deg,#CC9B12,#FFEEBE)',
+    source:'Formulaire web',
+    contexte:'A téléchargé le guide "Transmettre sa PME" · Consulté 4 articles fiscaux en 48h',
+    validation:'Patrimoine déclaré par le prospect · Dirigeant confirmé · Cession envisagée',
+    contact_canal:'Appel téléphonique',
+    contact_moment:'Mardi ou jeudi, 9h–11h',
+    contact_rappel:'A demandé à être rappelé avant vendredi',
     action:'Appeler avant vendredi — décision imminente',
-    script:'Bonjour Marc, suite à votre consultation sur la transmission d\'entreprise, notre expert Pacte Dutreil peut vous proposer une simulation personnalisée — économie potentielle de 75% sur les droits.',
+    script:'Bonjour Marc, suite à votre démarche sur la transmission d\'entreprise, notre expert Pacte Dutreil peut vous proposer une simulation personnalisée — économie potentielle de 75% sur les droits de cession. Est-ce que jeudi matin vous conviendrait pour un échange de 20 minutes ?',
     resume:'Dirigeant PME lyonnaise (CA ~8M€). Cession partielle envisagée d\'ici 18 mois. Fort intérêt fiscal. Patrimoine financier à structurer en parallèle.',
-    timeline:[['2026','Holding'],['2027','Cession part.'],['2029','Transmission']],
-    bg:'linear-gradient(135deg,#e05555,#ff8080)',
-    score_detail:['✓ Durée d\'appel : 18 min','✓ Sujet haute valeur : Transmission PME','✓ Profil confirmé : dirigeant PME (CA ~8M€)','✓ Urgence exprimée : cession dans 18 mois','✓ 3 leviers fiscaux évoqués (Pacte Dutreil, holding, IS)']
+    score_detail:['✓ Durée d\'appel Sophia : 18 min','✓ Besoin déclaré : Transmission PME','✓ Profil confirmé : dirigeant PME (CA ~8M€)','✓ Urgence exprimée : cession dans 18 mois','✓ 3 leviers fiscaux évoqués spontanément'],
+    objections:['Timing pas encore décidé','Consulte d\'autres cabinets'],
   },
-  { id:'d2', nom:'Antoine L.', prenom:'Antoine', age:61, ville:'Paris', phone:'+33 6 55 44 33 22',
-    patrimoine:'2,2M€ estimé', duree:1320, score:8.6, sms:'O', sujet:'Succession & Donation',
-    conv_pct:88, window:'7 jours', risk:'Modéré — décision familiale en cours',
-    contenus:['Donation enfants','Assurance-vie','SCI familiale','Testament'],
-    objections:['Complexité fiscale','Accord familial à obtenir'],
-    action:'Planifier RDV transmission — priorité haute',
-    script:'Bonjour Antoine, avec votre patrimoine et l\'horizon successoral, une donation-partage couplée à une SCI familiale peut réduire vos droits de 60 à 70%.',
-    resume:'Retraité, 3 enfants adultes. Patrimoine immobilier et financier important à organiser. Décision dans les 3 mois selon ses dires.',
-    timeline:[['2026','SCI familiale'],['2027','Donation'],['2030','Succession']],
-    bg:'linear-gradient(135deg,#c9a84c,#e8c96a)',
-    score_detail:['✓ Durée d\'appel : 22 min','✓ Sujet haute valeur : Succession & Donation','✓ Patrimoine estimé : 2,2M€','✓ Horizon décision confirmé : 3 mois','✓ 4 sujets couverts (SCI, donation-partage, AV, testament)']
+  {
+    id:'d2', nom:'Antoine L.', prenom:'Antoine', age:61, ville:'Paris', phone:'+33 6 55 44 33 22',
+    patrimoine:'2,2M€ estimé', score:8.6, sms:'O',
+    besoin:'Organiser sa succession pour ses enfants',
+    sujet:'Succession & Donation — SCI Familiale',
+    window:'7 jours', risk:'Modéré', urgency:'warm',
+    bg:'linear-gradient(135deg,#888,#ccc)',
+    source:'Recommandation client',
+    contexte:'Recommandé par un client existant · A regardé la vidéo "Succession" 2 fois',
+    validation:'Patrimoine estimé (à confirmer) · Retraité · 3 enfants adultes',
+    contact_canal:'Rendez-vous visio ou présentiel',
+    contact_moment:'En semaine, l\'après-midi',
+    contact_rappel:'Pas de contrainte particulière, décision dans 3 mois',
+    action:'Planifier un RDV découverte — priorité haute',
+    script:'Bonjour Antoine, avec votre patrimoine et l\'horizon successoral que vous avez évoqué, une donation-partage couplée à une SCI familiale peut réduire vos droits de 60 à 70%. Souhaitez-vous qu\'on organise un rendez-vous pour une première simulation sans engagement ?',
+    resume:'Retraité, 3 enfants adultes. Patrimoine immobilier et financier important. Décision envisagée dans les 3 mois.',
+    score_detail:['✓ Durée d\'appel Sophia : 22 min','✓ Besoin déclaré : Succession & Donation','✓ Patrimoine estimé : 2,2M€','✓ Horizon décision confirmé : 3 mois','✓ 4 sujets couverts spontanément'],
+    objections:['Complexité fiscale perçue','Accord familial à obtenir'],
   },
-  { id:'d3', nom:'Claire B.', prenom:'Claire', age:44, ville:'Bordeaux', phone:'+33 6 98 76 54 32',
-    patrimoine:'650k€ estimé', duree:720, score:7.8, sms:'O', sujet:'SCPI & Retraite',
-    conv_pct:78, window:'14 jours', risk:'Faible — mûrissement en cours',
-    contenus:['SCPI rendement','Défiscalisation','Retraite complémentaire'],
-    objections:['Liquidité SCPI','Incertitude rendements futurs'],
-    action:'Envoyer simulation SCPI personnalisée',
-    script:'Bonjour Claire, avec un horizon retraite à 11 ans, une stratégie SCPI progressive peut viser 4,5% net tout en optimisant votre fiscalité.',
-    resume:'Cadre supérieure, retraite à 55 ans. Patrimoine immobilier existant, cherche revenus passifs complémentaires. Très réceptive.',
-    timeline:[['2026','1ère SCPI'],['2028','Diversification'],['2035','Revenus retraite']],
-    bg:'linear-gradient(135deg,#4d8eff,#80aaff)',
-    score_detail:['✓ Durée d\'appel : 12 min','✓ Sujet : SCPI & Retraite','✓ Profil : cadre supérieure, retraite à 55 ans','✓ Réceptivité forte détectée (2 rappels spontanés)','✓ Patrimoine existant à structurer en revenus passifs']
+  {
+    id:'d3', nom:'Claire B.', prenom:'Claire', age:44, ville:'Bordeaux', phone:'+33 6 98 76 54 32',
+    patrimoine:'650k€ estimé', score:7.8, sms:'O',
+    besoin:'Préparer sa retraite et générer des revenus passifs',
+    sujet:'SCPI & Optimisation Retraite',
+    window:'14 jours', risk:'Faible', urgency:'cool',
+    bg:'linear-gradient(135deg,#1a5aff,#4d8eff)',
+    source:'Article SEO',
+    contexte:'Arrivée via "SCPI retraite 2026" sur Google · A lu 3 articles · A demandé un guide',
+    validation:'Cadre supérieure confirmée · Objectif retraite à 55 ans déclaré',
+    contact_canal:'Email d\'abord, puis appel',
+    contact_moment:'Le matin avant 10h',
+    contact_rappel:'Préfère recevoir une simulation avant de prendre RDV',
+    action:'Envoyer simulation SCPI personnalisée puis proposer RDV',
+    script:'Bonjour Claire, avec un horizon retraite à 11 ans, une stratégie SCPI progressive peut viser 4,5% net tout en optimisant votre fiscalité. Je vous prépare une simulation sur mesure — je vous l\'envoie dès demain, et on en discute à votre rythme ?',
+    resume:'Cadre supérieure, retraite souhaitée à 55 ans. Cherche revenus passifs complémentaires. Très réceptive, préfère être autonome dans sa réflexion.',
+    score_detail:['✓ Durée d\'appel Sophia : 12 min','✓ Besoin déclaré : Revenus passifs retraite','✓ Profil : cadre supérieure, 44 ans','✓ Réceptivité forte (2 interactions spontanées)','✓ Patrimoine existant à structurer'],
+    objections:['Liquidité des SCPI','Incertitude sur les rendements futurs'],
   },
-  { id:'d4', nom:'Sophie M.', prenom:'Sophie', age:47, ville:'Nantes', phone:'+33 6 77 88 99 00',
-    patrimoine:'420k€ estimé', duree:540, score:6.9, sms:'N', sujet:'Retraite Dirigeante',
-    conv_pct:70, window:'3 jours', risk:'Modéré — fenêtre PER fin juin',
-    contenus:['PER dirigeant','Loi Madelin','Retraite chapeau'],
-    objections:['Manque de temps','Changements législatifs'],
-    action:'Rappel 48h — fenêtre PER à saisir avant juin',
-    script:'Bonjour Sophie, votre situation de dirigeante vous permet une économie PER jusqu\'à 15 000€ cette année — avant la fin du second trimestre.',
-    resume:'Dirigeante TPE secteur conseil. Très occupée, préfère les échanges courts et concrets. Intérêt fort pour les dispositifs dirigeants.',
-    timeline:[['2026','Optim. PER'],['2030','Départ'],['2032','Retraite opt.']],
-    bg:'linear-gradient(135deg,#3ecf8e,#6af0b0)',
-    score_detail:['✓ Durée d\'appel : 9 min','✓ Sujet : Retraite Dirigeante','✓ Profil : dirigeante TPE','✓ Fenêtre PER fin juin identifiée (économie ~15k€)','⚠ Appel court — disponibilité limitée, préférer SMS']
-  },
-  { id:'d5', nom:'Pierre V.', prenom:'Pierre', age:55, ville:'Marseille', phone:'+33 6 11 22 33 44',
-    patrimoine:'580k€ estimé', duree:840, score:7.2, sms:'O', sujet:'Défiscalisation',
-    conv_pct:72, window:'30 jours', risk:'Faible — objectif bilan 2026',
-    contenus:['Déficit foncier','FCPI','Pinel','Malraux'],
-    objections:['Engagement long terme','Risque placement'],
-    action:'Envoyer guide défiscalisation 2026',
-    script:'Bonjour Pierre, à 41% d\'imposition, 3 dispositifs 2026 peuvent réduire votre impôt de 8 à 12 000€ cette année.',
-    resume:'Cadre direction grand groupe. Forte pression fiscale. Patrimoine en IDF. Cherche optimisation 2026 avant bilan.',
-    timeline:[['2026','Pinel'],['2027','SCPI fiscales'],['2029','Stratégie globale']],
-    bg:'linear-gradient(135deg,#e8943a,#f0b060)',
-    score_detail:['✓ Durée d\'appel : 14 min','✓ Sujet : Défiscalisation 2026','✓ Profil : cadre direction, TMI 41%','✓ Objectif chiffré exprimé (8-12k€ d\'économie)','⚠ Objection engagement long terme — à lever en RDV']
-  }
 ];
 
-const INTENTIONS = [
-  {nom:'Transmission PME',pct:92,cls:'h'},{nom:'Retraite dirigeant',pct:81,cls:'w'},
-  {nom:'SCPI & Revenus passifs',pct:67,cls:'b'},{nom:'Succession & Donation',pct:54,cls:''},
-  {nom:'Défiscalisation',pct:48,cls:''},{nom:'Expatriation fiscale',pct:38,cls:'b'},
+var SIGNALS = [
+  {pct:'+42%', topic:'Vente d\'entreprise et fiscalité', region:'Rhône-Alpes', bar:90},
+  {pct:'+28%', topic:'Préparer sa retraite de dirigeant', region:'Île-de-France', bar:68},
+  {pct:'+19%', topic:'Revenus passifs et immobilier', region:'Sud-Ouest', bar:52},
+  {pct:'+15%', topic:'Donation aux enfants', region:'National', bar:42},
 ];
 
-const TRENDS = [
-  {pct:'+42%',sujet:'Transmission PME',region:'Rhône-Alpes',bar:90},
-  {pct:'+28%',sujet:'Retraite dirigeant',region:'Île-de-France',bar:68},
-  {pct:'+19%',sujet:'SCPI Revenus passifs',region:'Sud-Ouest',bar:52},
-  {pct:'+15%',sujet:'Succession & Donation',region:'National',bar:42},
-];
+var URGENCY = {
+  hot:  {bg:'rgba(255,64,96,.1)',  border:'rgba(255,64,96,.25)',  score:'#ff4060', icon:'🔥'},
+  warm: {bg:'rgba(255,154,60,.1)', border:'rgba(255,154,60,.25)', score:'#ff9a3c', icon:'⭐'},
+  cool: {bg:'rgba(0,130,243,.1)',  border:'rgba(0,130,243,.25)',  score:'#0082f3', icon:'📞'},
+};
 
-const CONTENTS = [
-  {type:'LinkedIn',cls:'ct-linkedin',title:'"3 erreurs fiscales que font 80% des dirigeants en transmettant leur PME"',perf:'<strong>2 300</strong> vues estimées · <strong>47</strong> leads/mois',status:'Script généré — à valider',scls:'status-gen'},
-  {type:'Article SEO',cls:'ct-seo',title:'"Transmission PME 2026 — Guide fiscal complet Pacte Dutreil"',perf:'<strong>340</strong> prospects/mois estimés · Top 3 Google',status:'Squelette prêt — à rédiger',scls:'status-val'},
-  {type:'Webinaire',cls:'ct-webinar',title:'"Préparer sa retraite de dirigeant : 5 leviers fiscaux 2026"',perf:'<strong>85</strong> inscrits prévus · <strong>18%</strong> conversion RDV',status:'Date proposée : 12 juin 2026',scls:'status-val'},
-  {type:'Campagne Ads',cls:'ct-ads',title:'Ciblage LinkedIn — PDG 45-60 ans — Lyon / Rhône-Alpes',perf:'<strong>12</strong> leads/mois estimés · CPA ~38€',status:'Budget suggéré : 450€/mois',scls:'status-gen'},
-];
+/* ── STATE ─────────────────────────────────────── */
+var TOKEN = localStorage.getItem('dl_token') || '';
+var realLeads = [];
+var lastResponse = '';
+var synth = window.speechSynthesis;
+var voiceActive = false;
+var recognition = null;
 
-const FEED_EVT = [
-  {icon:'🔥',ville:'Lyon',sub:'Transmission PME — hausse +34% des intentions',time:'2 min',score:9.1,col:'var(--hot)'},
-  {icon:'📍',ville:'Paris 8e',sub:'Expatriation fiscale — profil dirigeant détecté',time:'8 min',score:8.2,col:'var(--blue)'},
-  {icon:'⭐',ville:'Bordeaux',sub:'SCPI Retraite — 3 nouveaux signaux qualifiés',time:'15 min',score:7.8,col:'var(--warm)'},
-  {icon:'📞',ville:'Strasbourg',sub:'Succession — requêtes en hausse +22%',time:'23 min',score:6.5,col:'var(--dim)'},
-  {icon:'⭐',ville:'Nantes',sub:'Transmission entreprise — dirigeants actifs',time:'31 min',score:6.9,col:'var(--green)'},
-];
-
-const NOTIF_SIM = [
-  {ville:'Bordeaux',age:48,sexe:'Homme',sujet:'Préparation retraite dirigeant',source:'Vidéo LinkedIn',score:8.9},
-  {ville:'Lyon',age:53,sexe:'Femme',sujet:'Transmission entreprise familiale',source:'Article SEO',score:9.2},
-  {ville:'Paris 16e',age:62,sexe:'Homme',sujet:'Succession et donation',source:'Webinaire',score:8.6},
-];
-
-const STAGES = [
-  '🔍 Détection signal marché…',
-  '🧠 Analyse comportementale…',
-  '👤 Identification profil…',
-  '📊 Calcul score patrimonial…',
-  '✅ Lead qualifié',
-];
-
-/* ── STATE ──────────────────────────────────────── */
-let TOKEN = localStorage.getItem('dl_token')||'';
-let realLeads = [];
-let currentFilter = null;
-
-/* ── AUTH ───────────────────────────────────────── */
+/* ── AUTH ──────────────────────────────────────── */
 async function doLogin() {
-  const pw = document.getElementById('pw').value;
-  const r = await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:pw})});
-  if (r.ok) { const d=await r.json(); TOKEN=d.token; localStorage.setItem('dl_token',TOKEN); showApp(); }
-  else document.getElementById('lerr').textContent='Mot de passe incorrect.';
+  var pw = document.getElementById('pw').value;
+  var r = await fetch('/api/auth/login', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password:pw})});
+  if (r.ok) {
+    var d = await r.json();
+    TOKEN = d.token;
+    localStorage.setItem('dl_token', TOKEN);
+    showApp();
+  } else {
+    document.getElementById('lerr').textContent = 'Mot de passe incorrect.';
+  }
 }
-function logout() { TOKEN=''; localStorage.removeItem('dl_token'); document.getElementById('app').style.display='none'; document.getElementById('login').style.display='flex'; }
+function logout() {
+  TOKEN = '';
+  localStorage.removeItem('dl_token');
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login').style.display = 'flex';
+}
 
-/* ── BOOT ───────────────────────────────────────── */
+/* ── BOOT ──────────────────────────────────────── */
 function showApp() {
-  document.getElementById('login').style.display='none';
-  document.getElementById('app').style.display='block';
+  document.getElementById('login').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
   startClock();
-  renderBriefing(); renderRadar(); renderShadow(); renderCards();
-  renderAcq(); renderFeed(); loadRealData();
-  setTimeout(()=>triggerNotif(0), 35000);
+  renderBriefing();
+  renderPriorities();
+  renderSignals();
+  loadRealData();
 }
 
-/* ── CLOCK ──────────────────────────────────────── */
+/* ── CLOCK ─────────────────────────────────────── */
 function startClock() {
-  const fmt = ()=> new Date().toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})+' — '+new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-  document.getElementById('clock').textContent=fmt();
-  setInterval(()=>document.getElementById('clock').textContent=fmt(),1000);
+  function fmt() {
+    return new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})
+      + ' — ' + new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  }
+  document.getElementById('clock').textContent = fmt();
+  setInterval(function(){ document.getElementById('clock').textContent = fmt(); }, 1000);
 }
 
-/* ── BRIEFING ───────────────────────────────────── */
+/* ── BRIEFING ──────────────────────────────────── */
 function renderBriefing() {
-  const h=new Date().getHours(), g=h<12?'Bonjour':h<18?'Bon après-midi':'Bonsoir';
-  document.getElementById('brief-msg').textContent=`${g}. 3 opportunités à fort potentiel identifiées aujourd'hui. Lyon en tête : +34% d'intentions de transmission PME. Marc D. (score 9.4) — fenêtre de décision ouverte, à contacter avant vendredi. Valeur patrimoniale qualifiée ce mois : 3,4M€. Les signaux détectés cette semaine indiquent une accélération de la demande de transmission d'entreprise — plus vite que la capacité de traitement des cabinets traditionnels.`;
-  document.getElementById('brief-time').textContent=new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
-  document.getElementById('shadow-date').textContent=new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
+  var h = new Date().getHours();
+  var g = h < 12 ? 'Bonjour' : h < 18 ? 'Bon après-midi' : 'Bonsoir';
+  document.getElementById('sophia-msg').textContent = g + '. Cette semaine, 37 personnes ont exprimé un besoin lié à la retraite, la fiscalité ou la transmission. J\'ai identifié 3 contacts pour qui un échange avec un expert Days Legacy aurait une vraie valeur. Marc D. est le plus urgent — il cherche à sécuriser la transmission de son entreprise avant une décision à vendredi.';
+  document.getElementById('priority-date').textContent = new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
 }
 
-/* ── RADAR ──────────────────────────────────────── */
-function renderRadar() {
-  document.getElementById('radar').innerHTML=INTENTIONS.map(i=>`
-    <div class="rad-item">
-      <div class="rad-top"><span class="rad-name">${i.nom}</span><span class="rad-pct">${i.pct}%</span></div>
-      <div class="rad-bar"><div class="rad-fill ${i.cls}" style="width:0" data-w="${i.pct}%"></div></div>
-    </div>`).join('');
-  setTimeout(()=>document.querySelectorAll('.rad-fill').forEach(b=>b.style.width=b.dataset.w),200);
+/* ── VOICE ─────────────────────────────────────── */
+function toggleVoice() {
+  if (voiceActive) { stopListening(); } else { startListening(); }
+}
+function startListening() {
+  var SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRec) {
+    document.getElementById('sophia-q').placeholder = 'Micro non supporté — utilisez Chrome';
+    return;
+  }
+  if (synth) synth.cancel();
+  recognition = new SpeechRec();
+  recognition.lang = 'fr-FR';
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  voiceActive = true;
+  var vbtn = document.getElementById('voice-btn');
+  vbtn.classList.add('listening');
+  document.getElementById('voice-label').textContent = 'Écoute…';
+  document.getElementById('voice-bar').classList.add('show');
+  document.getElementById('speak-bar').style.display = 'none';
+  recognition.onresult = function(ev) {
+    var t = ev.results[0][0].transcript;
+    document.getElementById('sophia-q').value = t;
+    stopListening();
+    _callSophia(t, true);
+  };
+  recognition.onerror = function(ev) {
+    stopListening();
+    if (ev.error !== 'aborted') document.getElementById('voice-status').textContent = 'Erreur : ' + ev.error;
+  };
+  recognition.onend = function() { if (voiceActive) stopListening(); };
+  recognition.start();
+}
+function stopListening() {
+  voiceActive = false;
+  var vbtn = document.getElementById('voice-btn');
+  vbtn.classList.remove('listening');
+  document.getElementById('voice-label').textContent = 'Vocal';
+  document.getElementById('voice-bar').classList.remove('show');
+  document.getElementById('voice-status').textContent = 'Sophia vous écoute… parlez maintenant';
+  if (recognition) { try { recognition.stop(); } catch(e) {} recognition = null; }
+}
+function speakSophia(text) {
+  if (!synth) return;
+  synth.cancel();
+  var utt = new SpeechSynthesisUtterance(text);
+  utt.lang = 'fr-FR'; utt.rate = 1.0; utt.pitch = 1.1;
+  var voices = synth.getVoices();
+  for (var i = 0; i < voices.length; i++) {
+    if (voices[i].lang === 'fr-FR') { utt.voice = voices[i]; break; }
+  }
+  var sb = document.getElementById('stop-speak');
+  if (sb) sb.style.display = 'inline-flex';
+  utt.onend = function() { if (sb) sb.style.display = 'none'; };
+  synth.speak(utt);
+}
+function speakLast() { if (lastResponse) speakSophia(lastResponse); }
+function stopSpeaking() {
+  if (synth) synth.cancel();
+  var sb = document.getElementById('stop-speak');
+  if (sb) sb.style.display = 'none';
 }
 
-/* ── SHADOW BD ──────────────────────────────────── */
-function renderShadow() {
-  const top3=[...LEADS].sort((a,b)=>b.score-a.score).slice(0,3);
-  document.getElementById('shadow-grid').innerHTML=top3.map((l,i)=>{
-    const c=2*Math.PI*16, d=(l.score/10)*c, sc=l.score>=8?'var(--hot)':l.score>=7?'var(--warm)':'var(--blue)';
-    const riskCls=l.risk.startsWith('Élevé')?'pb-risk-hi':'pb-risk-md';
-    return `<div class="s-card" onclick="openLead('${l.id}')">
-      <div class="s-rank">${['1er','2ème','3ème'][i]}</div>
-      <div class="s-top">
-        <div class="s-av" style="background:${l.bg}">${l.prenom[0]}</div>
-        <div class="s-info"><div class="s-name">${l.nom}</div><div class="s-sub">${l.age} ans · ${l.ville}</div></div>
-        <div class="s-score-wrap">
-          <svg width="42" height="42" viewBox="0 0 42 42">
-            <circle cx="21" cy="21" r="16" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="3"/>
-            <circle cx="21" cy="21" r="16" fill="none" stroke="${sc}" stroke-width="3" stroke-dasharray="${d} ${c}" stroke-linecap="round"/>
-          </svg>
-          <div class="s-score-val" style="color:${sc}">${l.score}</div>
-        </div>
-      </div>
-      <div class="s-action"><div class="s-action-lbl">Action IA</div>${l.action}</div>
-      <div class="predict-row" style="margin-top:8px">
-        <span class="predict-badge pb-window">⏱ ${l.window}</span>
-        <span class="predict-badge ${riskCls}">⚠ ${l.risk.split('—')[0].trim()}</span>
-        <span class="predict-badge" style="background:rgba(77,142,255,.1);color:var(--blue);border:1px solid rgba(77,142,255,.2)">${l.conv_pct}% conv.</span>
-      </div>
-      <button class="btn-why" onclick="toggleWhy('sw-why-${l.id}',event)">Pourquoi ce score ?</button>
-      <div class="why-panel" id="sw-why-${l.id}">${l.score_detail.map(r=>`<div class="why-item">${r}</div>`).join('')}</div>
-    </div>`;
-  }).join('');
+/* ── SOPHIA CONTEXT ────────────────────────────── */
+function buildSophiaContext() {
+  var hot = LEADS.filter(function(l){ return l.urgency === 'hot'; }).length;
+  var warm = LEADS.filter(function(l){ return l.urgency === 'warm'; }).length;
+  var ctx = '[CONTEXTE BD DAYS LEGACY]\n';
+  ctx += 'Date : ' + new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}) + '\n';
+  ctx += 'Pipeline : ' + LEADS.length + ' prospects (' + hot + ' chaud, ' + warm + ' tiède)\n';
+  ctx += 'Top prospect : Marc D. 52 ans Lyon — Transmission PME score 9.4/10 fenêtre 48h\n';
+  ctx += 'Priorité 2 : Antoine L. 61 ans Paris — Succession SCI Familiale score 8.6/10\n';
+  ctx += 'Priorité 3 : Claire B. 44 ans Bordeaux — SCPI Retraite score 7.8/10\n';
+  ctx += 'Signaux : +42% vente entreprise (Rhône-Alpes), +28% retraite dirigeant (IDF)\n';
+  if (realLeads.length > 0) ctx += 'Base réelle : ' + realLeads.length + ' prospects\n';
+  ctx += '[FIN CONTEXTE]\n\n';
+  return ctx;
 }
 
-/* ── PROSPECT CARDS ─────────────────────────────── */
-function renderCards() {
-  document.getElementById('cards').innerHTML=[...LEADS].sort((a,b)=>b.score-a.score).slice(0,3).map(l=>{
-    const c=2*Math.PI*21, d=(l.score/10)*c, sc=l.score>=8?'var(--hot)':l.score>=7?'var(--warm)':'var(--blue)';
-    const riskCls=l.risk.startsWith('Élevé')?'pb-risk-hi':'pb-risk-md';
-    return `<div class="pcard" onclick="openLead('${l.id}')">
-      <div class="pc-top">
-        <div class="pc-score">
-          <svg width="50" height="50" viewBox="0 0 50 50"><circle cx="25" cy="25" r="21" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="3"/><circle cx="25" cy="25" r="21" fill="none" stroke="${sc}" stroke-width="3" stroke-dasharray="${d} ${c}" stroke-linecap="round"/></svg>
-          <div class="pc-score-val" style="color:${sc}">${l.score}</div>
-        </div>
-        <div class="pc-meta">
-          <div class="pc-name">${l.nom}</div>
-          <div class="pc-sub">${l.age} ans · ${l.ville} · ${Math.floor(l.duree/60)}min appel</div>
-          <div class="pc-pat">${l.patrimoine}</div>
-        </div>
-        <div class="pc-av" style="background:${l.bg}">${l.prenom[0]}</div>
-      </div>
-      <div class="pc-subj"><div class="pc-subj-lbl">Sujet dominant</div><div class="pc-subj-val">${l.sujet}</div></div>
-      <div class="pc-predict">
-        <div class="pc-predict-lbl">Prédiction IA</div>
-        <div class="pc-predict-row">
-          <div class="pc-predict-item"><div class="pc-predict-v" style="color:var(--green)">${l.conv_pct}%</div><div class="pc-predict-k">Conversion</div></div>
-          <div class="pc-predict-item"><div class="pc-predict-v" style="color:var(--blue)">${l.window}</div><div class="pc-predict-k">Fenêtre idéale</div></div>
-          <div class="pc-predict-item"><div class="pc-predict-v" style="color:${l.risk.startsWith('Élevé')?'var(--hot)':'var(--warm)';font-size:'10px'}">${l.risk.split('—')[0].trim()}</div><div class="pc-predict-k">Risque perte</div></div>
-        </div>
-      </div>
-      <div class="pills">${l.contenus.map(c=>`<span class="pill">${c}</span>`).join('')}</div>
-      <div class="pills">${l.objections.map(o=>`<span class="pill pill-risk">${o}</span>`).join('')}</div>
-      <div class="tl-wrap"><div class="tl-lbl">Timeline patrimoniale IA</div>
-        <div class="tl-row">${l.timeline.map(([y,e])=>`<div class="tl-item"><div class="tl-dot"></div><div class="tl-yr">${y}</div><div class="tl-ev">${e}</div></div>`).join('')}</div>
-      </div>
-      <button class="btn-why" onclick="toggleWhy('pc-why-${l.id}',event)">Pourquoi ce score ?</button>
-      <div class="why-panel" id="pc-why-${l.id}">${l.score_detail.map(r=>`<div class="why-item">${r}</div>`).join('')}</div>
-    </div>`;
-  }).join('');
+/* ── SOPHIA CHAT ───────────────────────────────── */
+async function askSophia() {
+  var q = document.getElementById('sophia-q').value.trim();
+  if (!q) return;
+  document.getElementById('sophia-q').value = '';
+  await _callSophia(q, false);
 }
-
-/* ── ACQUISITION ────────────────────────────────── */
-function renderAcq() {
-  document.getElementById('trends').innerHTML=TRENDS.map(t=>`
-    <div class="trend-item">
-      <div class="trend-pct">${t.pct}</div>
-      <div class="trend-body"><div class="trend-sujet">${t.sujet}</div><div class="trend-region">${t.region}</div></div>
-      <div class="trend-bar"><div class="trend-bar-fill" style="width:0" data-w="${t.bar}%"></div></div>
-    </div>`).join('');
-  setTimeout(()=>document.querySelectorAll('.trend-bar-fill').forEach(b=>b.style.width=b.dataset.w),300);
-  document.getElementById('contents').innerHTML=CONTENTS.map(c=>`
-    <div class="content-item">
-      <span class="content-type ${c.cls}">${c.type}</span>
-      <div class="content-title">${c.title}</div>
-      <div class="content-perf">${c.perf}</div>
-      <div class="content-status ${c.scls}">${c.status}</div>
-    </div>`).join('');
+async function askSophiaAuto(question) {
+  document.getElementById('sophia-q').value = question;
+  await _callSophia(question, false);
+  document.getElementById('sophia-q').value = '';
 }
-
-/* ── FEED ───────────────────────────────────────── */
-function renderFeed() {
-  document.getElementById('feed').innerHTML=FEED_EVT.map(e=>`
-    <div class="feed-item">
-      <div class="fi-icon">${e.icon}</div>
-      <div class="fi-body"><div class="fi-line"><span class="fi-city">${e.ville}</span> — <span class="fi-sub">${e.sub}</span></div><div class="fi-time">Il y a ${e.time}</div></div>
-      <div class="fi-score" style="color:${e.col}">${e.score}/10</div>
-    </div>`).join('');
-}
-
-/* ── VISION EXÉCUTIVE ───────────────────────────── */
-function openVision() {
-  document.getElementById('vision-ov').classList.add('open');
-  renderVision();
-}
-function closeVision() { document.getElementById('vision-ov').classList.remove('open'); }
-function renderVision() {
-  const vkpis=[
-    {lbl:'Leads qualifiés ce mois',val:'80',sub:'pipeline actif — signaux agrégés',col:'var(--gold)',glow:'rgba(201,168,76,.04)'},
-    {lbl:'Valeur patrimoniale totale',val:'3,4M€',sub:'prospects qualifiés en cours',col:'var(--green)',glow:'rgba(62,207,142,.04)'},
-    {lbl:'Leads chauds (score ≥7)',val:'18',sub:'à contacter cette semaine',col:'var(--hot)',glow:'rgba(224,85,85,.04)'},
-    {lbl:'Top région',val:'Lyon',sub:'Rhône-Alpes — +34% intentions',col:'var(--blue)',glow:'rgba(77,142,255,.04)'},
-    {lbl:'Top sujet',val:'Transmission PME',sub:'92% — indice d\'intérêt marché',col:'var(--warm)',glow:'rgba(232,148,58,.04)'},
-    {lbl:'Contenus performants',val:'7',sub:'67k vues estimées / mois',col:'var(--green)',glow:'rgba(62,207,142,.04)'},
-  ];
-  document.getElementById('vis-kpis').innerHTML=vkpis.map(k=>`
-    <div class="vkpi" style="--_glow:${k.glow}">
-      <div class="vkpi-lbl">${k.lbl}</div>
-      <div class="vkpi-val" style="color:${k.col}">${k.val}</div>
-      <div class="vkpi-sub">${k.sub}</div>
-    </div>`).join('');
-  const top3=[...LEADS].sort((a,b)=>b.score-a.score).slice(0,3);
-  document.getElementById('vis-tops').innerHTML=top3.map(l=>`
-    <div class="vis-top-card">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-        <div style="width:40px;height:40px;border-radius:50%;background:${l.bg};display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#000">${l.prenom[0]}</div>
-        <div><div style="font-size:14px;font-weight:700">${l.nom}</div><div style="font-size:10px;color:var(--dim)">${l.ville} · ${l.age} ans</div></div>
-        <div style="margin-left:auto;font-size:22px;font-weight:900;color:${l.score>=8?'var(--hot)':'var(--warm)'}">${l.score}</div>
-      </div>
-      <div style="font-size:11px;color:var(--gold);font-weight:600;margin-bottom:4px">${l.sujet}</div>
-      <div style="font-size:11px;color:var(--dim)">${l.patrimoine}</div>
-      <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
-        <span class="predict-badge pb-window">${l.conv_pct}% conversion</span>
-        <span class="predict-badge pb-window">⏱ ${l.window}</span>
-      </div>
-    </div>`).join('');
-  const months=['Juin','Juil','Août','Sept','Oct','Nov'];
-  const vals=[18,24,31,28,38,43];
-  const max=Math.max(...vals);
-  document.getElementById('forecast-row').innerHTML=months.map((m,i)=>`
-    <div style="flex:1">
-      <div class="fc-bar ${i>=3?'active':''}" style="height:${(vals[i]/max)*80}px;position:relative">
-        <span class="fc-val">${vals[i]}</span>
-      </div>
-      <div class="fc-label">${m}</div>
-    </div>`).join('');
-}
-
-/* ── MODAL ──────────────────────────────────────── */
-function openLead(id) {
-  const l=LEADS.find(x=>x.id===id); if(!l) return;
-  const sc=l.score>=8?'var(--hot)':l.score>=7?'var(--warm)':'var(--blue)';
-  document.getElementById('modal').innerHTML=`
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px">
-      <div style="display:flex;align-items:center;gap:14px">
-        <div style="width:54px;height:54px;border-radius:50%;background:${l.bg};display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#000">${l.prenom[0]}</div>
-        <div><div style="font-size:20px;font-weight:800">${l.nom}</div><div style="color:var(--dim);font-size:12px;margin-top:3px">${l.age} ans · ${l.ville} · ${l.patrimoine}</div></div>
-      </div>
-      <div style="display:flex;align-items:center;gap:10px">
-        <div style="font-size:28px;font-weight:900;color:${sc}">${l.score}<span style="font-size:14px;font-weight:400;color:var(--dim)">/10</span></div>
-        <button class="modal-close" onclick="closeModal()">×</button>
-      </div>
-    </div>
-    <div style="background:rgba(62,207,142,.07);border:1px solid rgba(62,207,142,.15);border-radius:10px;padding:14px;margin-bottom:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center">
-      <div><div style="font-size:22px;font-weight:800;color:var(--green)">${l.conv_pct}%</div><div style="font-size:9px;color:var(--dim);margin-top:2px">Probabilité conversion</div></div>
-      <div><div style="font-size:16px;font-weight:800;color:var(--blue)">${l.window}</div><div style="font-size:9px;color:var(--dim);margin-top:2px">Fenêtre idéale</div></div>
-      <div><div style="font-size:13px;font-weight:700;color:${l.risk.startsWith('Élevé')?'var(--hot)':'var(--warm)'}">${l.risk.split('—')[0]}</div><div style="font-size:9px;color:var(--dim);margin-top:2px">Risque de perte</div></div>
-    </div>
-    <div style="margin-bottom:16px"><div class="label" style="margin-bottom:6px">Résumé IA</div><div style="background:rgba(255,255,255,.04);border-radius:9px;padding:13px;font-size:13px;line-height:1.6;color:var(--dim)">${l.resume}</div></div>
-    <div style="margin-bottom:16px"><div class="label" style="margin-bottom:6px">Script recommandé</div><div style="background:var(--gold-b);border:1px solid rgba(201,168,76,.15);border-radius:9px;padding:13px;font-size:13px;line-height:1.7;font-style:italic;color:var(--text)">"${l.script}"</div></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
-      <div><div class="label" style="margin-bottom:6px">Contenus consultés</div><div class="pills">${l.contenus.map(c=>`<span class="pill">${c}</span>`).join('')}</div></div>
-      <div><div class="label" style="margin-bottom:6px">Objections détectées</div><div class="pills">${l.objections.map(o=>`<span class="pill pill-risk">${o}</span>`).join('')}</div></div>
-    </div>
-    <div><div class="label" style="margin-bottom:10px">Timeline patrimoniale IA</div>
-      <div class="tl-row">${l.timeline.map(([y,e])=>`<div class="tl-item"><div class="tl-dot"></div><div class="tl-yr">${y}</div><div class="tl-ev">${e}</div></div>`).join('')}</div>
-    </div>`;
-  document.getElementById('modal-ov').classList.add('open');
-}
-async function openRealLead(id) {
-  if(!TOKEN) return;
-  const r=await fetch('/api/leads/'+id,{headers:{Authorization:'Bearer '+TOKEN}});
-  if(!r.ok) return;
-  const l=await r.json(); const sc=(l.score||0)>=8?'var(--hot)':(l.score||0)>=6?'var(--warm)':'var(--blue)';
-  const nom=[l.prenom,l.nom].filter(Boolean).join(' ')||'Inconnu';
-  document.getElementById('modal').innerHTML=`
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px">
-      <div><div style="font-size:20px;font-weight:800">${nom}</div><div style="color:var(--dim);font-size:12px;margin-top:3px">${l.phone||'—'} · ${new Date(l.date).toLocaleString('fr-FR')}</div></div>
-      <div style="display:flex;gap:10px;align-items:center"><span style="font-size:26px;font-weight:900;color:${sc}">${(l.score||0).toFixed(1)}</span><button class="modal-close" onclick="closeModal()">×</button></div>
-    </div>
-    <div class="label" style="margin-bottom:6px">Résumé</div><div style="color:var(--dim);font-size:13px;margin-bottom:18px">${l.resume||'—'}</div>
-    <div class="label" style="margin-bottom:8px">Transcript</div>
-    ${(l.transcript||[]).map(m=>`<div class="t-line t-${m.role}"><div class="t-role tr-${m.role}">${m.role==='assistant'?'SOPHIA':'PROSPECT'}</div>${m.content}</div>`).join('')||'<p style="color:var(--faint);font-size:13px">Pas de transcript</p>'}`;
-  document.getElementById('modal-ov').classList.add('open');
-}
-function closeModal(){ document.getElementById('modal-ov').classList.remove('open'); }
-function toggleWhy(id,ev){ if(ev){ev.stopPropagation();} const p=document.getElementById(id); if(p) p.classList.toggle('open'); }
-
-/* ── REAL DATA ──────────────────────────────────── */
-async function loadRealData() {
-  if(!TOKEN) return;
+async function _callSophia(question, speakReply) {
+  var btn = document.getElementById('sophia-btn');
+  var resp = document.getElementById('sophia-resp');
+  btn.disabled = true; btn.textContent = '…';
+  resp.className = 'sh-resp show';
+  resp.innerHTML = '<span class="typing">Sophia analyse…</span>';
+  document.getElementById('speak-bar').style.display = 'none';
+  var msg = buildSophiaContext() + 'QUESTION : ' + question;
   try {
-    const [sr,lr]=await Promise.all([fetch('/api/leads/stats',{headers:{Authorization:'Bearer '+TOKEN}}),fetch('/api/leads',{headers:{Authorization:'Bearer '+TOKEN}})]);
-    if(sr.ok){ const s=await sr.json(); if(s.total>0){animN('kpi-tot',s.total);animN('kpi-hot',s.chauds);animN('kpi-warm',s.moyens);}else loadDemoKPIs(); }else loadDemoKPIs();
-    if(lr.ok){ realLeads=await lr.json(); if(realLeads.length>0){document.getElementById('tbl-count').textContent=realLeads.length+' prospects enregistrés';renderTable(realLeads);}else{document.getElementById('tbl-count').textContent='Mode démo — données représentatives';} }
-  } catch(e){ loadDemoKPIs(); }
-}
-function loadDemoKPIs(){ animN('kpi-tot',24);animN('kpi-hot',8);animN('kpi-warm',11); }
-function animN(id,tgt,float=false){ const el=document.getElementById(id); if(!el) return; const n=parseFloat(tgt); let c=0; const s=n/30; const t=setInterval(()=>{c=Math.min(c+s,n);el.textContent=float?c.toFixed(1):Math.round(c);if(c>=n)clearInterval(t);},40); }
-function setFilter(score,btn){ currentFilter=score; document.querySelectorAll('.f-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderTable(score==null?realLeads:realLeads.filter(l=>(l.score||0)>=score)); }
-function renderTable(leads) {
-  const tb=document.getElementById('tbody');
-  if(!leads||!leads.length){ tb.innerHTML='<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--faint)">Aucun prospect enregistré</td></tr>'; return; }
-  tb.innerHTML=leads.map(l=>{
-    const sc=l.score||0, col=sc>=7?'var(--hot)':sc>=4?'var(--warm)':'var(--blue)', bg=sc>=7?'var(--hot-b)':sc>=4?'var(--warm-b)':'var(--blue-b)';
-    const nom=[l.prenom,l.nom].filter(Boolean).join(' ')||'Inconnu';
-    const dt=l.date?new Date(l.date).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'—';
-    return `<tr onclick="openRealLead(${l.id})"><td><span class="sbadge" style="background:${bg};color:${col}">${sc.toFixed(1)}</span></td><td style="font-weight:600">${nom}</td><td style="font-family:monospace;color:var(--dim)">${l.phone||'—'}</td><td><span class="tag" style="background:var(--gold-b);color:var(--gold);border:1px solid rgba(201,168,76,.2)">${l.patrimoine||'N/P'}</span></td><td style="color:var(--dim);max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${l.objectif||'—'}</td><td style="color:var(--faint)">${dt}</td><td>${l.sms==='O'?`<span class="tag" style="background:var(--green-b);color:var(--green);border:1px solid rgba(62,207,142,.2)">✓ SMS</span>`:''}</td></tr>`;
-  }).join('');
+    var r = await fetch('/api/sophia/chat', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},
+      body:JSON.stringify({message:msg})
+    });
+    if (r.ok) {
+      var d = await r.json();
+      resp.textContent = d.response;
+      lastResponse = d.response;
+      document.getElementById('speak-bar').style.display = 'flex';
+      if (speakReply) speakSophia(d.response);
+    } else {
+      resp.textContent = 'Sophia est momentanément indisponible.';
+    }
+  } catch(e) {
+    resp.textContent = 'Erreur de connexion.';
+  }
+  btn.disabled = false; btn.textContent = 'Envoyer →';
 }
 
-/* ── NOTIFICATION IA PENSANTE ───────────────────── */
-function triggerNotif(idx) {
-  const ev=NOTIF_SIM[idx%NOTIF_SIM.length];
-  const notif=document.getElementById('notif');
-  document.getElementById('notif-time').textContent=new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
-  document.getElementById('notif-result').classList.remove('show');
-  document.getElementById('notif-stages').innerHTML=STAGES.map((s,i)=>`<div class="n-stage" id="ns${i}"><div class="n-stage-dot"></div>${s}</div>`).join('');
-  notif.classList.add('show');
-  STAGES.forEach((_,i)=>{
-    setTimeout(()=>{
-      document.querySelectorAll('.n-stage').forEach((el,j)=>{
-        if(j<i) el.classList.add('done');
-        else if(j===i) { el.classList.add('active'); el.classList.remove('done'); }
-        else { el.classList.remove('active','done'); }
-      });
-      if(i===STAGES.length-1){
-        setTimeout(()=>{
-          document.getElementById('nr-city').textContent=ev.ville;
-          document.getElementById('nr-score').textContent=ev.score+'/10';
-          document.getElementById('nr-detail').textContent=`${ev.sexe} · ${ev.age} ans · ${ev.sujet} · ${ev.source}`;
-          document.getElementById('notif-result').classList.add('show');
-        },400);
-        setTimeout(()=>{ notif.classList.remove('show'); setTimeout(()=>triggerNotif(idx+1),50000); },7000);
+/* ── PRIORITIES ────────────────────────────────── */
+function renderPriorities() {
+  var ranks = ['1ère priorité','2ème priorité','3ème priorité'];
+  var html = '';
+  for (var i = 0; i < Math.min(LEADS.length, 3); i++) {
+    var l = LEADS[i];
+    var u = URGENCY[l.urgency] || URGENCY.cool;
+    html += '<div class="p-card' + (l.urgency === 'hot' ? ' urgent' : '') + '" style="border-color:' + u.border + '">'
+      + '<div class="p-rank-row">'
+      +   '<div class="p-rank">' + u.icon + ' ' + ranks[i] + '</div>'
+      +   '<div class="p-window-pill" style="background:' + u.bg + ';color:' + u.score + ';border:1px solid ' + u.border + '">⏱ ' + l.window + '</div>'
+      + '</div>'
+      + '<div class="p-top">'
+      +   '<div class="p-av" style="background:' + l.bg + '">' + l.prenom[0] + '</div>'
+      +   '<div class="p-info"><div class="p-name">' + l.nom + '</div><div class="p-loc">' + l.age + ' ans · ' + l.ville + '</div></div>'
+      +   '<div class="p-score" style="color:' + u.score + '">' + l.score + '</div>'
+      + '</div>'
+      + '<div class="p-subject">'
+      +   '<div class="p-subj-lbl">Besoin exprimé</div>'
+      +   '<div class="p-subj-val">' + l.besoin + '</div>'
+      +   '<div class="p-pat">' + l.patrimoine + ' · ' + l.sujet + '</div>'
+      + '</div>'
+      + '<div class="p-row">'
+      +   '<div class="p-cell"><div class="p-cell-lbl">Source</div><div class="p-cell-val">' + l.source + '</div></div>'
+      +   '<div class="p-cell"><div class="p-cell-lbl">Contexte</div><div class="p-cell-val" style="font-weight:400;font-size:10px;color:var(--dim)">' + l.contexte + '</div></div>'
+      + '</div>'
+      + '<div class="p-contact-block">'
+      +   '<div class="p-contact-lbl">Comment et quand le contacter</div>'
+      +   '<div class="p-contact-row">📞 ' + l.contact_canal + '</div>'
+      +   '<div class="p-contact-row">🕐 ' + l.contact_moment + '</div>'
+      +   '<div class="p-contact-row" style="color:' + u.score + ';font-weight:600">💬 ' + l.contact_rappel + '</div>'
+      + '</div>'
+      + '<div class="p-actions">'
+      +   '<button class="btn-ghost btn-sm" style="flex:1;justify-content:center" onclick="openScript(\'' + l.id + '\')">Voir le script</button>'
+      +   '<button class="btn-gold btn-sm" style="flex:1;justify-content:center" onclick="openScript(\'' + l.id + '\')">📞 Préparer l\'appel</button>'
+      + '</div>'
+      + '</div>';
+  }
+  document.getElementById('p-grid').innerHTML = html;
+}
+
+/* ── SIGNALS ───────────────────────────────────── */
+function renderSignals() {
+  var html = '';
+  for (var i = 0; i < SIGNALS.length; i++) {
+    var s = SIGNALS[i];
+    html += '<div class="sig-item">'
+      + '<div class="sig-pct">' + s.pct + '</div>'
+      + '<div class="sig-body"><div class="sig-topic">' + s.topic + '</div><div class="sig-region">' + s.region + '</div></div>'
+      + '<div class="sig-bar"><div class="sig-fill" style="width:' + s.bar + '%"></div></div>'
+      + '<div class="sig-action"><button class="btn-ghost btn-sm" onclick="askSophiaAuto(\'Stratégie pour capter les personnes qui cherchent : ' + s.topic + ' en ' + s.region + '\')">Stratégie →</button></div>'
+      + '</div>';
+  }
+  document.getElementById('signals-list').innerHTML = html;
+}
+
+/* ── SCRIPT MODAL ──────────────────────────────── */
+function openScript(id) {
+  var l = null;
+  for (var i = 0; i < LEADS.length; i++) { if (LEADS[i].id === id) { l = LEADS[i]; break; } }
+  if (!l) return;
+  var u = URGENCY[l.urgency] || URGENCY.cool;
+  var scoreHtml = '';
+  for (var j = 0; j < l.score_detail.length; j++) {
+    scoreHtml += '<div style="font-size:11px;color:var(--dim);padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05)">' + l.score_detail[j] + '</div>';
+  }
+  var objHtml = '';
+  for (var k = 0; k < l.objections.length; k++) {
+    objHtml += '<div style="font-size:11px;padding:5px 10px;background:rgba(255,64,96,.07);border-radius:6px;margin-bottom:5px;color:var(--dim)">' + l.objections[k] + '</div>';
+  }
+  document.getElementById('modal').innerHTML = ''
+    + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">'
+    +   '<div style="display:flex;align-items:center;gap:14px">'
+    +     '<div style="width:52px;height:52px;border-radius:12px;background:' + l.bg + ';display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;color:#000">' + l.prenom[0] + '</div>'
+    +     '<div><div style="font-size:21px;font-weight:900">' + l.nom + '</div><div style="font-size:11px;color:var(--dim);margin-top:2px">' + l.ville + ' · ' + l.age + ' ans · ' + l.patrimoine + '</div></div>'
+    +   '</div>'
+    +   '<div style="display:flex;align-items:center;gap:12px">'
+    +     '<div style="font-size:28px;font-weight:900;color:' + u.score + '">' + l.score + '<span style="font-size:12px;font-weight:400;color:var(--dim)">/10</span></div>'
+    +     '<button class="modal-close" onclick="closeModal()">×</button>'
+    +   '</div>'
+    + '</div>'
+    + '<div style="background:rgba(204,155,18,.07);border:1px solid rgba(204,155,18,.18);border-radius:12px;padding:14px 18px;margin-bottom:18px">'
+    +   '<div class="lbl" style="margin-bottom:5px;color:rgba(204,155,18,.7)">Besoin exprimé</div>'
+    +   '<div style="font-size:15px;font-weight:700">' + l.besoin + '</div>'
+    + '</div>'
+    + '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:18px">'
+    +   '<div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:12px"><div class="lbl" style="margin-bottom:4px">Source</div><div style="font-size:13px;font-weight:700">' + l.source + '</div></div>'
+    +   '<div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:12px"><div class="lbl" style="margin-bottom:4px">Canal préféré</div><div style="font-size:13px;font-weight:700">' + l.contact_canal + '</div></div>'
+    +   '<div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:12px"><div class="lbl" style="margin-bottom:4px">Meilleur moment</div><div style="font-size:13px;font-weight:700">' + l.contact_moment + '</div></div>'
+    + '</div>'
+    + '<div style="background:rgba(0,130,243,.06);border:1px solid rgba(0,130,243,.15);border-radius:10px;padding:12px 16px;margin-bottom:18px">'
+    +   '<div class="lbl" style="margin-bottom:4px;color:rgba(0,130,243,.7)">Message important</div>'
+    +   '<div style="font-size:13px;font-weight:600;color:' + u.score + '">' + l.contact_rappel + '</div>'
+    + '</div>'
+    + '<div style="margin-bottom:18px"><div class="lbl" style="margin-bottom:7px">Contexte & déclencheurs</div>'
+    +   '<div style="background:rgba(255,255,255,.04);border-radius:10px;padding:12px;font-size:12px;color:var(--dim);line-height:1.7">' + l.contexte + ' · ' + l.validation + '</div></div>'
+    + '<div style="margin-bottom:18px"><div class="lbl" style="margin-bottom:7px">Script d\'appel recommandé</div>'
+    +   '<div style="background:rgba(204,155,18,.07);border:1px solid rgba(204,155,18,.18);border-radius:10px;padding:16px;font-size:13px;line-height:1.8;font-style:italic">"' + l.script + '"</div></div>'
+    + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px">'
+    +   '<div><div class="lbl" style="margin-bottom:7px">Pourquoi ce score ?</div>' + scoreHtml + '</div>'
+    +   '<div><div class="lbl" style="margin-bottom:7px">Objections à préparer</div>' + objHtml + '</div>'
+    + '</div>'
+    + '<div style="margin-bottom:18px"><div class="lbl" style="margin-bottom:7px">Résumé prospect</div>'
+    +   '<div style="background:rgba(255,255,255,.04);border-radius:10px;padding:12px;font-size:13px;color:var(--dim);line-height:1.65">' + l.resume + '</div></div>'
+    + '<div style="display:flex;gap:10px">'
+    +   '<button onclick="generateScript(\'' + l.id + '\')" class="btn-gold" style="flex:1;padding:13px;font-size:13px;border-radius:12px">✨ Générer un script avec Sophia</button>'
+    +   '<button onclick="closeModal()" class="btn-ghost" style="padding:13px 20px;font-size:13px;border-radius:12px">Fermer</button>'
+    + '</div>'
+    + '<div id="gen-out" style="margin-top:14px;display:none"></div>';
+  document.getElementById('modal-ov').classList.add('open');
+}
+
+async function generateScript(id) {
+  var l = null;
+  for (var i = 0; i < LEADS.length; i++) { if (LEADS[i].id === id) { l = LEADS[i]; break; } }
+  if (!l) return;
+  var out = document.getElementById('gen-out');
+  out.style.display = 'block';
+  out.innerHTML = '<div style="font-size:12px;color:var(--dim);font-style:italic;padding:10px">Sophia rédige un script personnalisé…</div>';
+  try {
+    var r = await fetch('/api/sophia/chat', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},
+      body:JSON.stringify({message:'Génère un script d\'appel pour Days Legacy. Prospect : ' + l.nom + ', ' + l.age + ' ans, ' + l.ville + '. Besoin : ' + l.besoin + '. Patrimoine : ' + l.patrimoine + '. Canal : ' + l.contact_canal + '. ' + l.contact_rappel + '. Objections : ' + l.objections.join(', ') + '. Ton Days Legacy : expert, humain, personnalisé.'})
+    });
+    if (r.ok) {
+      var d = await r.json();
+      out.innerHTML = '<div style="background:rgba(204,155,18,.07);border:1px solid rgba(204,155,18,.18);border-radius:12px;padding:16px;font-size:13px;line-height:1.8">' + d.response.replace(/\n/g,'<br>') + '</div>';
+    }
+  } catch(e) {
+    out.innerHTML = '<div style="color:var(--hot);font-size:12px;padding:8px">Erreur.</div>';
+  }
+}
+
+function closeModal() { document.getElementById('modal-ov').classList.remove('open'); }
+
+/* ── CONTENT MODAL ─────────────────────────────── */
+function showContentModal() {
+  var items = [
+    {type:'Post LinkedIn', icon:'💼', desc:'Dirigeants 45-60 ans · Vente d\'entreprise et fiscalité'},
+    {type:'Article SEO', icon:'🔍', desc:'Guide complet Pacte Dutreil 2026 · Rhône-Alpes'},
+    {type:'Email nurturing', icon:'📧', desc:'Séquence 3 emails · SCPI retraite · Cadres supérieurs'},
+    {type:'Script vidéo', icon:'🎥', desc:'Retraite dirigeant : 5 leviers fiscaux méconnus'},
+  ];
+  var html = '';
+  for (var i = 0; i < items.length; i++) {
+    var c = items[i];
+    html += '<div onclick="generateContent(\'' + c.type + '\',\'' + c.desc + '\')" '
+      + 'style="display:flex;align-items:center;gap:14px;padding:15px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;cursor:pointer;transition:border-color .2s" '
+      + 'onmouseover="this.style.borderColor=\'rgba(204,155,18,.35)\'" onmouseout="this.style.borderColor=\'rgba(255,255,255,.07)\'">'
+      + '<div style="font-size:24px">' + c.icon + '</div>'
+      + '<div><div style="font-size:13px;font-weight:700">' + c.type + '</div><div style="font-size:10px;color:var(--dim)">' + c.desc + '</div></div>'
+      + '<div style="margin-left:auto;font-size:11px;color:var(--gold);font-weight:700">Générer →</div>'
+      + '</div>';
+  }
+  document.getElementById('modal').innerHTML = ''
+    + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">'
+    +   '<div style="font-size:19px;font-weight:900">🧲 Créer un contenu</div>'
+    +   '<button class="modal-close" onclick="closeModal()">×</button>'
+    + '</div>'
+    + '<div style="font-size:13px;color:var(--dim);margin-bottom:18px">Sophia génère un contenu calé sur les signaux marché et la mission Days Legacy.</div>'
+    + '<div style="display:grid;gap:8px">' + html + '</div>'
+    + '<div id="content-out" style="margin-top:16px;display:none"></div>';
+  document.getElementById('modal-ov').classList.add('open');
+}
+
+async function generateContent(type, desc) {
+  var out = document.getElementById('content-out');
+  out.style.display = 'block';
+  out.innerHTML = '<div style="font-size:12px;color:var(--dim);font-style:italic;padding:10px">Sophia génère le contenu…</div>';
+  try {
+    var r = await fetch('/api/sophia/chat', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},
+      body:JSON.stringify({message:'Génère un ' + type + ' pour Days Legacy sur : ' + desc + '. Mission Days Legacy : aider les gens à reprendre le contrôle de leur argent grâce à un expert humain et personnalisé. Ton humain, premium, accessible. Pas de jargon.'})
+    });
+    if (r.ok) {
+      var d = await r.json();
+      out.innerHTML = '<div style="background:rgba(204,155,18,.07);border:1px solid rgba(204,155,18,.18);border-radius:12px;padding:16px;font-size:13px;line-height:1.8">' + d.response.replace(/\n/g,'<br>') + '</div>';
+    }
+  } catch(e) { out.innerHTML = '<div style="color:var(--hot);font-size:12px;padding:8px">Erreur.</div>'; }
+}
+
+/* ── SIGNALS MODAL ─────────────────────────────── */
+function showSignalsModal() {
+  var html = '';
+  for (var i = 0; i < SIGNALS.length; i++) {
+    var s = SIGNALS[i];
+    html += '<div style="display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.05)">'
+      + '<div style="font-size:22px;font-weight:900;color:var(--green);width:62px">' + s.pct + '</div>'
+      + '<div style="flex:1"><div style="font-size:14px;font-weight:700">' + s.topic + '</div><div style="font-size:11px;color:var(--dim);margin-top:2px">' + s.region + '</div></div>'
+      + '<button class="btn-ghost btn-sm" onclick="askSophiaAuto(\'Stratégie Days Legacy pour capter les personnes qui cherchent : ' + s.topic + ' en ' + s.region + '\');closeModal()">Stratégie →</button>'
+      + '</div>';
+  }
+  document.getElementById('modal').innerHTML = ''
+    + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">'
+    +   '<div style="font-size:19px;font-weight:900">📡 Signaux du marché</div>'
+    +   '<button class="modal-close" onclick="closeModal()">×</button>'
+    + '</div>'
+    + html
+    + '<button class="btn-ghost" onclick="closeModal()" style="margin-top:16px;width:100%;justify-content:center">Fermer</button>';
+  document.getElementById('modal-ov').classList.add('open');
+}
+
+/* ── REAL DATA ─────────────────────────────────── */
+async function loadRealData() {
+  if (!TOKEN) return;
+  try {
+    var lr = await fetch('/api/leads', {headers:{Authorization:'Bearer '+TOKEN}});
+    if (lr.ok) {
+      realLeads = await lr.json();
+      if (realLeads.length > 0) {
+        document.getElementById('tbl-count').textContent = realLeads.length + ' prospects qualifiés';
+        renderTable(realLeads);
+      } else {
+        document.getElementById('tbl-count').textContent = 'Prospects réels après les appels Sophia';
       }
-    },i*1100);
-  });
+    }
+  } catch(e) {}
 }
 
-setInterval(()=>{ if(TOKEN) loadRealData(); },30000);
-if(TOKEN) showApp();
+function setFilter(score, btn) {
+  document.querySelectorAll('.f-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  renderTable(score == null ? realLeads : realLeads.filter(function(l){ return (l.score||0) >= score; }));
+}
+
+function renderTable(leads) {
+  var tb = document.getElementById('tbody');
+  if (!leads || !leads.length) {
+    tb.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:48px;color:var(--faint)">Aucun prospect enregistré</td></tr>';
+    return;
+  }
+  var html = '';
+  for (var i = 0; i < leads.length; i++) {
+    var l = leads[i];
+    var sc = l.score || 0;
+    var col = sc >= 7 ? '#ff4060' : sc >= 4 ? '#ff9a3c' : '#0082f3';
+    var bg  = sc >= 7 ? 'rgba(255,64,96,.1)' : sc >= 4 ? 'rgba(255,154,60,.1)' : 'rgba(0,130,243,.1)';
+    var nom = [l.prenom, l.nom].filter(Boolean).join(' ') || 'Inconnu';
+    var dt  = l.date ? new Date(l.date).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '—';
+    html += '<tr>'
+      + '<td><span class="sbadge" style="background:' + bg + ';color:' + col + '">' + sc.toFixed(1) + '</span></td>'
+      + '<td style="font-weight:700">' + nom + '</td>'
+      + '<td style="font-family:monospace;color:var(--dim)">' + (l.phone||'—') + '</td>'
+      + '<td><span class="tag" style="background:var(--gold-b);color:var(--gold2);border:1px solid rgba(204,155,18,.2)">' + (l.patrimoine||'N/P') + '</span></td>'
+      + '<td style="color:var(--dim)">' + (l.objectif||'—') + '</td>'
+      + '<td style="color:var(--faint)">' + dt + '</td>'
+      + '<td>' + (l.sms === 'O' ? '<span class="tag" style="background:var(--green-b);color:var(--green);border:1px solid rgba(34,201,132,.2)">✓ SMS</span>' : '') + '</td>'
+      + '</tr>';
+  }
+  tb.innerHTML = html;
+}
+
+setInterval(function(){ if(TOKEN) loadRealData(); }, 30000);
+if (TOKEN) showApp();
 </script>
 </body>
 </html>

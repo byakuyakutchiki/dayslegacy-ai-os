@@ -8,7 +8,7 @@ load_dotenv()
 
 from database import engine, Base
 import models  # noqa: F401 — enregistre les modèles SQLAlchemy
-from routers import calls, leads, auth
+from routers import calls, leads, auth, sophia
 
 Base.metadata.create_all(bind=engine)
 
@@ -17,6 +17,7 @@ app = FastAPI(title="Days Legacy AI OS", version="0.1.0", docs_url="/api/docs")
 app.include_router(calls.router, prefix="/api")
 app.include_router(leads.router, prefix="/api")
 app.include_router(auth.router, prefix="/api")
+app.include_router(sophia.router, prefix="/api")
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
