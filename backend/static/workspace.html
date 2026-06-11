@@ -276,8 +276,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font
           </div>
           <div class="visio-actions">
             <button class="btn-ghost btn-sm" onclick="addParticipant()">+ Inviter</button>
-            <button class="btn-ghost btn-sm" onclick="toggleMute()">🎙 Micro</button>
-            <button class="btn-ghost btn-sm" onclick="toggleCamera()">📹 Caméra</button>
+            <button class="btn-ghost btn-sm" id="btn-mic" onclick="toggleMute()">🎙 Micro</button>
+            <button class="btn-ghost btn-sm" id="btn-cam" onclick="toggleCamera()">📹 Caméra</button>
             <button class="btn-ghost btn-sm" style="color:var(--hot);border-color:rgba(255,64,96,.3)" onclick="leaveMeeting()">Quitter</button>
           </div>
         </div>
@@ -349,6 +349,14 @@ var CURRENT_WS = null;
 var CURRENT_ROOM = null;
 var POLLER = null;
 var _originalFetch = window.fetch;
+
+/* media */
+var localStream = null;
+var screenStream = null;
+var MIC_ON = false;
+var CAM_ON = false;
+var SCREEN_ON = false;
+var VISIO_ON = false;
 
 /* ══════════════════════════════════════════════════
    DEMO DATA
@@ -576,9 +584,12 @@ function findRoomIndex(id){
 }
 
 function renderRoom(r){
+  stopVisio();
   document.getElementById('room-title').textContent = r ? r.name : 'Sélectionnez une salle';
   document.getElementById('room-sub').textContent = r ? (r.type+' · '+r.status) : '';
-  document.getElementById('visio-badge').textContent = r ? 'Module visio en préparation — '+r.name : 'Module visio en préparation';
+  var badge = document.getElementById('visio-badge');
+  badge.textContent = r ? ('Salle active — '+r.name) : 'Sélectionnez une salle pour démarrer';
+  badge.style.background=''; badge.style.borderColor=''; badge.style.color='';
   var btns = ['btn-visio','btn-share'];
   for(var i=0;i<btns.length;i++){ document.getElementById(btns[i]).disabled = !r; }
   document.getElementById('meeting-summary').textContent = r ? 'Salle active : '+r.name+'. Utilisez le chat pour échanger avec l\'équipe et Sophia.' : 'Aucune réunion en cours.';
@@ -665,14 +676,194 @@ function showToast(msg){
 }
 
 /* ══════════════════════════════════════════════════
-   VISIO PLACEHOLDER ACTIONS
+   MEDIA — HELPERS
 ══════════════════════════════════════════════════ */
-function startVisio(){ showToast('🎥 Module visio en préparation — disponible au prochain sprint.'); }
-function shareScreen(){ showToast('🖥 Partage d\'écran — à venir.'); }
-function addParticipant(){ showToast('✉️ Invitation de participant — à venir.'); }
-function toggleMute(){ showToast('🎙 Micro — fonctionnalité visio à venir.'); }
-function toggleCamera(){ showToast('📹 Caméra — fonctionnalité visio à venir.'); }
-function leaveMeeting(){ showToast('👋 Quitter la réunion — fonctionnalité visio à venir.'); }
+function hasGUM(){ return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia); }
+function hasGDM(){ return !!(navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia); }
+
+function handleMediaError(err, device){
+  var msg;
+  if(err.name==='NotAllowedError'||err.name==='PermissionDeniedError'){
+    msg='🔒 Permission '+device+' refusée — autorisez l\'accès dans les réglages du navigateur.';
+  } else if(err.name==='NotFoundError'||err.name==='DevicesNotFoundError'){
+    msg='❌ Aucun '+device+' détecté sur cet appareil.';
+  } else if(err.name==='NotReadableError'){
+    msg='⚠️ '+device+' utilisé par une autre application.';
+  } else {
+    msg='❌ Erreur '+device+' ('+err.name+')';
+  }
+  showToast(msg);
+}
+
+function updateVisioUI(){
+  var bv = document.getElementById('btn-visio');
+  if(bv){
+    if(VISIO_ON){
+      bv.textContent='⏹ Terminer';
+      bv.style.cssText='padding:6px 14px;font-size:11px;background:rgba(255,64,96,.15);color:var(--hot);border:1px solid rgba(255,64,96,.4);border-radius:50px;cursor:pointer;font-family:var(--font);font-weight:700;';
+    } else {
+      bv.textContent='🎥 Démarrer la visio';
+      bv.style.cssText='';
+    }
+  }
+  var bs = document.getElementById('btn-share');
+  if(bs){
+    bs.textContent = SCREEN_ON ? '⏹ Arrêter partage' : '🖥 Partager';
+    bs.style.color = SCREEN_ON ? 'var(--warm)' : '';
+    bs.style.borderColor = SCREEN_ON ? 'rgba(255,154,60,.5)' : '';
+  }
+  var bm = document.getElementById('btn-mic');
+  if(bm){
+    var hasMic = localStream && localStream.getAudioTracks().length>0;
+    bm.textContent = !hasMic ? '🎙 Micro' : MIC_ON ? '🎙 Micro' : '🔇 Micro coupé';
+    bm.style.color = (hasMic&&!MIC_ON) ? 'var(--hot)' : (hasMic&&MIC_ON) ? 'var(--green)' : '';
+    bm.style.borderColor = (hasMic&&!MIC_ON) ? 'rgba(255,64,96,.4)' : (hasMic&&MIC_ON) ? 'rgba(34,201,132,.35)' : '';
+  }
+  var bc = document.getElementById('btn-cam');
+  if(bc){
+    bc.textContent = CAM_ON ? '📹 Caméra (ON)' : '📹 Caméra';
+    bc.style.color = CAM_ON ? 'var(--green)' : '';
+    bc.style.borderColor = CAM_ON ? 'rgba(34,201,132,.35)' : '';
+  }
+}
+
+/* ── TILES ──────────────────────────────────────── */
+function showLocalVideo(stream){
+  var grid = document.getElementById('visio-grid');
+  var tile = document.getElementById('local-tile');
+  if(!tile){
+    tile = document.createElement('div');
+    tile.className='visio-tile speaker'; tile.id='local-tile';
+    tile.innerHTML=
+      '<video id="local-video" autoplay muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:12px;"></video>'+
+      '<div class="av" id="local-av" style="position:relative;z-index:1">V</div>'+
+      '<div class="name" style="position:relative;z-index:1;color:#fff;">Vous</div>'+
+      '<div class="label" style="position:relative;z-index:1">LOCAL</div>';
+    grid.prepend(tile);
+  }
+  var vid=document.getElementById('local-video');
+  if(vid){
+    vid.srcObject=stream;
+    vid.onloadedmetadata=function(){
+      var av=document.getElementById('local-av');
+      if(av) av.style.display='none';
+    };
+  }
+}
+function removeLocalVideo(){ var t=document.getElementById('local-tile'); if(t) t.remove(); }
+
+function showScreenTile(stream){
+  var grid=document.getElementById('visio-grid');
+  var tile=document.getElementById('screen-tile');
+  if(!tile){
+    tile=document.createElement('div');
+    tile.id='screen-tile'; tile.className='visio-tile';
+    tile.style.gridColumn='1 / -1'; tile.style.aspectRatio='16/9';
+    tile.innerHTML=
+      '<video id="screen-video" autoplay playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:12px;background:#000;"></video>'+
+      '<div style="position:absolute;bottom:8px;left:10px;z-index:1;font-size:9px;font-weight:700;letter-spacing:1.5px;background:rgba(0,0,0,.7);padding:3px 10px;border-radius:8px;color:var(--warm);">PARTAGE ÉCRAN</div>';
+    grid.appendChild(tile);
+  }
+  var vid=document.getElementById('screen-video');
+  if(vid) vid.srcObject=stream;
+}
+function removeScreenTile(){ var t=document.getElementById('screen-tile'); if(t) t.remove(); }
+
+/* ── VISIO DÉMARRER / ARRÊTER ────────────────────── */
+async function startVisio(){
+  if(VISIO_ON){ stopVisio(); return; }
+  if(!hasGUM()){ showToast('❌ Votre navigateur ne supporte pas la caméra/micro. Utilisez Chrome ou Firefox.'); return; }
+  if(!CURRENT_ROOM){ showToast('Sélectionnez une salle pour démarrer la visio.'); return; }
+  try{
+    localStream = await navigator.mediaDevices.getUserMedia({video:true, audio:true});
+    VISIO_ON=true; MIC_ON=true; CAM_ON=true;
+    showLocalVideo(localStream);
+    updateVisioUI();
+    var badge=document.getElementById('visio-badge');
+    badge.textContent='🔴 Réunion en cours';
+    badge.style.background='rgba(255,64,96,.1)';
+    badge.style.borderColor='rgba(255,64,96,.3)';
+    badge.style.color='var(--hot)';
+    showToast('🎥 Visio démarrée — caméra et micro actifs');
+  } catch(e){ handleMediaError(e,'caméra/micro'); }
+}
+
+function stopVisio(){
+  if(localStream){ localStream.getTracks().forEach(function(t){t.stop();}); localStream=null; }
+  if(screenStream){ screenStream.getTracks().forEach(function(t){t.stop();}); screenStream=null; }
+  VISIO_ON=false; MIC_ON=false; CAM_ON=false; SCREEN_ON=false;
+  removeLocalVideo(); removeScreenTile();
+  updateVisioUI();
+}
+
+/* ── MICRO ───────────────────────────────────────── */
+async function toggleMute(){
+  if(!hasGUM()){ showToast('❌ Micro non supporté par ce navigateur.'); return; }
+  if(!localStream || !localStream.getAudioTracks().length){
+    try{
+      var s=await navigator.mediaDevices.getUserMedia({audio:true,video:false});
+      if(!localStream) localStream=s;
+      else s.getAudioTracks().forEach(function(t){localStream.addTrack(t);});
+      MIC_ON=true; updateVisioUI(); showToast('🎙 Micro activé');
+    } catch(e){ handleMediaError(e,'micro'); }
+    return;
+  }
+  MIC_ON=!MIC_ON;
+  localStream.getAudioTracks().forEach(function(t){t.enabled=MIC_ON;});
+  updateVisioUI();
+  showToast(MIC_ON ? '🎙 Micro activé' : '🔇 Micro coupé');
+}
+
+/* ── CAMÉRA ──────────────────────────────────────── */
+async function toggleCamera(){
+  if(!hasGUM()){ showToast('❌ Caméra non supportée par ce navigateur.'); return; }
+  if(!localStream || !localStream.getVideoTracks().length){
+    try{
+      var s=await navigator.mediaDevices.getUserMedia({video:true,audio:false});
+      if(!localStream) localStream=s;
+      else s.getVideoTracks().forEach(function(t){localStream.addTrack(t);});
+      CAM_ON=true;
+      showLocalVideo(localStream);
+      updateVisioUI(); showToast('📹 Caméra activée');
+    } catch(e){ handleMediaError(e,'caméra'); }
+    return;
+  }
+  CAM_ON=!CAM_ON;
+  localStream.getVideoTracks().forEach(function(t){t.enabled=CAM_ON;});
+  var vid=document.getElementById('local-video');
+  var av=document.getElementById('local-av');
+  if(vid) vid.style.display=CAM_ON?'block':'none';
+  if(av) av.style.display=CAM_ON?'none':'flex';
+  updateVisioUI();
+  showToast(CAM_ON ? '📹 Caméra activée' : '📹 Caméra désactivée');
+}
+
+/* ── PARTAGE ÉCRAN ───────────────────────────────── */
+async function shareScreen(){
+  if(!hasGDM()){ showToast('❌ Partage écran non supporté. Utilisez Chrome ou Edge.'); return; }
+  if(!CURRENT_ROOM){ showToast('Sélectionnez une salle avant de partager votre écran.'); return; }
+  if(SCREEN_ON){ stopScreenShare(); return; }
+  try{
+    screenStream=await navigator.mediaDevices.getDisplayMedia({video:true,audio:false});
+    SCREEN_ON=true;
+    showScreenTile(screenStream);
+    updateVisioUI(); showToast('🖥 Partage écran démarré');
+    screenStream.getVideoTracks()[0].onended=function(){ stopScreenShare(); };
+  } catch(e){
+    if(e.name!=='NotAllowedError') handleMediaError(e,'écran');
+  }
+}
+function stopScreenShare(){
+  if(screenStream){ screenStream.getTracks().forEach(function(t){t.stop();}); screenStream=null; }
+  SCREEN_ON=false; removeScreenTile(); updateVisioUI();
+  showToast('🖥 Partage écran arrêté');
+}
+
+/* ── QUITTER RÉUNION ─────────────────────────────── */
+function leaveMeeting(){ stopVisio(); showToast('👋 Vous avez quitté la réunion.'); }
+
+/* ── INVITER ─────────────────────────────────────── */
+function addParticipant(){ showToast('✉️ Invitation — disponible avec WebRTC (prochain sprint).'); }
 
 /* ══════════════════════════════════════════════════
    UI HELPERS
