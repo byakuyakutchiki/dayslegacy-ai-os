@@ -204,10 +204,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font
   <div class="l-box">
     <div class="l-title">Legacy Days</div>
     <div class="l-sub">Workspace Sécurisé</div>
+    <input id="email" type="email" class="l-input" placeholder="Email ou identifiant" onkeydown="if(event.key==='Enter')doLogin()">
     <input id="pw" type="password" class="l-input" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')doLogin()">
     <button class="l-btn" onclick="doLogin()">Entrer dans le Workspace</button>
     <div class="l-err" id="lerr"></div>
-    <div class="l-demo" onclick="enterDemoMode()">→ Démonstration sans mot de passe</div>
+    <div class="l-demo" onclick="enterDemoMode()">→ Démonstration sans compte</div>
   </div>
 </div>
 
@@ -349,6 +350,9 @@ var CURRENT_WS = null;
 var CURRENT_ROOM = null;
 var POLLER = null;
 var _originalFetch = window.fetch;
+var _loadingMessages = false;
+var _lastMsgCount = -1;
+var _lastMsgId = -1;
 
 /* media */
 var localStream = null;
@@ -447,17 +451,20 @@ function enterDemoMode(){
 }
 
 async function doLogin(){
+  var email = (document.getElementById('email').value||'').trim() || 'admin';
   var pw = document.getElementById('pw').value;
-  var r = await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:pw})});
+  var r = await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,password:pw})});
   if(r.ok){
     var d = await r.json();
-    TOKEN = d.token; localStorage.setItem('dl_token',TOKEN);
+    TOKEN = d.token;
+    localStorage.setItem('dl_token',TOKEN);
+    localStorage.setItem('dl_display_name', d.display_name||email);
     MODE='prod'; uninstallDemoMock();
     document.getElementById('login').classList.remove('active');
     document.getElementById('app').classList.add('active');
     startClock(); loadWorkspaces();
   } else {
-    document.getElementById('lerr').textContent='Mot de passe incorrect.';
+    document.getElementById('lerr').textContent='Email ou mot de passe incorrect.';
   }
 }
 
@@ -565,6 +572,7 @@ async function loadMembers(wsId){
 ══════════════════════════════════════════════════ */
 function selectRoom(id){
   CURRENT_ROOM = id;
+  _lastMsgCount = -1; _lastMsgId = -1;
   var r = null;
   for(var i=0;i<ROOMS.length;i++){ if(ROOMS[i].id===id){ r=ROOMS[i]; break; } }
   renderRoom(r);
@@ -596,11 +604,23 @@ function renderRoom(r){
 }
 
 async function loadMessages(roomId, silent){
-  var data = await apiGet('/api/rooms/'+roomId+'/messages?limit=50');
-  if(!data && isDemo()) data = DEMO_MESSAGES.filter(function(m){return m.room_id===roomId;});
-  MESSAGES = data || [];
-  renderMessages();
-  if(!silent) scrollChat();
+  if(silent && _loadingMessages) return;
+  _loadingMessages = true;
+  try {
+    var data = await apiGet('/api/rooms/'+roomId+'/messages?limit=50');
+    if(!data && isDemo()) data = DEMO_MESSAGES.filter(function(m){return m.room_id===roomId;});
+    var msgs = data || [];
+    var lastId = msgs.length ? msgs[msgs.length-1].id : -1;
+    if(!silent || msgs.length !== _lastMsgCount || lastId !== _lastMsgId) {
+      MESSAGES = msgs;
+      _lastMsgCount = msgs.length;
+      _lastMsgId = lastId;
+      renderMessages();
+      if(!silent) scrollChat();
+    }
+  } finally {
+    _loadingMessages = false;
+  }
 }
 
 function renderMessages(){

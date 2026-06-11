@@ -127,6 +127,7 @@ test('4. Login réel avec mot de passe fort', async ({ page }) => {
   page.on('pageerror', err => consoleErrors.push(`PAGEERROR: ${err.message}`));
 
   await page.goto(`${BASE}/dashboard`);
+  await page.fill('#email', 'admin');
   await page.fill('#pw', ADMIN_PASSWORD);
   await page.click('.l-btn');
   await page.waitForSelector('#app', { timeout: 5000 });
@@ -181,6 +182,7 @@ test('6. Toggle Démo/Prod ne casse rien', async ({ page }) => {
   await expect(page.locator('#login')).toBeVisible();
 
   // Login et repasse en démo
+  await page.fill('#email', 'admin');
   await page.fill('#pw', ADMIN_PASSWORD);
   await page.click('.l-btn');
   await page.waitForSelector('#app', { timeout: 5000 });
