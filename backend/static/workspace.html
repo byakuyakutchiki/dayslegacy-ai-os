@@ -332,6 +332,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font
   </div>
 </div>
 
+<!-- TOAST -->
+<div id="toast" style="position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);z-index:400;background:rgba(15,15,17,.97);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:12px 22px;font-size:13px;font-weight:700;color:rgba(255,255,255,.92);transition:transform .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none;max-width:380px;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,.5);white-space:nowrap;"></div>
+
 <script>
 /* ══════════════════════════════════════════════════
    STATE
@@ -615,7 +618,8 @@ function scrollChat(){ var b=document.getElementById('chat-messages'); if(b) b.s
 async function sendMessage(){
   var input = document.getElementById('chat-input');
   var txt = input.value.trim();
-  if(!txt || !CURRENT_ROOM) return;
+  if(!CURRENT_ROOM){ showToast('Sélectionnez une salle pour envoyer un message.'); return; }
+  if(!txt) return;
   var body = {sender_email:isDemo()?'jean@cabinet.fr':'user@legacydays.ai', sender_name:isDemo()?'Jean Dupont':'Utilisateur', content:txt, type:'text'};
   var sent = await apiPost('/api/rooms/'+CURRENT_ROOM+'/messages', body);
   if(sent || isDemo()){
@@ -648,14 +652,27 @@ async function _callSophia(question){
 }
 
 /* ══════════════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════════════ */
+var _toastTimer = null;
+function showToast(msg){
+  var t = document.getElementById('toast');
+  if(!t) return;
+  t.textContent = msg;
+  t.style.transform = 'translateX(-50%) translateY(0)';
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(function(){ t.style.transform = 'translateX(-50%) translateY(80px)'; }, 3000);
+}
+
+/* ══════════════════════════════════════════════════
    VISIO PLACEHOLDER ACTIONS
 ══════════════════════════════════════════════════ */
-function startVisio(){ alert('Module visio en préparation. Intégration WebRTC prévue au prochain sprint.'); }
-function shareScreen(){ alert('Partage d\'écran en préparation.'); }
-function addParticipant(){ alert('Invitation de participant en préparation.'); }
-function toggleMute(){ alert('Micro togglé (placeholder).'); }
-function toggleCamera(){ alert('Caméra togglée (placeholder).'); }
-function leaveMeeting(){ alert('Vous avez quitté la réunion (placeholder).'); }
+function startVisio(){ showToast('🎥 Module visio en préparation — disponible au prochain sprint.'); }
+function shareScreen(){ showToast('🖥 Partage d\'écran — à venir.'); }
+function addParticipant(){ showToast('✉️ Invitation de participant — à venir.'); }
+function toggleMute(){ showToast('🎙 Micro — fonctionnalité visio à venir.'); }
+function toggleCamera(){ showToast('📹 Caméra — fonctionnalité visio à venir.'); }
+function leaveMeeting(){ showToast('👋 Quitter la réunion — fonctionnalité visio à venir.'); }
 
 /* ══════════════════════════════════════════════════
    UI HELPERS
