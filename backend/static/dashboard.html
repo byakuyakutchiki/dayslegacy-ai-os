@@ -382,6 +382,89 @@ tr:hover td{background:rgba(255,255,255,.02);cursor:pointer;}
 /* ── RESPONSIVE ───────────────────────────────── */
 @media(max-width:1024px){.p-grid,.qa-grid,.audit-grid{grid-template-columns:1fr 1fr;}.main{padding:18px 18px 48px;}}
 @media(max-width:600px){.p-grid,.qa-grid,.audit-grid{grid-template-columns:1fr;}.topbar{padding:0 16px;}.sh-body{flex-direction:column;gap:16px;}.sh-stats{flex-wrap:wrap;}.sh-stat{min-width:50%;}}
+
+/* ── PROSPECT NAVIGATOR ───────────────────────── */
+.nav-hero-banner{background:linear-gradient(160deg,#0e0c06,#0b0b0c);border:1px solid rgba(204,155,18,.15);border-radius:20px;padding:28px 34px;margin-bottom:22px;position:relative;overflow:hidden;}
+.nav-hero-banner::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#CC9B12 35%,#FFEEBE 50%,#A27700 65%,transparent);}
+.nav-hero-t{font-size:clamp(19px,2.6vw,28px);font-weight:900;letter-spacing:-.5px;margin-bottom:8px;}
+.nav-hero-sub{font-size:13px;color:rgba(255,255,255,.5);line-height:1.65;max-width:680px;}
+.nav-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.nav-prog{font-size:11px;color:var(--dim);font-weight:700;}
+.nav-prog-gold{color:var(--gold);font-weight:900;}
+.nav-card{background:rgba(255,255,255,.04);border:1.5px solid rgba(204,155,18,.18);border-radius:22px;padding:24px;margin-bottom:16px;position:relative;overflow:hidden;transition:border-color .3s;}
+.nav-card.accepted{border-color:rgba(34,201,132,.32);}
+.nav-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold-gh);border-radius:2px 2px 0 0;opacity:.6;}
+.nav-card.accepted::before{background:linear-gradient(90deg,var(--green),#6af0b0);}
+.nc-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:16px;}
+.nc-av{width:58px;height:58px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#0b0b0c;flex-shrink:0;}
+.nc-identity{flex:1;min-width:0;}
+.nc-name{font-size:21px;font-weight:900;letter-spacing:-.4px;margin-bottom:3px;}
+.nc-profile{font-size:12px;color:var(--dim);margin-bottom:7px;}
+.nc-tags{display:flex;flex-wrap:wrap;gap:5px;}
+.nc-tag{padding:2px 9px;border-radius:50px;font-size:8px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
+.nc-tag.region{background:rgba(0,130,243,.1);color:#5db8ff;border:1px solid rgba(0,130,243,.2);}
+.nc-tag.source{background:rgba(255,255,255,.06);color:var(--dim);border:1px solid rgba(255,255,255,.1);}
+.nc-tag.rgpd{background:rgba(34,201,132,.07);color:var(--green);border:1px solid rgba(34,201,132,.15);}
+.nc-tag.demo{background:rgba(255,154,60,.08);color:rgba(255,154,60,.8);border:1px solid rgba(255,154,60,.2);}
+.nc-score-wrap{text-align:right;flex-shrink:0;}
+.nc-score-n{font-size:34px;font-weight:900;line-height:1;background:var(--gold-gh);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.nc-score-l{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--faint);}
+.nc-confidence{font-size:10px;font-weight:700;color:var(--green);margin-top:4px;}
+.nc-signal{background:rgba(204,155,18,.06);border:1px solid rgba(204,155,18,.13);border-radius:12px;padding:12px 16px;margin-bottom:12px;}
+.nc-sig-lbl{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(204,155,18,.6);margin-bottom:5px;}
+.nc-sig-val{font-size:14px;font-weight:700;color:var(--gold2);margin-bottom:3px;}
+.nc-sig-sub{font-size:11px;color:var(--dim);line-height:1.5;}
+.nc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
+.nc-cell{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:9px 12px;}
+.nc-cell-lbl{font-size:7px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--faint);margin-bottom:4px;}
+.nc-cell-val{font-size:11px;font-weight:700;line-height:1.3;}
+.nc-need{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:11px;padding:11px 16px;}
+.nc-need-lbl{font-size:7px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--faint);margin-bottom:5px;}
+.nc-need-val{font-size:13px;font-weight:700;margin-bottom:3px;}
+.nc-need-note{font-size:10px;color:rgba(204,155,18,.65);font-weight:600;}
+.why-block{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:17px 21px;margin-bottom:16px;}
+.why-title{font-size:13px;font-weight:900;margin-bottom:11px;}
+.why-list{display:grid;gap:7px;}
+.why-item{display:flex;align-items:flex-start;gap:9px;font-size:12px;color:rgba(255,255,255,.7);}
+.why-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:5px;}
+.nav-actions{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.btn-accept{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 19px;border-radius:50px;border:1px solid rgba(34,201,132,.28);cursor:pointer;font-family:var(--font);font-weight:700;font-size:12px;background:rgba(34,201,132,.07);color:var(--green);transition:all .25s;white-space:nowrap;}
+.btn-accept:hover{background:rgba(34,201,132,.14);border-color:rgba(34,201,132,.5);}
+.btn-accept.done{opacity:.75;cursor:default;}
+.btn-skip{display:inline-flex;align-items:center;justify-content:center;padding:10px 19px;border-radius:50px;border:1px solid rgba(255,255,255,.13);cursor:pointer;font-family:var(--font);font-weight:700;font-size:12px;background:rgba(255,255,255,.04);color:var(--dim);transition:all .25s;white-space:nowrap;}
+.btn-skip:hover{background:rgba(255,255,255,.09);color:var(--text);}
+.btn-approach{display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:10px 19px;border-radius:50px;border:1px solid rgba(204,155,18,.27);cursor:pointer;font-family:var(--font);font-weight:700;font-size:12px;background:var(--gold-b);color:var(--gold2);transition:all .25s;white-space:nowrap;}
+.btn-approach:hover{background:rgba(204,155,18,.19);border-color:rgba(204,155,18,.5);}
+.accepted-banner{display:none;padding:10px 16px;background:rgba(34,201,132,.07);border:1px solid rgba(34,201,132,.17);border-radius:10px;font-size:12px;color:var(--green);font-weight:700;align-items:center;gap:8px;margin-bottom:14px;}
+.accepted-banner.show{display:flex;}
+.approach-panel{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:19px 21px;margin-bottom:20px;}
+.approach-hdr{font-size:13px;font-weight:900;margin-bottom:13px;}
+.channel-tabs{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap;}
+.channel-tab{padding:7px 15px;border-radius:50px;border:1px solid rgba(255,255,255,.1);background:none;color:var(--dim);cursor:pointer;font-family:var(--font);font-size:11px;font-weight:700;transition:all .2s;}
+.channel-tab:hover{background:rgba(255,255,255,.06);color:var(--text);}
+.channel-tab.active{background:var(--gold-b);border-color:rgba(204,155,18,.3);color:var(--gold2);}
+.channel-content{background:rgba(204,155,18,.05);border:1px solid rgba(204,155,18,.12);border-radius:11px;padding:14px 18px;font-size:12px;line-height:1.85;color:rgba(255,255,255,.77);white-space:pre-wrap;font-family:var(--font);}
+.channel-lbl{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(204,155,18,.6);margin-bottom:8px;}
+.channel-demo-note{margin-top:9px;padding:6px 11px;background:rgba(255,154,60,.06);border:1px solid rgba(255,154,60,.13);border-radius:7px;font-size:10px;color:rgba(255,154,60,.6);font-style:italic;}
+.crm-section{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:19px 21px;margin-bottom:20px;}
+.crm-textarea{width:100%;min-height:95px;padding:12px 16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:var(--text);font-size:13px;font-family:var(--font);outline:none;transition:border-color .3s;resize:vertical;line-height:1.7;margin-bottom:10px;display:block;}
+.crm-textarea:focus{border-color:rgba(204,155,18,.5);}
+.crm-textarea::placeholder{color:rgba(255,255,255,.2);}
+.crm-result{display:none;margin-top:12px;padding:16px 20px;background:rgba(204,155,18,.05);border:1px solid rgba(204,155,18,.13);border-radius:13px;font-size:13px;line-height:1.8;color:rgba(255,255,255,.82);position:relative;}
+.crm-result::before{content:'SOPHIA';position:absolute;top:-9px;left:18px;font-size:8px;font-weight:700;letter-spacing:2.5px;color:rgba(204,155,18,.65);background:#0f0f11;padding:0 8px;}
+.crm-result.show{display:block;animation:fadein .35s;}
+.crm-err{display:none;padding:7px 12px;background:rgba(255,64,96,.07);border:1px solid rgba(255,64,96,.14);border-radius:7px;font-size:11px;color:var(--hot);margin-bottom:9px;}
+.crm-err.show{display:block;}
+.pipeline-strip{display:flex;margin-bottom:24px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:14px;overflow:hidden;}
+.pl-step{flex:1;padding:11px 5px;text-align:center;border-right:1px solid rgba(255,255,255,.05);min-width:0;}
+.pl-step:last-child{border-right:none;}
+.pl-step-n{font-size:16px;font-weight:900;line-height:1;margin-bottom:3px;background:var(--gold-gh);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.pl-step-l{font-size:7px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--faint);}
+.compliance-block{display:flex;align-items:flex-start;gap:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);border-radius:12px;padding:13px 17px;margin-bottom:28px;}
+.compliance-icon{font-size:13px;flex-shrink:0;margin-top:1px;}
+.compliance-txt{font-size:10px;color:rgba(255,255,255,.29);line-height:1.75;}
+@media(max-width:900px){.nc-grid{grid-template-columns:1fr 1fr;}.pipeline-strip{flex-wrap:wrap;}.pl-step{min-width:33%;}}
+@media(max-width:600px){.nc-header{flex-wrap:wrap;}.nc-grid{grid-template-columns:1fr;}.nav-actions{flex-direction:column;}.nav-actions button{width:100%;justify-content:center;}.pipeline-strip{flex-wrap:wrap;}.pl-step{min-width:50%;}}
 </style>
 </head>
 <body>
@@ -436,12 +519,12 @@ tr:hover td{background:rgba(255,255,255,.02);cursor:pointer;}
   <div class="topbar">
     <div class="tb-left">
       <div>
-        <div class="tb-brand">Intelligence Patrimoniale IA</div>
-        <div class="tb-name">Days Legacy</div>
+        <div class="tb-brand">Days Legacy AI OS</div>
+        <div class="tb-name">Sophia Prospect Navigator</div>
       </div>
       <div class="live-pill"><div class="live-dot"></div><div class="live-txt">SOPHIA ACTIVE</div></div>
       <div class="nav-tabs">
-        <button class="nav-tab active" data-tab="pipeline" onclick="switchTab('pipeline')">Pipeline</button>
+        <button class="nav-tab active" data-tab="pipeline" onclick="switchTab('pipeline')">Prospection</button>
         <button class="nav-tab" data-tab="audits" onclick="switchTab('audits')">Audits Clients</button>
       </div>
     </div>
@@ -519,12 +602,43 @@ tr:hover td{background:rgba(255,255,255,.02);cursor:pointer;}
         </div>
       </div>
 
-      <!-- PRIORITÉS -->
-      <div class="sec-hdr">
-        <div class="sec-title">⚡ Priorités du jour — Recommandées par Sophia</div>
-        <div style="font-size:10px;color:var(--faint)" id="priority-date"></div>
+      <!-- SOPHIA PROSPECT NAVIGATOR -->
+      <span id="priority-date" style="display:none"></span>
+
+      <div class="nav-hero-banner">
+        <div class="nav-hero-t">Trouvez votre prochain client qualifié</div>
+        <div class="nav-hero-sub">Sophia analyse les signaux publics, les profils cibles et les opportunités commerciales pour guider chaque business developer jusqu'au rendez-vous.</div>
       </div>
-      <div class="p-grid" id="p-grid"></div>
+
+      <div class="nav-row">
+        <div class="nav-prog">Prospect <span id="nav-idx" class="nav-prog-gold">1</span> / <span id="nav-total">8</span></div>
+        <div style="font-size:10px;font-weight:700;color:var(--green)"><span id="nav-accepted-count">0</span> accepté(s) · <span id="nav-skipped-count">0</span> passé(s)</div>
+      </div>
+
+      <div class="accepted-banner" id="accepted-banner">
+        <span>✓</span><span id="accepted-msg">Prospect accepté.</span>
+      </div>
+
+      <div id="nav-card-wrap"></div>
+      <div id="why-block-wrap"></div>
+
+      <div class="nav-actions">
+        <button class="btn-accept" id="btn-accept-prospect" onclick="acceptProspect()">✓ Accepter ce prospect</button>
+        <button class="btn-skip" onclick="skipProspect()">Passer au suivant →</button>
+        <button class="btn-approach" id="btn-approach-toggle" onclick="toggleApproach()">Préparer l'approche ↓</button>
+        <button class="btn-ghost btn-sm" onclick="openWorkspace()">🖥 Workspace</button>
+      </div>
+
+      <div class="approach-panel" id="approach-panel" style="display:none">
+        <div class="approach-hdr">✉ Choisir l'approche</div>
+        <div class="channel-tabs">
+          <button class="channel-tab" data-ch="linkedin" onclick="selectChannel('linkedin')">💼 LinkedIn</button>
+          <button class="channel-tab" data-ch="email" onclick="selectChannel('email')">📧 Email</button>
+          <button class="channel-tab" data-ch="telephone" onclick="selectChannel('telephone')">📞 Téléphone</button>
+          <button class="channel-tab" data-ch="reseau" onclick="selectChannel('reseau')">🤝 Réseau</button>
+        </div>
+        <div id="channel-content-wrap"></div>
+      </div>
 
       <!-- QUICK ACTIONS -->
       <div class="sec-hdr"><div class="sec-title">Actions rapides</div></div>
@@ -578,6 +692,28 @@ tr:hover td{background:rgba(255,255,255,.02);cursor:pointer;}
           </tbody>
         </table>
       </div>
+      <!-- PIPELINE STATS -->
+      <div class="sec-hdr" style="margin-bottom:12px"><div class="sec-title">Pipeline commercial</div></div>
+      <div class="pipeline-strip" id="pipeline-strip"></div>
+
+      <!-- CRM REPORT -->
+      <div class="crm-section">
+        <div class="sec-hdr" style="margin-bottom:14px"><div class="sec-title">📋 Compte-rendu après contact</div></div>
+        <div class="crm-err" id="crm-err">Veuillez saisir un compte-rendu avant d'analyser.</div>
+        <textarea class="crm-textarea" id="crm-text" placeholder="Collez ou dictez le résumé de votre appel…&#10;Ex : J'ai appelé Marc, il était intéressé mais veut attendre la fin du trimestre. Cession possible dans 12 mois. Pas de décision avant septembre."></textarea>
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <button class="btn-gold" onclick="analyzeReport()">Analyser avec Sophia →</button>
+          <span id="crm-mode-note" style="font-size:10px;color:var(--faint)"></span>
+        </div>
+        <div class="crm-result" id="crm-result"></div>
+      </div>
+
+      <!-- COMPLIANCE -->
+      <div class="compliance-block">
+        <div class="compliance-icon">🛡</div>
+        <div class="compliance-txt">Les données affichées en mode démonstration sont entièrement fictives. Les recommandations de Sophia sont indicatives et doivent être validées par un conseiller habilité avant toute démarche. La prospection réelle doit respecter le RGPD et les règles applicables. Sophia ne donne pas de conseil financier personnalisé — elle prépare l'approche et assiste le business developer. Signaux analysés : sources publiques, données volontairement accessibles, données internes autorisées. Validation humaine obligatoire avant tout contact.</div>
+      </div>
+
     </div>
 
     <!-- ════════════════════════════════════════════
@@ -638,6 +774,12 @@ var DEMO_DATA = {
       resume:'Dirigeant PME lyonnaise (CA ~8M€). Cession partielle envisagée d\'ici 18 mois. Fort intérêt fiscal. Patrimoine financier à structurer en parallèle.',
       score_detail:['✓ Durée d\'appel Sophia : 18 min','✓ Besoin déclaré : Transmission PME','✓ Profil confirmé : dirigeant PME (CA ~8M€)','✓ Urgence exprimée : cession dans 18 mois','✓ 3 leviers fiscaux évoqués spontanément'],
       objections:['Timing pas encore décidé','Consulte d\'autres cabinets'],
+      approach_recommended:'telephone',days_legacy_product:'Pacte Dutreil + Holding Familiale',
+      confidence:'Élevé',rgpd_note:'Formulaire volontaire',secteur:'Dirigeant PME / Industrie',
+      why_sophia:['Signal fort : guide transmission téléchargé + 4 articles lus en 48h','Profil prioritaire : dirigeant PME lyonnais, CA estimé 8M€','Besoin déclaré : cession envisagée dans 18 mois','Fenêtre décisionnelle courte : rappel demandé avant vendredi'],
+      linkedin_msg:'Bonjour Marc,\n\nJ\'ai vu votre démarche sur la transmission PME. Days Legacy accompagne des dirigeants comme vous dans la structuration de leur cession (Pacte Dutreil, holding).\n\nUn échange de 20 min cette semaine ?\n\n[Données de démonstration]',
+      email_msg:'Objet : Transmission PME — simulation fiscale personnalisée\n\nBonjour Marc,\n\nDays Legacy accompagne des dirigeants dans leur cession (économie indicative 60–75% selon les cas). Disponible jeudi 9h–11h pour 20 min ?\n\n[Données de démonstration]',
+      reseau_msg:'Via réseau lyonnais : activer un contact commun pour introduire Days Legacy à Marc D. (dirigeant PME, transmission en cours).\n\n[Données de démonstration]',
     },
     {
       id:'d2', nom:'Antoine L.', prenom:'Antoine', age:61, ville:'Paris', phone:'+33 6 55 44 33 22', date:'2026-06-09T11:15:00',
@@ -657,6 +799,12 @@ var DEMO_DATA = {
       resume:'Retraité, 3 enfants adultes. Patrimoine immobilier et financier important. Décision envisagée dans les 3 mois.',
       score_detail:['✓ Durée d\'appel Sophia : 22 min','✓ Besoin déclaré : Succession & Donation','✓ Patrimoine estimé : 2,2M€','✓ Horizon décision confirmé : 3 mois','✓ 4 sujets couverts spontanément'],
       objections:['Complexité fiscale perçue','Accord familial à obtenir'],
+      approach_recommended:'reseau',days_legacy_product:'SCI Familiale + Donation-Partage',
+      confidence:'Élevé',rgpd_note:'Recommandation validée',secteur:'Retraité / Patrimoine Senior',
+      why_sophia:['Recommandé par un client existant — signal de confiance maximal','Patrimoine estimé 2,2M€ avec horizon successoral identifié','3 enfants adultes = besoin donation-partage + SCI familiale','Décision prévue dans 3 mois : timing idéal pour initier le contact'],
+      linkedin_msg:'Bonjour Antoine,\n\nJe vous contacte suite à l\'introduction de notre client commun. Days Legacy accompagne des particuliers dans la structuration successorale (donation-partage, SCI familiale).\n\nUn RDV découverte cette semaine ?\n\n[Données de démonstration]',
+      email_msg:'Objet : Succession et donation — préparer maintenant\n\nBonjour Antoine,\n\nSuite à la recommandation de notre client commun, je vous propose un RDV pour parler structuration successorale. Disponible l\'après-midi en semaine ?\n\n[Données de démonstration]',
+      reseau_msg:'Via le contact commun : introduire Days Legacy à Antoine L. (Paris, retraité, 3 enfants, succession à préparer).\n\n[Données de démonstration]',
     },
     {
       id:'d3', nom:'Claire B.', prenom:'Claire', age:44, ville:'Bordeaux', phone:'+33 6 98 76 54 32', date:'2026-06-08T14:45:00',
@@ -676,6 +824,12 @@ var DEMO_DATA = {
       resume:'Cadre supérieure, retraite souhaitée à 55 ans. Cherche revenus passifs complémentaires. Très réceptive, préfère être autonome dans sa réflexion.',
       score_detail:['✓ Durée d\'appel Sophia : 12 min','✓ Besoin déclaré : Revenus passifs retraite','✓ Profil : cadre supérieure, 44 ans','✓ Réceptivité forte (2 interactions spontanées)','✓ Patrimoine existant à structurer'],
       objections:['Liquidité des SCPI','Incertitude sur les rendements futurs'],
+      approach_recommended:'email',days_legacy_product:'SCPI de Rendement + PER',
+      confidence:'Moyen',rgpd_note:'SEO · Source publique',secteur:'Cadre Supérieur / Retraite Anticipée',
+      why_sophia:['Arrivée via SEO "SCPI retraite 2026" + 3 articles lus + guide demandé','Profil cadre supérieure, retraite souhaitée à 55 ans : besoin de revenus passifs','Préfère une approche asynchrone avant RDV — email en premier','Simulation personnalisée en amont = taux de conversion élevé pour ce profil'],
+      linkedin_msg:'Bonjour Claire,\n\nVotre démarche sur les SCPI retraite montre que vous pensez à long terme. Days Legacy accompagne des cadres comme vous dans la structuration de revenus passifs.\n\nUne visio de 30 min ?\n\n[Données de démonstration]',
+      email_msg:'Objet : Retraite à 55 ans — simulation SCPI personnalisée\n\nBonjour Claire,\n\nAvec un horizon de 11 ans, une stratégie SCPI progressive peut viser 4–5% net (indicatif). Je vous prépare une simulation sur mesure à votre rythme.\n\n[Données de démonstration]',
+      reseau_msg:'Via réseau professionnel Bordeaux : mentionner Days Legacy à Claire B. (cadre, retraite anticipée 55 ans, projet SCPI).\n\n[Données de démonstration]',
     },
     {
       id:'d4', nom:'Thomas R.', prenom:'Thomas', age:58, ville:'Annecy', phone:'+33 6 11 22 33 44', date:'2026-06-10T08:00:00',
@@ -695,6 +849,12 @@ var DEMO_DATA = {
       resume:'Dirigeant agroalimentaire, CA 12M€. Vision claire : transmettre à ses 2 enfants via holding. Déjà rencontré 2 concurrents. Décision rapide attendue.',
       score_detail:['✓ Durée d\'appel Sophia : 25 min','✓ Besoin déclaré : Holding familiale + LBO','✓ Patrimoine déclaré : 3,5M€','✓ Urgence confirmée : décision avant le 15','✓ 3 questions techniques sur le LBO familial'],
       objections:['A déjà rencontré 2 concurrents','Attend un chiffrage rapide'],
+      approach_recommended:'telephone',days_legacy_product:'Holding Familiale + LBO Familial',
+      confidence:'Élevé',rgpd_note:'Webinar · Consentement explicite',secteur:'Dirigeant Agroalimentaire',
+      why_sophia:['Présence au webinar + 3 questions techniques sur le LBO familial = intentionnalité forte','Patrimoine 3,5M€ déclaré + 2 enfants en école de commerce : transmission planifiée','Décision avant le 15 : fenêtre ultra-courte — priorité absolue','A déjà rencontré des concurrents : différencier avec expertise Days Legacy'],
+      linkedin_msg:'Bonjour Thomas,\n\nMerci pour vos questions lors du webinar sur la holding familiale. Days Legacy a structuré de nombreuses holdings familiales cette année — votre situation est exactement notre cœur de métier.\n\nMercredi ou vendredi matin ?\n\n[Données de démonstration]',
+      email_msg:'Objet : Holding familiale — suite à votre participation au webinar\n\nBonjour Thomas,\n\nVos questions sur le LBO familial étaient très pertinentes. Notre expert est disponible pour un entretien confidentiel cette semaine.\n\n[Données de démonstration]',
+      reseau_msg:'Via réseau dirigeants ou club agroalimentaire : introduire Days Legacy à Thomas R. (Annecy, 3,5M€, holding familiale en projet).\n\n[Données de démonstration]',
     },
     {
       id:'d5', nom:'Sophie M.', prenom:'Sophie', age:49, ville:'Aix-en-Provence', phone:'+33 6 77 88 99 00', date:'2026-06-07T16:20:00',
@@ -714,6 +874,78 @@ var DEMO_DATA = {
       resume:'Directrice marketing, 49 ans. Départ Lisbonne dans 8 mois. Actionnaire minoritaire (valorisation à structurer). Attentive à l\'optimisation fiscale pré-départ.',
       score_detail:['✓ Interaction LinkedIn qualifiée','✓ Besoin déclaré : Expatriation fiscale','✓ Patrimoine estimé : 1,2M€','✓ Horizon : 8 mois','✓ 5 visites sur notre page LinkedIn'],
       objections:['Attend la signature du contrat étranger','Budget conseiller non alloué'],
+      approach_recommended:'linkedin',days_legacy_product:'Bilan Patrimonial + Exit Tax',
+      confidence:'Moyen',rgpd_note:'LinkedIn · Profil public',secteur:'C-Suite / Expatriation',
+      why_sophia:['Commenté 2 posts sur l\'expatriation fiscale + profil visité 5× par notre page','Départ Lisbonne dans 8 mois : fenêtre fiscale à sécuriser maintenant','Actionnaire minoritaire = exit tax à structurer avant départ','LinkedIn = canal naturel pour ce profil C-suite digital'],
+      linkedin_msg:'Bonjour Sophie,\n\nVotre départ pour Lisbonne représente une fenêtre patrimoniale à sécuriser maintenant (exit tax, actionnariat). Days Legacy accompagne des profils comme le vôtre.\n\nUn échange visio cette semaine ?\n\n[Données de démonstration]',
+      email_msg:'Objet : Expatriation Lisbonne — bilan patrimonial avant départ\n\nBonjour Sophie,\n\nAvec votre départ dans 8 mois, un bilan patrimonial complet maintenant peut vous faire économiser sur l\'exit tax. Disponible lundi ou jeudi après-midi ?\n\n[Données de démonstration]',
+      reseau_msg:'Via réseau C-suite ou événements Aix-Marseille : introduire Days Legacy à Sophie M. (directrice, départ Lisbonne, exit tax à préparer).\n\n[Données de démonstration]',
+    },
+    {
+      id:'d6',nom:'Julien P.',prenom:'Julien',age:48,ville:'Lyon',phone:'+33 6 44 55 66 77',date:'2026-06-10T10:30:00',
+      patrimoine:'900k€ estimé',score:8.0,sms:'O',
+      besoin:'Diversifier et structurer son patrimoine',sujet:'Gestion Patrimoniale — Diversification & Assurance-Vie',
+      window:'14 jours',risk:'Modéré',urgency:'warm',bg:'linear-gradient(135deg,#5a6a7a,#8aaabb)',
+      source:'Réseau / Club Affaires',secteur:'Dirigeant / Réseau Premium',
+      contexte:'Membre d\'un club d\'affaires lyonnais · Commenté 2 posts LinkedIn Days Legacy · Recommandé par client existant',
+      validation:'Identité confirmée via recommandation directe · Dirigeant holding · Patrimoine non structuré',
+      contact_canal:'Rencontre réseau / Présentiel',contact_moment:'Soirée ou événement club',
+      contact_rappel:'Éviter approche froide — passer par contact commun',
+      action:'Activer le contact commun pour une introduction naturelle',
+      script:'Bonjour Julien, [contact commun] m\'a parlé de vous — vous cherchez à structurer un patrimoine qui a bien grandi. Days Legacy accompagne des profils comme le vôtre : diversification, optimisation fiscale, transmission. Un déjeuner la semaine prochaine ?',
+      resume:'Dirigeant holding, 48 ans. Patrimoine en croissance, non structuré. Très sensible à la recommandation et à la qualité relationnelle.',
+      score_detail:['✓ Recommandation directe d\'un client existant','✓ 2 interactions LinkedIn qualifiées','✓ Profil aligné : dirigeant 45-55 ans, patrimoine croissant','✓ Canal réseau = meilleure approche','✓ Potentiel produit fort'],
+      objections:['Besoin pas encore formalisé','Préfère les recommandations aux approches commerciales'],
+      approach_recommended:'reseau',days_legacy_product:'Assurance-Vie + Diversification',
+      confidence:'Moyen',rgpd_note:'Recommandation réseau',secteur:'Dirigeant / Réseau Premium',
+      why_sophia:['Recommandé par un client existant Days Legacy — signal de confiance fort','Profil aligné : dirigeant 48 ans, holding, patrimoine en croissance','Besoin implicite de structuration détecté via engagements LinkedIn','Canal réseau prioritaire pour ce profil — éviter approche commerciale directe'],
+      linkedin_msg:'Bonjour Julien,\n\nJe vous contacte suite à notre connexion via [contact commun]. Days Legacy accompagne des dirigeants dans la structuration et diversification patrimoniale.\n\nUn déjeuner cette semaine ?\n\n[Données de démonstration]',
+      email_msg:'Objet : Suite à notre connexion via [contact commun]\n\nBonjour Julien,\n\nDays Legacy accompagne des dirigeants dans la structuration de leur patrimoine : diversification, optimisation, transmission. Disponible pour un déjeuner ?\n\n[Données de démonstration]',
+      reseau_msg:'Via contact commun :\n1. Demander une introduction à Julien P.\n2. Proposer un déjeuner informel\n3. Écouter avant de vendre — sensible à la relation\n\n[Données de démonstration]',
+    },
+    {
+      id:'d7',nom:'Camille V.',prenom:'Camille',age:35,ville:'Paris',phone:'+33 6 22 33 44 55',date:'2026-06-08T11:20:00',
+      patrimoine:'280k€ estimé',score:7.5,sms:'N',
+      besoin:'Structurer son patrimoine et commencer à investir',sujet:'Premier Bilan Patrimonial — Assurance-Vie & SCPI',
+      window:'21 jours',risk:'Faible',urgency:'warm',bg:'linear-gradient(135deg,#9B59B6,#C39BD3)',
+      source:'LinkedIn / Alumni ESSCA',secteur:'Tech / Entrepreneuriat',
+      contexte:'Entrepreneur tech, 35 ans · Suit la page Days Legacy · A commenté un post sur la première gestion patrimoniale',
+      validation:'Profil LinkedIn public · Entrepreneur confirmé · Revenus en croissance',
+      contact_canal:'LinkedIn DM puis visio',contact_moment:'Soir après 19h ou weekend',
+      contact_rappel:'Profil digital-first : DM asynchrone avant appel',
+      action:'Envoyer un DM LinkedIn personnalisé puis proposer visio',
+      script:'Bonjour Camille, vous suivez Days Legacy — vous êtes exactement dans le moment où une bonne structuration patrimoniale fait la différence sur 10 ans. Assurance-vie, SCPI, fiscalité entrepreneur : une visio de 30 min à votre rythme ?',
+      resume:'Entrepreneur tech, 35 ans. Premiers savings importants, non structurés. Préfère l\'asynchrone. Potentiel relation longue durée.',
+      score_detail:['✓ Engagement LinkedIn actif sur notre contenu','✓ Entrepreneur tech — profil cible Days Legacy','✓ Premier besoin : structuration + fiscalité','✓ 35 ans : moment optimal pour structurer','✓ Potentiel fidélité long terme'],
+      objections:['Manque de temps','Gestion différée : "plus tard"'],
+      approach_recommended:'linkedin',days_legacy_product:'Assurance-Vie + SCPI de Rendement',
+      confidence:'Moyen',rgpd_note:'LinkedIn · Source publique',secteur:'Tech / Entrepreneuriat',
+      why_sophia:['Engagement direct sur le contenu Days Legacy : suivi + commentaire','Entrepreneur tech 35 ans : cible prioritaire pour premier bilan patrimonial','Fenêtre idéale : revenus en hausse, aucune structuration en place','Canal LinkedIn adapté à ce profil digital-first'],
+      linkedin_msg:'Bonjour Camille,\n\nMerci pour votre suivi de Days Legacy. À 35 ans avec une carrière entrepreneuriale en croissance, c\'est le moment optimal pour structurer.\n\nAssurance-vie, SCPI, fiscalité : une visio de 30 min cette semaine ?\n\n[Données de démonstration]',
+      email_msg:'Objet : Patrimoine entrepreneur à 35 ans — les 3 décisions qui comptent\n\nBonjour Camille,\n\nDays Legacy accompagne des entrepreneurs comme vous dans leurs premières décisions patrimoniales clés. Une visio de 30 min cette semaine ?\n\n[Données de démonstration]',
+      reseau_msg:'Via alumni ESSCA ou réseau startup Paris : introduire Days Legacy à Camille V. (entrepreneur tech, 35 ans, premier bilan patrimonial).\n\n[Données de démonstration]',
+    },
+    {
+      id:'d8',nom:'Frédéric M.',prenom:'Frédéric',age:63,ville:'Strasbourg',phone:'+33 6 11 77 88 99',date:'2026-06-10T14:00:00',
+      patrimoine:'1,5M€ estimé',score:8.8,sms:'O',
+      besoin:'Préparer sa retraite et transmettre son cabinet médical',sujet:'Retraite Profession Libérale — PER + Cession Cabinet',
+      window:'10 jours',risk:'Élevé',urgency:'hot',bg:'linear-gradient(135deg,#c0392b,#e07373)',
+      source:'Conférence',secteur:'Santé / Profession Libérale',
+      contexte:'Participé à une conférence retraite professions libérales · Formulaire rempli post-conférence · Veut un entretien avant fin juin',
+      validation:'Médecin libéral senior confirmé · Cabinet en activité · Retraite prévue dans 2–3 ans',
+      contact_canal:'Appel téléphonique',contact_moment:'Semaine, avant 12h ou après 17h30',
+      contact_rappel:'Veut une réponse avant fin juin',
+      action:'Appel prioritaire — double sujet PER + cession cabinet',
+      script:'Bonjour Frédéric, suite à la conférence et à votre formulaire de contact, je reviens vers vous. Days Legacy accompagne des médecins libéraux sur deux sujets clés : maximiser votre PER avant la retraite et structurer la cession de votre cabinet. Disponible 30 min cette semaine ?',
+      resume:'Médecin libéral, 63 ans. Retraite dans 2-3 ans. Double besoin PER + cession cabinet. Très mûr, fenêtre courte.',
+      score_detail:['✓ Démarche active : conférence + formulaire = intentionnalité forte','✓ Profil prioritaire : profession libérale senior','✓ Double besoin PER + cession cabinet identifié','✓ Patrimoine 1,5M€ à structurer','✓ Fenêtre calendaire : retraite dans 2-3 ans'],
+      objections:['Déjà en contact avec son comptable','Complexité de la cession de cabinet'],
+      approach_recommended:'telephone',days_legacy_product:'PER Madelin + Accompagnement Cession Cabinet',
+      confidence:'Élevé',rgpd_note:'Formulaire conférence · Consentement explicite',secteur:'Santé / Profession Libérale',
+      why_sophia:['Démarche active : formulaire rempli après conférence = intentionnalité forte','Profil senior profession libérale : cible prioritaire pour PER et cession','Double besoin identifié : PER Madelin + structuration cession de cabinet','Fenêtre courte : retraite dans 2-3 ans, décision attendue avant fin juin'],
+      linkedin_msg:'Bonjour Frédéric,\n\nSuite à la conférence sur la retraite des professions libérales, Days Legacy peut vous accompagner sur deux sujets clés : PER Madelin + structuration de la cession de votre cabinet. Un échange de 30 min cette semaine ?\n\n[Données de démonstration]',
+      email_msg:'Objet : Retraite et cession de cabinet — agir maintenant\n\nBonjour Frédéric,\n\nSuite à votre formulaire, je vous propose un entretien pour parler PER Madelin et cession de cabinet médical. Disponible avant fin juin ?\n\n[Données de démonstration]',
+      reseau_msg:'Via réseau médical strasbourgeois : introduire Days Legacy à Dr. Frédéric M. (retraite 2-3 ans, cession cabinet).\n\n[Données de démonstration]',
     }
   ],
   signals: [
@@ -766,6 +998,9 @@ var synth = window.speechSynthesis;
 var voiceActive = false;
 var recognition = null;
 var _originalFetch = window.fetch;
+var NAV_IDX = 0;
+var NAV_ACCEPTED = [];
+var NAV_SKIPPED = [];
 
 function isDemo() { return MODE === 'demo'; }
 
@@ -827,7 +1062,163 @@ function mockSophiaResponse(q) {
   if (q.indexOf('génère') !== -1 || q.indexOf('générer') !== -1) {
     return "Voici le contenu généré pour Days Legacy :\n\n— Introduction personnalisée sur le besoin patrimonial exprimé\n— 2-3 arguments clés adaptés au profil du prospect\n— Proposition d'un rendez-vous sans engagement\n— Formulation premium et accessible, sans jargon\n\n[Disclaimer] Ces informations sont fournies à titre indicatif uniquement et ne constituent pas un conseil en investissement personnalisé. Elles doivent être validées par un expert patrimonial agréé avant toute décision.";
   }
+  if (q.indexOf('compte-rendu de contact') !== -1) {
+    return "Analyse du compte-rendu :\n\n📝 Résumé : Contact établi. Le prospect montre un intérêt réel mais exprime des réserves sur le timing.\n\n🎯 Besoin détecté : Transmission patrimoniale — besoin confirmé, horizon 12–18 mois.\n\n⚠ Objections identifiées :\n— \"Je verrai ça plus tard\" → Proposer un calendrier précis avec simulation chiffrée\n— Présence de concurrents → Valoriser l'expertise et la réactivité Days Legacy\n\n📅 Prochaine étape : Recontacter dans 7–10 jours avec une simulation sans engagement.\n\n💼 Piste Days Legacy (indicatif) : À valider par l'expert patrimonial selon les informations recueillies.\n\n[Disclaimer] Ces informations sont fournies à titre indicatif uniquement et ne constituent pas un conseil en investissement personnalisé. Elles doivent être validées par un expert patrimonial agréé avant toute décision.";
+  }
   return "Je suis Sophia, l'assistante IA patrimoniale de Days Legacy. Je peux vous aider à préparer vos appels, analyser vos prospects, générer du contenu ou répondre à vos questions sur le marché patrimonial français.\n\nN'oubliez pas : je ne suis pas habilitée à donner de conseil financier personnalisé. Pour toute décision patrimoniale concrète, un rendez-vous avec l'un de nos experts est indispensable.\n\n[Disclaimer] Ces informations sont fournies à titre indicatif uniquement et ne constituent pas un conseil en investissement personnalisé. Elles doivent être validées par un expert patrimonial agréé avant toute décision.";
+}
+
+/* ══════════════════════════════════════════════════
+   PROSPECT NAVIGATOR
+══════════════════════════════════════════════════ */
+function openWorkspace() {
+  window.location.href = '/workspace' + (isDemo() ? '?demo=1' : '');
+}
+
+function renderNavigator() {
+  var ls = getLeads();
+  var cardWrap = document.getElementById('nav-card-wrap');
+  var whyWrap = document.getElementById('why-block-wrap');
+  if (!cardWrap) return;
+  if (!ls.length) {
+    cardWrap.innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--faint)">Aucun prospect disponible.</div>';
+    if (whyWrap) whyWrap.innerHTML = '';
+    return;
+  }
+  var idx = NAV_IDX % ls.length;
+  var l = ls[idx];
+  var u = URGENCY[l.urgency] || URGENCY.cool;
+  var isAcc = NAV_ACCEPTED.indexOf(l.id) !== -1;
+  var el;
+  el = document.getElementById('nav-idx'); if(el) el.textContent = idx+1;
+  el = document.getElementById('nav-total'); if(el) el.textContent = ls.length;
+  el = document.getElementById('nav-accepted-count'); if(el) el.textContent = NAV_ACCEPTED.length+' accepté(s)';
+  el = document.getElementById('nav-skipped-count'); if(el) el.textContent = NAV_SKIPPED.length+' passé(s)';
+  var ab = document.getElementById('btn-accept-prospect');
+  if (ab) { if (isAcc){ab.textContent='✓ Accepté';ab.classList.add('done');}else{ab.textContent='✓ Accepter ce prospect';ab.classList.remove('done');} }
+  var banner = document.getElementById('accepted-banner');
+  if (banner) { if (isAcc){document.getElementById('accepted-msg').textContent=l.nom+' est dans votre pipeline. Préparez l\'approche ou passez au suivant.';banner.classList.add('show');}else banner.classList.remove('show'); }
+  var chL = {linkedin:'💼 LinkedIn',email:'📧 Email',telephone:'📞 Téléphone',reseau:'🤝 Réseau'};
+  var tags = '<span class="nc-tag region">'+(l.ville||'—')+'</span>'
+    +'<span class="nc-tag source">'+(l.source||'—')+'</span>'
+    +'<span class="nc-tag rgpd">'+(l.rgpd_note||'Source publique')+'</span>'
+    +(isDemo()?'<span class="nc-tag demo">DÉMO</span>':'');
+  cardWrap.innerHTML = '<div class="nav-card'+(isAcc?' accepted':'')+'">'
+    +'<div class="nc-header">'
+    +'<div class="nc-av" style="background:'+(l.bg||'var(--gold-b)')+'">'+((l.prenom||'?')[0])+'</div>'
+    +'<div class="nc-identity">'
+    +'<div class="nc-name">'+(l.nom||'—')+'</div>'
+    +'<div class="nc-profile">'+(l.age||'—')+' ans · '+(l.secteur||l.ville||'—')+'</div>'
+    +'<div class="nc-tags">'+tags+'</div>'
+    +'</div>'
+    +'<div class="nc-score-wrap">'
+    +'<div class="nc-score-n">'+(l.score||0)+'</div>'
+    +'<div class="nc-score-l">Score Sophia</div>'
+    +'<div class="nc-confidence">'+(l.confidence||'Élevé')+'</div>'
+    +'</div>'
+    +'</div>'
+    +'<div class="nc-signal">'
+    +'<div class="nc-sig-lbl">Signal détecté · Besoin probable</div>'
+    +'<div class="nc-sig-val">'+(l.besoin||'—')+'</div>'
+    +'<div class="nc-sig-sub">'+(l.contexte||'—')+'</div>'
+    +'</div>'
+    +'<div class="nc-grid">'
+    +'<div class="nc-cell"><div class="nc-cell-lbl">Patrimoine</div><div class="nc-cell-val">'+(l.patrimoine||'—')+'</div></div>'
+    +'<div class="nc-cell"><div class="nc-cell-lbl">Fenêtre</div><div class="nc-cell-val" style="color:'+u.score+'">'+(l.window||'—')+'</div></div>'
+    +'<div class="nc-cell"><div class="nc-cell-lbl">Canal conseillé</div><div class="nc-cell-val">'+(chL[l.approach_recommended]||'📞 Téléphone')+'</div></div>'
+    +'</div>'
+    +'<div class="nc-need">'
+    +'<div class="nc-need-lbl">Piste Days Legacy (indicatif — à valider par un expert)</div>'
+    +'<div class="nc-need-val">'+(l.sujet||l.besoin||'—')+'</div>'
+    +'<div class="nc-need-note">'+(l.days_legacy_product||'—')+'</div>'
+    +'</div>'
+    +'</div>';
+  var why = l.why_sophia || [];
+  if (!why.length) { if(whyWrap) whyWrap.innerHTML=''; return; }
+  var items='';
+  for(var i=0;i<why.length;i++) items+='<div class="why-item"><div class="why-dot"></div><div>'+why[i]+'</div></div>';
+  if(whyWrap) whyWrap.innerHTML='<div class="why-block"><div class="why-title">💡 Pourquoi Sophia recommande ce prospect</div><div class="why-list">'+items+'</div></div>';
+  var noteEl=document.getElementById('crm-mode-note'); if(noteEl) noteEl.textContent=isDemo()?'Mode démonstration — réponse simulée':'';
+}
+
+function acceptProspect() {
+  var ls=getLeads(); if(!ls.length) return;
+  var l=ls[NAV_IDX%ls.length]; if(!l) return;
+  if(NAV_ACCEPTED.indexOf(l.id)===-1) NAV_ACCEPTED.push(l.id);
+  renderNavigator(); renderPipelineStrip();
+}
+
+function skipProspect() {
+  var ls=getLeads(); if(!ls.length) return;
+  var l=ls[NAV_IDX%ls.length];
+  if(l && NAV_SKIPPED.indexOf(l.id)===-1) NAV_SKIPPED.push(l.id);
+  NAV_IDX=(NAV_IDX+1)%ls.length;
+  var panel=document.getElementById('approach-panel'); if(panel) panel.style.display='none';
+  var atBtn=document.getElementById('btn-approach-toggle'); if(atBtn) atBtn.textContent='Préparer l\'approche ↓';
+  renderNavigator(); renderPipelineStrip();
+  var top=document.getElementById('nav-card-wrap'); if(top) top.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function toggleApproach() {
+  var panel=document.getElementById('approach-panel');
+  var btn=document.getElementById('btn-approach-toggle');
+  if(!panel) return;
+  if(panel.style.display==='none'){
+    panel.style.display='block';
+    if(btn) btn.textContent='Masquer l\'approche ↑';
+    var ls=getLeads(); var l=ls[NAV_IDX%ls.length];
+    selectChannel(l&&l.approach_recommended?l.approach_recommended:'telephone');
+    setTimeout(function(){panel.scrollIntoView({behavior:'smooth',block:'nearest'});},50);
+  } else {
+    panel.style.display='none';
+    if(btn) btn.textContent='Préparer l\'approche ↓';
+  }
+}
+
+function selectChannel(ch) {
+  document.querySelectorAll('.channel-tab').forEach(function(t){t.classList.toggle('active',t.dataset.ch===ch);});
+  var ls=getLeads(); var l=ls[NAV_IDX%ls.length];
+  var labels={linkedin:'💼 Message LinkedIn',email:'📧 Email d\'approche',telephone:'📞 Script téléphonique',reseau:'🤝 Approche réseau'};
+  var content='';
+  if(!l) content='Sélectionnez un prospect d\'abord.';
+  else if(ch==='linkedin') content=l.linkedin_msg||l.script||'—';
+  else if(ch==='email') content=l.email_msg||l.script||'—';
+  else if(ch==='telephone') content=l.script||'—';
+  else if(ch==='reseau') content=l.reseau_msg||'Activez un contact commun pour une introduction naturelle.';
+  var demoNote=isDemo()?'<div class="channel-demo-note">⚠ Données de démonstration — À personnaliser avant tout usage réel.</div>':'';
+  var wrap=document.getElementById('channel-content-wrap');
+  if(wrap) wrap.innerHTML='<div class="channel-content"><div class="channel-lbl">'+(labels[ch]||'Script')+'</div><div>'+content.replace(/\n/g,'<br>')+'</div>'+demoNote+'</div>';
+}
+
+async function analyzeReport() {
+  var text=document.getElementById('crm-text')?document.getElementById('crm-text').value.trim():'';
+  var errEl=document.getElementById('crm-err');
+  var resultEl=document.getElementById('crm-result');
+  if(!text){ if(errEl){errEl.classList.add('show');setTimeout(function(){errEl.classList.remove('show');},3000);} return; }
+  if(errEl) errEl.classList.remove('show');
+  if(resultEl){resultEl.className='crm-result show';resultEl.innerHTML='<span class="typing">Sophia analyse le compte-rendu…</span>';}
+  var ls=getLeads(); var l=ls.length?ls[NAV_IDX%ls.length]:null;
+  var msg=buildSophiaContext()+'COMPTE-RENDU DE CONTACT à analyser :\n\n'+text
+    +(l?'\n\nProspect : '+l.nom+', '+l.besoin:'')
+    +'\n\nAnalyse requise : résumé, besoin détecté, objections, prochaine étape, produit Days Legacy potentiellement pertinent (indicatif, à valider par expert).';
+  try {
+    var r=await fetch('/api/sophia/chat',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({message:msg})});
+    if(r.ok){var d=await r.json();if(resultEl) resultEl.textContent=d.response;}
+    else{if(resultEl) resultEl.textContent='Sophia indisponible. Réessayez.';}
+  } catch(e){if(resultEl) resultEl.textContent='Erreur de connexion.';}
+}
+
+function renderPipelineStrip() {
+  var el=document.getElementById('pipeline-strip'); if(!el) return;
+  var ls=getLeads();
+  var steps=[
+    {n:ls.length,l:'Détectés'},{n:NAV_ACCEPTED.length,l:'Acceptés'},
+    {n:isDemo()?2:0,l:'Contactés'},{n:isDemo()?1:0,l:'RDV'},
+    {n:0,l:'Propositions'},{n:0,l:'Signatures'},{n:'0%',l:'Taux conv.'}
+  ];
+  var html='';
+  steps.forEach(function(s){html+='<div class="pl-step"><div class="pl-step-n">'+s.n+'</div><div class="pl-step-l">'+s.l+'</div></div>';});
+  el.innerHTML=html;
 }
 
 /* ══════════════════════════════════════════════════
@@ -1082,50 +1473,15 @@ async function _callSophia(question, speakReply) {
 ══════════════════════════════════════════════════ */
 function renderPriorities() {
   var ls = getLeads();
-  var ranks = ['1ère priorité','2ème priorité','3ème priorité','4ème priorité','5ème priorité'];
-  var html = '';
-  for (var i = 0; i < Math.min(ls.length, 5); i++) {
-    var l = ls[i];
-    var u = URGENCY[l.urgency] || URGENCY.cool;
-    html += '<div class="p-card' + (l.urgency === 'hot' ? ' urgent' : '') + '" style="border-color:' + u.border + '">'
-      + '<div class="p-rank-row">'
-      +   '<div class="p-rank">' + u.icon + ' ' + ranks[i] + '</div>'
-      +   '<div class="p-window-pill" style="background:' + u.bg + ';color:' + u.score + ';border:1px solid ' + u.border + '">⏱ ' + l.window + '</div>'
-      + '</div>'
-      + '<div class="p-top">'
-      +   '<div class="p-av" style="background:' + l.bg + '">' + l.prenom[0] + '</div>'
-      +   '<div class="p-info"><div class="p-name">' + l.nom + '</div><div class="p-loc">' + l.age + ' ans · ' + l.ville + '</div></div>'
-      +   '<div class="p-score" style="color:' + u.score + '">' + l.score + '</div>'
-      + '</div>'
-      + '<div class="p-subject">'
-      +   '<div class="p-subj-lbl">Besoin exprimé</div>'
-      +   '<div class="p-subj-val">' + l.besoin + '</div>'
-      +   '<div class="p-pat">' + l.patrimoine + ' · ' + l.sujet + '</div>'
-      + '</div>'
-      + '<div class="p-row">'
-      +   '<div class="p-cell"><div class="p-cell-lbl">Source</div><div class="p-cell-val">' + l.source + '</div></div>'
-      +   '<div class="p-cell"><div class="p-cell-lbl">Contexte</div><div class="p-cell-val" style="font-weight:400;font-size:10px;color:var(--dim)">' + l.contexte + '</div></div>'
-      + '</div>'
-      + '<div class="p-contact-block">'
-      +   '<div class="p-contact-lbl">Comment et quand le contacter</div>'
-      +   '<div class="p-contact-row">📞 ' + l.contact_canal + '</div>'
-      +   '<div class="p-contact-row">🕐 ' + l.contact_moment + '</div>'
-      +   '<div class="p-contact-row" style="color:' + u.score + ';font-weight:600">💬 ' + l.contact_rappel + '</div>'
-      + '</div>'
-      + '<div class="p-actions">'
-      +   '<button class="btn-ghost btn-sm" style="flex:1;justify-content:center" onclick="openScript(\'' + l.id + '\')">Voir le script</button>'
-      +   '<button class="btn-gold btn-sm" style="flex:1;justify-content:center" onclick="prepareCall(\'' + l.id + '\')">📞 Préparer l\'appel</button>'
-      + '</div>'
-      + '</div>';
-  }
-  document.getElementById('p-grid').innerHTML = html;
-  // Update stats band
   var top = getTopLead();
-  document.getElementById('stat-priorities').textContent = ls.length;
-  document.getElementById('stat-topscore').textContent = top ? top.score : '—';
   var sigs = getSignals();
-  document.getElementById('stat-signal').textContent = sigs.length ? sigs[0].pct : '—';
-  document.getElementById('stat-window').textContent = top ? top.window : '—';
+  var el;
+  el=document.getElementById('stat-priorities'); if(el) el.textContent=ls.length;
+  el=document.getElementById('stat-topscore'); if(el) el.textContent=top?top.score:'—';
+  el=document.getElementById('stat-signal'); if(el) el.textContent=sigs.length?sigs[0].pct:'—';
+  el=document.getElementById('stat-window'); if(el) el.textContent=top?top.window:'—';
+  renderNavigator();
+  renderPipelineStrip();
 }
 
 /* ══════════════════════════════════════════════════
