@@ -470,7 +470,7 @@ tr:hover td{background:rgba(255,255,255,.02);cursor:pointer;}
             <div class="sh-status-dot"></div>
             <div class="sh-label">Sophia · Assistante IA Patrimoniale</div>
           </div>
-          <div class="sh-model">Days Legacy AI OS · gpt-4o</div>
+          <div class="sh-model">Days Legacy AI OS</div>
         </div>
         <div class="sh-body">
           <div class="sh-av-wrap">
@@ -825,7 +825,7 @@ function mockSophiaResponse(q) {
     return "Stratégie de prospection suggérée :\n\n1. Ciblage : dirigeants 50-65 ans, CA >5M€, secteur industrie / PME familiale\n2. Canal : LinkedIn + webinar thématique (Pacte Dutreil ou holding familiale)\n3. Contenu : 1 post + 1 guide PDF à télécharger\n4. Relance : séquence 3 emails sur 10 jours\n5. Conversion : appel Sophia en aval pour qualification automatique\n\n[Disclaimer] Ces informations sont fournies à titre indicatif uniquement et ne constituent pas un conseil en investissement personnalisé. Elles doivent être validées par un expert patrimonial agréé avant toute décision.";
   }
   if (q.indexOf('génère') !== -1 || q.indexOf('générer') !== -1) {
-    return "Voici le contenu généré pour Days Legacy :\n\n— Introduction personnalisée sur le besoin patrimonial exprimé\n— 2-3 arguments clés adaptés au profil du prospect\n— Proposition d'un rendez-vous sans engagement\n— Formulation premium et accessible, sans jargon\n\n[Version complète disponible en production avec OpenAI]\n\n[Disclaimer] Ces informations sont fournies à titre indicatif uniquement et ne constituent pas un conseil en investissement personnalisé. Elles doivent être validées par un expert patrimonial agréé avant toute décision.";
+    return "Voici le contenu généré pour Days Legacy :\n\n— Introduction personnalisée sur le besoin patrimonial exprimé\n— 2-3 arguments clés adaptés au profil du prospect\n— Proposition d'un rendez-vous sans engagement\n— Formulation premium et accessible, sans jargon\n\n[Disclaimer] Ces informations sont fournies à titre indicatif uniquement et ne constituent pas un conseil en investissement personnalisé. Elles doivent être validées par un expert patrimonial agréé avant toute décision.";
   }
   return "Je suis Sophia, l'assistante IA patrimoniale de Days Legacy. Je peux vous aider à préparer vos appels, analyser vos prospects, générer du contenu ou répondre à vos questions sur le marché patrimonial français.\n\nN'oubliez pas : je ne suis pas habilitée à donner de conseil financier personnalisé. Pour toute décision patrimoniale concrète, un rendez-vous avec l'un de nos experts est indispensable.\n\n[Disclaimer] Ces informations sont fournies à titre indicatif uniquement et ne constituent pas un conseil en investissement personnalisé. Elles doivent être validées par un expert patrimonial agréé avant toute décision.";
 }
